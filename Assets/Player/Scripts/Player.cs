@@ -132,6 +132,8 @@ public class Player : Character
 
     public bool isAttackOver = false;
 
+    public Checkpoint checkpointObject;
+
     void Awake()
     {
         coll = GetComponent<BoxCollider2D>();
