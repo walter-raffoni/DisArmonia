@@ -11,7 +11,7 @@ public class ExtendedAnimator : MonoBehaviour
     [Header("Miscellaneous Values")]
     [SerializeField] float maxTilt = 5;
     [SerializeField] float tiltSpeed = 30;
-    [SerializeField, Range(1f, 3f)] float maxIdleSpeed = 2;
+    [SerializeField, Range(0f, 3f)] float maxIdleSpeed = 2;
     [SerializeField] Vector2 scaleModifierCrouch = new Vector2(1, 0.7f);
 
     [Header("Particle System")]
@@ -101,7 +101,12 @@ public class ExtendedAnimator : MonoBehaviour
     {
         animator.SetTrigger(StartedAttackKey);
 
-        if (player.isAttackOver == true) animator.SetTrigger(NextAttackKey);
+        if (player.isAttackOver == true) 
+        {
+            animator.SetTrigger(NextAttackKey);
+            player.isAttackOver = false;
+        }
+        
     }
 
     private void OnEndAttack()
@@ -156,7 +161,9 @@ public class ExtendedAnimator : MonoBehaviour
         var targetRotVector = new Vector3(0, 0, Mathf.Lerp(-maxTilt, maxTilt, Mathf.InverseLerp(-1, 1, player.Input.X)));//Fa pendere lo sprite leggermente mentre corre || TODO: Capire se è da tenere oppure no
         animator.transform.rotation = Quaternion.RotateTowards(animator.transform.rotation, Quaternion.Euler(targetRotVector), tiltSpeed * Time.deltaTime);
 
-        animator.SetFloat(IdleSpeedKey, Mathf.Lerp(1, maxIdleSpeed, inputPoint));//Fa aumentare la velocità dell'animazione quando corre
+        //animator.SetFloat(IdleSpeedKey, Mathf.Lerp(1, maxIdleSpeed, inputPoint));//Fa aumentare la velocità dell'animazione quando corre
+
+        animator.SetFloat(IdleSpeedKey, Mathf.Abs(player.speed.x));
 
         DetectGroundColor();
 
