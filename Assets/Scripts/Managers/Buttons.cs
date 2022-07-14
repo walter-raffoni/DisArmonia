@@ -24,7 +24,7 @@ public class Buttons : MonoBehaviour
 #endif
     }
 
-    public void AddStack() => GameManager.instance.player.stackDiSangue += 1;
+    public void AddStack() => GameManager.instance.player.stackDiSangue++;
 
-    public void RemoveStack() => GameManager.instance.player.stackDiSangue -= 1;
+    public void RemoveStack() => GameManager.instance.player.stackDiSangue--;
 }

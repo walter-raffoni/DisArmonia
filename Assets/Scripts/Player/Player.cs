@@ -94,7 +94,7 @@ public class Player : Character
     public event Action<bool> OnGroundedChanged;
     public event Action<bool> OnDashingChanged;
     public event Action<bool> OnCrouchingChanged;
-    public event Action OnStartAttackChanged;
+    public event Action OnStartAttackChanged, OnStartBrutalAttackChanged;
     public event Action OnJumping, OnDoubleJumping;
 
     [HideInInspector] public BoxCollider2D coll;
@@ -124,6 +124,8 @@ public class Player : Character
     public HorizontalAttackState horizontalAttackState;
     public VerticalAttackState verticalAttackState;
     public BrutalAttackState1 brutalAttackState1;
+    public BrutalAttackState2 brutalAttackState2;
+    public BrutalAttackState3 brutalAttackState3;
     #endregion
 
     public int stackDiSangue = 0;
@@ -151,6 +153,8 @@ public class Player : Character
         horizontalAttackState = new HorizontalAttackState(this, stateMachine);
         verticalAttackState = new VerticalAttackState(this, stateMachine);
         brutalAttackState1 = new BrutalAttackState1(this, stateMachine);
+        brutalAttackState2 = new BrutalAttackState2(this, stateMachine);
+        brutalAttackState3 = new BrutalAttackState3(this, stateMachine);
 
         stateMachine.Initialize(standingState);
     }
@@ -163,7 +167,7 @@ public class Player : Character
         if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//DEBUG: X MORTE
 
         if (stackDiSangue < 0) stackDiSangue = 0;
-        else if (stackDiSangue > 4) stackDiSangue = 4;
+        else if (stackDiSangue > 3) stackDiSangue = 3;
     }
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
@@ -449,6 +453,7 @@ public class Player : Character
     public void OnJumpingInvoke() => OnJumping?.Invoke();
     public void OnDoubleJumpingInvoke() => OnDoubleJumping?.Invoke();
     public void OnStartAttackChangedInvoke() => OnStartAttackChanged?.Invoke();
+    public void OnStartBrutalAttackChangedInvoke() => OnStartBrutalAttackChanged?.Invoke();
     public void OnCrouchingChangedInvoke(bool state) => OnCrouchingChanged?.Invoke(state);
     public void OnDashingChangedInvoke(bool state) => OnDashingChanged?.Invoke(state);
     #endregion

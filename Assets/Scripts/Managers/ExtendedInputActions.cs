@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class ExtendedInputActions : MonoBehaviour
 {
     private InputActions actions;
-    private InputAction move, jump, dash, escape, baseAttack, cambiaStance, reloadGame;
+    private InputAction move, jump, dash, escape, baseAttack, brutalAttack, cambiaStance, reloadGame;
 
     private void Awake()
     {
@@ -15,6 +15,7 @@ public class ExtendedInputActions : MonoBehaviour
         jump = actions.Player.Jump;
         dash = actions.Player.Dash;
         baseAttack = actions.Player.BaseAttack;
+        brutalAttack = actions.Player.BrutalAttack;
         cambiaStance = actions.Player.CambiaStance;
 
         //Game Keys
@@ -36,6 +37,8 @@ public class ExtendedInputActions : MonoBehaviour
             DashDown = dash.WasPressedThisFrame(),
             AttackDown = baseAttack.WasPressedThisFrame(),
             BaseAttackReleased = baseAttack.WasReleasedThisFrame(),
+            BrutalAttackDown = brutalAttack.WasPressedThisFrame(),
+            BrutalAttackReleased = brutalAttack.WasReleasedThisFrame(),
             CambiaStanceDown = cambiaStance.WasPressedThisFrame(),
 
             X = move.ReadValue<Vector2>().x,

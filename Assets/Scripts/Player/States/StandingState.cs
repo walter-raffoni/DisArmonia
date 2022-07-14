@@ -25,6 +25,13 @@ public class StandingState : State
         player.HandleInput();
 
         if (player.Input.AttackDown) stateMachine.ChangeState(player.horizontalAttackState);
+        if (player.Input.BrutalAttackDown)
+        {
+            if (player.stackDiSangue == 0) return;
+            else if (player.stackDiSangue == 1) stateMachine.ChangeState(player.brutalAttackState1);
+            else if (player.stackDiSangue == 2) stateMachine.ChangeState(player.brutalAttackState2);
+            else if (player.stackDiSangue == 3) stateMachine.ChangeState(player.brutalAttackState3);
+        }
     }
 
     public override void PhysicsUpdate()

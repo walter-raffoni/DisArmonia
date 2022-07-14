@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class BrutalAttackState1 : State
+public class BrutalAttackState3 : State
 {
-    public BrutalAttackState1(Player _player, StateMachine _stateMachine) : base(_player, _stateMachine)
+    public BrutalAttackState3(Player _player, StateMachine _stateMachine) : base(_player, _stateMachine)
     {
         player = _player;
         stateMachine = _stateMachine;

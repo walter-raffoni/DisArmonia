@@ -16,7 +16,11 @@ public class EnemyRanged : Enemy
 
         stateMachine.Initialize(patrollingState);
 
-        stanceMaggioreDanno = Random.Range(0, 1);
+        stanceMaggioreDanno = Random.Range(0, 2);
+
+        var main = particleStance.main;
+        if (stanceMaggioreDanno == 0) main.startColor = Color.green;
+        else if (stanceMaggioreDanno == 1) main.startColor = Color.red;
     }
 
     private void Update()

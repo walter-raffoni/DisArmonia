@@ -40,6 +40,7 @@ public class ExtendedAnimator : MonoBehaviour
     private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
     private static readonly int StartedAttackKey = Animator.StringToHash("StartedAttack");
     private static readonly int StartedAirAttackKey = Animator.StringToHash("StartedAirAttack");
+    private static readonly int StartedBrutalAttackKey = Animator.StringToHash("StartedBrutalAttack");
     private static readonly int NextAttackKey = Animator.StringToHash("NextAttack");
     #endregion
 
@@ -51,6 +52,7 @@ public class ExtendedAnimator : MonoBehaviour
 
         player.OnGroundedChanged += OnLanded;
         player.OnStartAttackChanged += OnStartAttack;
+        player.OnStartBrutalAttackChanged += OnStartBrutalAttack;
         player.OnJumping += OnJumping;
         player.OnDoubleJumping += OnDoubleJumping;
         player.OnDashingChanged += OnDashing;
@@ -61,6 +63,7 @@ public class ExtendedAnimator : MonoBehaviour
     {
         player.OnGroundedChanged -= OnLanded;
         player.OnStartAttackChanged -= OnStartAttack;
+        player.OnStartBrutalAttackChanged -= OnStartBrutalAttack;
         player.OnJumping -= OnJumping;
         player.OnDoubleJumping -= OnDoubleJumping;
         player.OnDashingChanged -= OnDashing;
@@ -109,7 +112,11 @@ public class ExtendedAnimator : MonoBehaviour
         }
 
         if (!player.isGrounded) animator.SetTrigger(StartedAirAttackKey);
+    }
 
+    private void OnStartBrutalAttack()
+    {
+        animator.SetTrigger(StartedBrutalAttackKey);
     }
 
     private void OnEndAttack()

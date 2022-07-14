@@ -14,6 +14,7 @@ public class Enemy : Character
     public GameObject firePoint;
     [HideInInspector] public bool facingRight = true;
     public int stanceMaggioreDanno;
+    public ParticleSystem particleStance;
 
     public void Flip()
     {
@@ -24,10 +25,4 @@ public class Enemy : Character
     }
 
     public void Spara() => Instantiate(projectilePrefab, firePoint.transform.position, firePoint.transform.rotation, transform);
-
-    void OnDestroy()
-    {
-        target.GetComponent<Player>().stackDiSangue++;
-    }
-
 }

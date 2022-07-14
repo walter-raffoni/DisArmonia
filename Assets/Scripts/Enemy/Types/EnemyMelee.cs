@@ -16,20 +16,28 @@ public class EnemyMelee : Enemy
 
         stateMachine.Initialize(patrollingState);
 
-        stanceMaggioreDanno = Random.Range(0, 1);
+        stanceMaggioreDanno = Random.Range(0, 2);
+
+        var main = particleStance.main;
+        if (stanceMaggioreDanno == 0) main.startColor = Color.green;
+        else if (stanceMaggioreDanno == 1) main.startColor = Color.red;
     }
 
     private void Update()
     {
         if (!GameManager.instance.IsPaused) stateMachine.currentState.LogicUpdate();
 
-        if (currentHP <= 0) Destroy(gameObject);
-
         if (Vector3.Distance(target.transform.position, transform.position) < 5)
         {
             transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
             if (target.transform.position.x > transform.position.x && !facingRight) Flip();
             if (target.transform.position.x < transform.position.x && facingRight) Flip();
+        }
+
+        if (currentHP <= 0)
+        {
+            target.GetComponent<Player>().stackDiSangue++;
+            Destroy(gameObject);
         }
     }
 
