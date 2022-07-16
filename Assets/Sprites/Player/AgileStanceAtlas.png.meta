@@ -1,0 +1,972 @@
+fileFormatVersion: 2
+guid: 3be3cc6a5503b2d479e44dc5aebbaf2f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2372086811554147733
+    second: AgileStanceAtlas_0
+  - first:
+      213: -7713487097039983531
+    second: AgileStanceAtlas_1
+  - first:
+      213: -2785226845362788433
+    second: AgileStanceAtlas_2
+  - first:
+      213: 1611411508587577011
+    second: AgileStanceAtlas_3
+  - first:
+      213: -5397721283910851313
+    second: AgileStanceAtlas_4
+  - first:
+      213: -2125710452215891378
+    second: AgileStanceAtlas_5
+  - first:
+      213: -4815461016447897556
+    second: AgileStanceAtlas_6
+  - first:
+      213: -2904444513100998017
+    second: AgileStanceAtlas_7
+  - first:
+      213: 527030611444081123
+    second: AgileStanceAtlas_8
+  - first:
+      213: 4112515576136718503
+    second: AgileStanceAtlas_9
+  - first:
+      213: -2844139701724914905
+    second: AgileStanceAtlas_10
+  - first:
+      213: 1380863815842102031
+    second: AgileStanceAtlas_11
+  - first:
+      213: -4868016792917102209
+    second: AgileStanceAtlas_12
+  - first:
+      213: 6047482436229912037
+    second: AgileStanceAtlas_13
+  - first:
+      213: 8780478927098240344
+    second: AgileStanceAtlas_14
+  - first:
+      213: 7533349397273118583
+    second: AgileStanceAtlas_15
+  - first:
+      213: -2244550111228748358
+    second: AgileStanceAtlas_16
+  - first:
+      213: -4970232669175716272
+    second: AgileStanceAtlas_17
+  - first:
+      213: 4823454497516462972
+    second: AgileStanceAtlas_18
+  - first:
+      213: 1516848758172339948
+    second: AgileStanceAtlas_19
+  - first:
+      213: 8509919627273349573
+    second: AgileStanceAtlas_20
+  - first:
+      213: 1398443052054477334
+    second: AgileStanceAtlas_21
+  - first:
+      213: -1693211976848403533
+    second: AgileStanceAtlas_22
+  - first:
+      213: -5251337043640129757
+    second: AgileStanceAtlas_23
+  - first:
+      213: 5444689455319453949
+    second: AgileStanceAtlas_24
+  - first:
+      213: 5154146540897589364
+    second: AgileStanceAtlas_25
+  - first:
+      213: 1303176852416362771
+    second: AgileStanceAtlas_26
+  - first:
+      213: 5032650887514078141
+    second: AgileStanceAtlas_27
+  - first:
+      213: 1023196644442986880
+    second: AgileStanceAtlas_28
+  - first:
+      213: -2574599644906781411
+    second: AgileStanceAtlas_29
+  - first:
+      213: -2229410947697525321
+    second: AgileStanceAtlas_30
+  - first:
+      213: 972950204358110611
+    second: AgileStanceAtlas_31
+  - first:
+      213: -4867778959536585213
+    second: AgileStanceAtlas_32
+  - first:
+      213: -1802844801897397976
+    second: AgileStanceAtlas_33
+  - first:
+      213: 5395384902784267348
+    second: AgileStanceAtlas_34
+  - first:
+      213: 4415425992989752021
+    second: AgileStanceAtlas_35
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 20
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AgileStanceAtlas_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 132
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.25, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59de21323685be020800000000000000
+      internalID: 2372086811554147733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_1
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 132
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.28, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55c6f516a5034f490800000000000000
+      internalID: -7713487097039983531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_2
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 132
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.3, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa7e44fd0f2e859d0800000000000000
+      internalID: -2785226845362788433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 132
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3beb65cba32ec5610800000000000000
+      internalID: 1611411508587577011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_4
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 132
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f05ade337117715b0800000000000000
+      internalID: -5397721283910851313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_5
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 132
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.38, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4a36503b95ff72e0800000000000000
+      internalID: -2125710452215891378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_6
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 132
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.39, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c20b1ec08bb0c2db0800000000000000
+      internalID: -4815461016447897556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 99
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7a58ce8a1751b7d0800000000000000
+      internalID: -2904444513100998017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_8
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 99
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.37, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e1a1ec7c83605700800000000000000
+      internalID: 527030611444081123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 99
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.42, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a8d3e0a027921930800000000000000
+      internalID: 4112515576136718503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_10
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 99
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.42, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72bd91b92069788d0800000000000000
+      internalID: -2844139701724914905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_11
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 99
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0b757a0350d92310800000000000000
+      internalID: 1380863815842102031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_12
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 99
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.48, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f713a89c484517cb0800000000000000
+      internalID: -4868016792917102209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_13
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 99
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.52, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e5d5ec1c39fce350800000000000000
+      internalID: 6047482436229912037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_14
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 99
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85d5e7f20178ad970800000000000000
+      internalID: 8780478927098240344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 66
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.27, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7770e590d55db8860800000000000000
+      internalID: 7533349397273118583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_16
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 66
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.3, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abd95a3e091c9d0e0800000000000000
+      internalID: -2244550111228748358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_17
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 66
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0566db688bf260bb0800000000000000
+      internalID: -4970232669175716272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_18
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 66
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c73aaba4f4a50f240800000000000000
+      internalID: 4823454497516462972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_19
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 66
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceecad0b8edec0510800000000000000
+      internalID: 1516848758172339948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_20
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 66
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c9a0c240de491670800000000000000
+      internalID: 8509919627273349573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_21
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 66
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61af15ceb84486310800000000000000
+      internalID: 1398443052054477334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_22
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 66
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b393869da08088e0800000000000000
+      internalID: -1693211976848403533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_23
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 66
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 327eaf518c08f17b0800000000000000
+      internalID: -5251337043640129757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_24
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 66
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df091a0663c6f8b40800000000000000
+      internalID: 5444689455319453949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_25
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 66
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 478528a98f4378740800000000000000
+      internalID: 5154146540897589364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_26
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 66
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 319f9c75170d51210800000000000000
+      internalID: 1303176852416362771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 33
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.42, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbbb4dc615197d540800000000000000
+      internalID: 5032650887514078141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_28
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 33
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 089556f4def133e00800000000000000
+      internalID: 1023196644442986880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_29
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 33
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.46, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d150c76834f254cd0800000000000000
+      internalID: -2574599644906781411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_30
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 33
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.44, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bd3f141e8a8f01e0800000000000000
+      internalID: -2229410947697525321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_31
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 33
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.48, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39da8e25e0d908d00800000000000000
+      internalID: 972950204358110611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_32
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 33
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.46, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30683bfa3dc227cb0800000000000000
+      internalID: -4867778959536585213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_33
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 33
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.52, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8210fbd54320bf6e0800000000000000
+      internalID: -1802844801897397976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_34
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 33
+        width: 47
+        height: 33
+      alignment: 9
+      pivot: {x: 0.53, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45436fcabf140ea40800000000000000
+      internalID: 5395384902784267348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AgileStanceAtlas_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5da3e24fb8eb64d30800000000000000
+      internalID: 4415425992989752021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

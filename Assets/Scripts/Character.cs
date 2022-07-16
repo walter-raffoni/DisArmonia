@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class Character : MonoBehaviour, IVita<int>
 {
+    [HideInInspector] public Rigidbody2D rb;
+
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
     [HideInInspector] public int currentHP;
-
-    [Header("Weapon System")]
-    [SerializeField] GameObject weapon;
-    [HideInInspector] public Rigidbody2D rb;
 
     private void Start()
     {

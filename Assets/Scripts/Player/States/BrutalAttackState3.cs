@@ -12,7 +12,7 @@ public class BrutalAttackState3 : State
     {
         base.Enter();
 
-        player.tempoAttacco = player.tempoAttaccoOriginale;
+        player.tempoAttaccoAttuale = player.tempoAttacco;
         player.anim.SetInteger("StackSangue", player.stackDiSangue);
         player.OnStartBrutalAttackChangedInvoke();
     }
@@ -21,7 +21,7 @@ public class BrutalAttackState3 : State
     {
         base.LogicUpdate();
 
-        if (player.tempoAttacco > 0) player.tempoAttacco -= Time.deltaTime;
+        if (player.tempoAttaccoAttuale > 0) player.tempoAttaccoAttuale -= Time.deltaTime;
         else player.stateMachine.ChangeState(player.standingState);
     }
 

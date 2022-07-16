@@ -8,6 +8,13 @@ public class Enemy_PatrollingState : State
         stateMachine = _stateMachine;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        enemy.anim.ResetTrigger("VistoNemico");
+    }
+
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();

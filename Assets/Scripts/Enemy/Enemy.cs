@@ -2,19 +2,29 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    public GameObject target;
-    public Transform startPoint, endPoint;
-    public float speed, speedAttacco;
-    public int statoNemico, attributoNemico;
-    public ParticleSystem particellare;
+    [Header("Movement System")]
+    public float speed;
+    public Transform startPoint;
+    public Transform endPoint;
     public LayerMask layerOstacoli;
     public Vector3 offsetRilevazione;
+    [HideInInspector] public bool facingRight = true;
+
+    [Header("Attack System")]
+    public GameObject target;
+    public float speedAttacco;
     public int puntiDanno = 2;
     public GameObject projectilePrefab;
     public GameObject firePoint;
-    [HideInInspector] public bool facingRight = true;
+
+    [Header("Stance System")]
     public int stanceMaggioreDanno;
     public ParticleSystem particleStance;
+    public Color coloreStanceAgile = Color.blue;
+    public Color coloreStanceBrutale = Color.red;
+
+    [Header("Animation System")]
+    public Animator anim;
 
     public void Flip()
     {

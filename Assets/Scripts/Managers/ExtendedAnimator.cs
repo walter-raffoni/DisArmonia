@@ -3,14 +3,12 @@ using UnityEngine;
 public class ExtendedAnimator : MonoBehaviour
 {
     [Header("Main System")]
-    [SerializeField] Animator animator;
+    public Animator animator;
     [SerializeField] SpriteRenderer playerSprite;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] Transform dashRingTransform;
 
     [Header("Miscellaneous Values")]
-    [SerializeField] float maxTilt = 5;
-    [SerializeField] float tiltSpeed = 30;
     [SerializeField, Range(0f, 3f)] float maxIdleSpeed = 2;
     [SerializeField] Vector2 scaleModifierCrouch = new Vector2(1, 0.7f);
 
@@ -130,7 +128,21 @@ public class ExtendedAnimator : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(player.attackPoint.position, player.attackRange, player.enemyLayers);//rileva nemici nel raggio dell'attacco
 
         //danneggia i nemici
-        foreach (Collider2D enemy in hitEnemies) enemy.gameObject.GetComponent<Enemy>().TakeDamage(player.dannoAlNemico);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy.GetType() == typeof(BoxCollider2D)) enemy.gameObject.GetComponent<Enemy>().TakeDamage(player.dannoAlNemico);
+        }
+    }
+
+    public void DealVerticalDamage()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(player.verticalAttackPoint.position, player.verticalAttackRange, player.enemyLayers);//rileva nemici nel raggio dell'attacco
+
+        //danneggia i nemici
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy.GetType() == typeof(BoxCollider2D)) enemy.gameObject.GetComponent<Enemy>().TakeDamage(player.dannoAlNemico);
+        }
     }
 
     private void OnLanded(bool grounded)
@@ -144,8 +156,6 @@ public class ExtendedAnimator : MonoBehaviour
             landParticles.transform.localScale = Vector3.one * Mathf.InverseLerp(0, maxFallSpeedParticles, movement.y);
             SetColor(landParticles);
             landParticles.Play();
-
-            //animator.SetTrigger(Combo0Key);
         }
         else moveParticles.Stop();
     }
@@ -167,9 +177,6 @@ public class ExtendedAnimator : MonoBehaviour
         var inputPoint = Mathf.Abs(player.Input.X);
 
         if (player.Input.X != 0) transform.localScale = new Vector3(player.Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
-
-        var targetRotVector = new Vector3(0, 0, Mathf.Lerp(-maxTilt, maxTilt, Mathf.InverseLerp(-1, 1, player.Input.X)));//Fa pendere lo sprite leggermente mentre corre || TODO: Capire se è da tenere oppure no
-        animator.transform.rotation = Quaternion.RotateTowards(animator.transform.rotation, Quaternion.Euler(targetRotVector), tiltSpeed * Time.deltaTime);
 
         animator.SetFloat(IdleSpeedKey, Mathf.Lerp(1, maxIdleSpeed, inputPoint));//Fa aumentare la velocità dell'animazione quando corre
 

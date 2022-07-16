@@ -19,8 +19,8 @@ public class EnemyMelee : Enemy
         stanceMaggioreDanno = Random.Range(0, 2);
 
         var main = particleStance.main;
-        if (stanceMaggioreDanno == 0) main.startColor = Color.green;
-        else if (stanceMaggioreDanno == 1) main.startColor = Color.red;
+        if (stanceMaggioreDanno == 0) main.startColor = coloreStanceAgile;
+        else if (stanceMaggioreDanno == 1) main.startColor = coloreStanceBrutale;
     }
 
     private void Update()

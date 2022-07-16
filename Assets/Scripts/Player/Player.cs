@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+
+//TODO: Far sì che al cambio di stance cambi l'animator così fa le altre animazioni
 
 /*
      * STANCE AGILE:
@@ -64,9 +68,20 @@ public class Player : Character
 
     [Header("Attack System")]
     public Transform attackPoint;
+    public Transform verticalAttackPoint;
     public float attackRange = 0.5f;
+    public float verticalAttackRange = 0.5f;
     public LayerMask enemyLayers;
     public int dannoAlNemico = 2;
+    public float tempoAttacco = 0.75f;
+    [HideInInspector] public float tempoAttaccoAttuale;
+    [HideInInspector] public bool isAttackOver;
+
+    [Header("Stack System")]
+    public int stackDiSangue = 0;
+    public AnimatorController animatorAgile;
+    public AnimatorController animatorBrutale;
+
     #endregion
 
     #region Campi privati
@@ -86,6 +101,9 @@ public class Player : Character
     [HideInInspector] public bool CanDoubleJump => canUseDoubleJump && !canUseCoyote;
     [HideInInspector] public bool CanUseCoyote => canUseCoyote && !isGrounded && timeLeftGrounded + coyoteTimeLimit > fixedFrame;
     [HideInInspector] public bool HasBufferedJump => ((isGrounded && !didBufferedJump) || isStuckInCorner) && lastJumpPressed + jumpBuffer > fixedFrame;
+
+    [HideInInspector] public Animator anim;
+    //public ExtendedAnimator extAnim;
     #endregion
 
     #region Campi "pubblici"
@@ -128,18 +146,11 @@ public class Player : Character
     public BrutalAttackState3 brutalAttackState3;
     #endregion
 
-    public int stackDiSangue = 0;
-    public float tempoAttacco;
-    public float tempoAttaccoOriginale = 2;
-
-    public bool isAttackOver = false;
-
-    public Animator anim;
-
     void Awake()
     {
         coll = GetComponent<BoxCollider2D>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
+        //extAnim = GetComponent<ExtendedAnimator>();
         input = GetComponent<ExtendedInputActions>();
 
         defaultSizeCollider = coll.size;
@@ -216,6 +227,8 @@ public class Player : Character
     {
         if (stanceAttivata == Stance.Agile)
         {
+            anim.runtimeAnimatorController = animatorAgile;
+            //extAnim.animator.runtimeAnimatorController = animatorAgile;
             stance = Stance.Agile;
             doubleJumpAbility = true;
             moveClamp = 13;
@@ -225,6 +238,8 @@ public class Player : Character
 
         if (stanceAttivata == Stance.Brutale)
         {
+            anim.runtimeAnimatorController = animatorBrutale;
+            //extAnim.animator.runtimeAnimatorController = animatorBrutale;
             stance = Stance.Brutale;
             doubleJumpAbility = false;
             moveClamp = 5;
@@ -446,6 +461,7 @@ public class Player : Character
         if (attackPoint == null) return;
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(verticalAttackPoint.position, verticalAttackRange);
     }
     #endregion
 

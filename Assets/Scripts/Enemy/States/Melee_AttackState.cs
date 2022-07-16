@@ -12,6 +12,8 @@ public class Melee_AttackState : State
     {
         base.PhysicsUpdate();
 
+        enemy.anim.SetTrigger("VistoNemico");
+
         enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.target.transform.position, enemy.speedAttacco * Time.fixedDeltaTime);
     }
 }
