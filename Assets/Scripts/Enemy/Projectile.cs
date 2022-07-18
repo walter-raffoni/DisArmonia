@@ -5,8 +5,8 @@ public class Projectile : MonoBehaviour
     private Rigidbody2D rb;
     private EnemyRanged enemy;
 
-    public float destroyTime = 2;
-    public float velocitaProiettile = 5;
+    [SerializeField] float destroyTime = 2;
+    [SerializeField] float velocitaProiettile = 5;
 
     private void Awake()
     {

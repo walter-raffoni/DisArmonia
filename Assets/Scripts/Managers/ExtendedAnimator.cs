@@ -10,7 +10,6 @@ public class ExtendedAnimator : MonoBehaviour
 
     [Header("Miscellaneous Values")]
     [SerializeField, Range(0f, 3f)] float maxIdleSpeed = 2;
-    [SerializeField] Vector2 scaleModifierCrouch = new Vector2(1, 0.7f);
 
     [Header("Particle System")]
     [SerializeField] ParticleSystem moveParticles;
@@ -54,7 +53,6 @@ public class ExtendedAnimator : MonoBehaviour
         player.OnJumping += OnJumping;
         player.OnDoubleJumping += OnDoubleJumping;
         player.OnDashingChanged += OnDashing;
-        player.OnCrouchingChanged += OnCrouching;
     }
 
     void OnDestroy()
@@ -65,7 +63,6 @@ public class ExtendedAnimator : MonoBehaviour
         player.OnJumping -= OnJumping;
         player.OnDoubleJumping -= OnDoubleJumping;
         player.OnDashingChanged -= OnDashing;
-        player.OnCrouchingChanged -= OnCrouching;
     }
 
     private void OnDoubleJumping()
@@ -130,7 +127,8 @@ public class ExtendedAnimator : MonoBehaviour
         //danneggia i nemici
         foreach (Collider2D enemy in hitEnemies)
         {
-            if (enemy.GetType() == typeof(BoxCollider2D)) enemy.gameObject.GetComponent<Enemy>().TakeDamage(player.dannoAlNemico);
+            if (enemy.GetType() == typeof(BoxCollider2D)) enemy.gameObject.GetComponent<EnemyMelee>().TakeDamage(player.dannoAlNemico);
+            else if (enemy.GetType() == typeof(BoxCollider2D)) enemy.gameObject.GetComponent<EnemyRanged>().TakeDamage(player.dannoAlNemico);
         }
     }
 
@@ -141,7 +139,8 @@ public class ExtendedAnimator : MonoBehaviour
         //danneggia i nemici
         foreach (Collider2D enemy in hitEnemies)
         {
-            if (enemy.GetType() == typeof(BoxCollider2D)) enemy.gameObject.GetComponent<Enemy>().TakeDamage(player.dannoAlNemico);
+            if (enemy.GetType() == typeof(BoxCollider2D)) enemy.gameObject.GetComponent<EnemyMelee>().TakeDamage(player.dannoAlNemico);
+            else if (enemy.GetType() == typeof(BoxCollider2D)) enemy.gameObject.GetComponent<EnemyRanged>().TakeDamage(player.dannoAlNemico);
         }
     }
 
@@ -160,23 +159,16 @@ public class ExtendedAnimator : MonoBehaviour
         else moveParticles.Stop();
     }
 
-    private void OnCrouching(bool crouching)
-    {
-        if (crouching)
-        {
-            playerSprite.size = spriteSizeDefault * scaleModifierCrouch;
-            audioSource.PlayOneShot(slideClips[Random.Range(0, slideClips.Length)], Mathf.InverseLerp(0, 5, Mathf.Abs(movement.x)));
-        }
-        else playerSprite.size = spriteSizeDefault;
-    }
-
     void Update()
     {
         if (player == null) return;
 
         var inputPoint = Mathf.Abs(player.Input.X);
 
-        if (player.Input.X != 0) transform.localScale = new Vector3(player.Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
+        if (player.Input.X != 0 && 
+            (player.stateMachine.currentState == player.airborneState ||
+            player.stateMachine.currentState == player.dashingState ||
+            player.stateMachine.currentState == player.standingState)) transform.localScale = new Vector3(player.Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
 
         animator.SetFloat(IdleSpeedKey, Mathf.Lerp(1, maxIdleSpeed, inputPoint));//Fa aumentare la velocità dell'animazione quando corre
 

@@ -25,7 +25,8 @@ public class StandingState : State
         player.HandleInput();
 
         if (player.Input.AttackDown) stateMachine.ChangeState(player.horizontalAttackState);
-        if (player.Input.BrutalAttackDown)
+        
+        if(player.Input.BrutalAttackDown /*&& player.stance == Player.Stance.Brutale*/)
         {
             if (player.stackDiSangue == 0) return;
             else if (player.stackDiSangue == 1) stateMachine.ChangeState(player.brutalAttackState1);
@@ -42,7 +43,6 @@ public class StandingState : State
 
         player.CollisionsChecks();
 
-        CanCrouch();
         player.HorizontalMovement();
         TopPoint();
         player.Gravity();
@@ -68,14 +68,9 @@ public class StandingState : State
         else player.topPoint = 0;
     }
 
-    void CanCrouch()
-    {
-        if (player.isGrounded && player.Input.Y < 0 && !player.isCrouching) stateMachine.ChangeState(player.crouchingState);
-    }
-
     void CanJump()
     {
-        if (player.isCrouching && !player.CanStand) return;
+        if (!player.CanStand) return;
 
         //Controlla se: Ha premuto il tasto di salto o comunque nella soglia possibile per il salto "coyote" || Se c'è un buffer per il salto sufficiente || È a terra
         if ((player.jumpToConsume && player.CanUseCoyote) || player.HasBufferedJump || !player.isGrounded) stateMachine.ChangeState(player.airborneState);
@@ -83,6 +78,6 @@ public class StandingState : State
 
     void CanDash()
     {
-        if (player.dashToConsume && player.canDash && !player.isCrouching && player.Input.X != 0 && player.dashAbility) stateMachine.ChangeState(player.dashingState);
+        if (player.dashToConsume && player.canDash && player.Input.X != 0 && player.dashAbility) stateMachine.ChangeState(player.dashingState);
     }
 }

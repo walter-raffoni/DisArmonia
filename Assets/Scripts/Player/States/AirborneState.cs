@@ -30,7 +30,7 @@ public class AirborneState : State
 
         player.HandleInput();
 
-        if (player.dashToConsume && player.canDash && player.Input.X != 0) player.stateMachine.ChangeState(player.dashingState);
+        if (player.dashToConsume && player.canDash && player.Input.X != 0 && player.stance == Player.Stance.Agile) player.stateMachine.ChangeState(player.dashingState);
 
         if (player.Input.AttackDown) stateMachine.ChangeState(player.verticalAttackState);
     }

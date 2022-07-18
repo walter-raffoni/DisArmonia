@@ -4,21 +4,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-//TODO: Far sì che al cambio di stance cambi l'animator così fa le altre animazioni
-
-/*
-     * STANCE AGILE:
-     * - Non sarà possibile accumulare cariche di sangue
-     * - Movimento su asse X, velocità alta;
-     * - Doppio salto, altezza alta;
-     * - Attacco base, range alto, danno normale;
-     * - [Abilità attiva] Dash multi-direzionale, range alto, danno basso;
-     * - [Abilità passiva] Probabilità colpo critico normale;
-     * - Trasformarsi non resetta il cooldown delle abilità
-     */
-
-public class Player : Character
+public class Player : MonoBehaviour
 {
     #region Campi modificabili
     [Header("Abilities")]
@@ -26,14 +12,12 @@ public class Player : Character
     public bool doubleJumpAbility, dashAbility;
 
     [Header("Stance System")]
+    public float cooldownStance = 1;
+    [HideInInspector] public float cooldownStanceAttuale;
     public Stance stance;
     public enum Stance { Agile, Brutale }
-
-    [Header("Crouch System")]
-    public int crouchSlowdownFrames = 50;
-    public float sizeModifierCrouch = 0.5f;
-    public float speedModifierCrouch = 0.1f;
-    public float immediateSlowdownLimitCrouch = 0.1f;
+    public CapsuleCollider2D colliderAgile;
+    public CapsuleCollider2D colliderBrutale;
 
     [Header("Collision System")]
     public LayerMask groundLayer;
@@ -82,9 +66,12 @@ public class Player : Character
     public AnimatorController animatorAgile;
     public AnimatorController animatorBrutale;
 
+    [Header("Health System")]
+    [SerializeField] int maxHP = 10;
+    [HideInInspector] public int currentHP;
     #endregion
 
-    #region Campi privati
+    #region Campi misti
     private ExtendedInputActions input;
 
     private RaycastHit2D[] hitsUp = new RaycastHit2D[1];
@@ -103,23 +90,19 @@ public class Player : Character
     [HideInInspector] public bool HasBufferedJump => ((isGrounded && !didBufferedJump) || isStuckInCorner) && lastJumpPressed + jumpBuffer > fixedFrame;
 
     [HideInInspector] public Animator anim;
-    //public ExtendedAnimator extAnim;
-    #endregion
-
-    #region Campi "pubblici"
     public FrameInput Input { get; private set; }
     public Vector2 RawMovement { get; private set; }
     public event Action<bool> OnGroundedChanged;
     public event Action<bool> OnDashingChanged;
-    public event Action<bool> OnCrouchingChanged;
     public event Action OnStartAttackChanged, OnStartBrutalAttackChanged;
     public event Action OnJumping, OnDoubleJumping;
 
-    [HideInInspector] public BoxCollider2D coll;
-    [HideInInspector] public int frameStartedCrouching, fixedFrame;
-    [HideInInspector] public float crouchVelocity, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing;
+    private Rigidbody2D rb;
+    public CapsuleCollider2D coll;//per impostare quello predefinito e non avere errori quando si avvia il progetto
+    [HideInInspector] public int fixedFrame;
+    [HideInInspector] public float timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing;
     [HideInInspector] public Vector2 defaultSizeCollider, defaultOffsetCollider, dashVelocity, lastPos, forceBuildup, lastPosition, velocity, speed;
-    [HideInInspector] public bool isCrouching, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyote, canUseDoubleJump, canDash;
+    [HideInInspector] public bool isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyote, canUseDoubleJump, canDash;
 
     public enum PlayerForce { Burst, Decay } //Burst: Aggiunta direttamente alla velocità di movimento del pg, da controllare con la decelerazione standard | Decay: Forza additiva gestita dal sistema di decadimento
 
@@ -136,7 +119,6 @@ public class Player : Character
     #region FSM
     public StateMachine stateMachine;
     public StandingState standingState;
-    public CrouchingState crouchingState;
     public AirborneState airborneState;
     public DashingState dashingState;
     public HorizontalAttackState horizontalAttackState;
@@ -148,17 +130,17 @@ public class Player : Character
 
     void Awake()
     {
-        coll = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        //extAnim = GetComponent<ExtendedAnimator>();
         input = GetComponent<ExtendedInputActions>();
 
         defaultSizeCollider = coll.size;
         defaultOffsetCollider = coll.offset;
 
+        currentHP = maxHP;
+
         stateMachine = new StateMachine();
         standingState = new StandingState(this, stateMachine);
-        crouchingState = new CrouchingState(this, stateMachine);
         airborneState = new AirborneState(this, stateMachine);
         dashingState = new DashingState(this, stateMachine);
         horizontalAttackState = new HorizontalAttackState(this, stateMachine);
@@ -173,12 +155,14 @@ public class Player : Character
     private void Update()
     {
         stateMachine.currentState.HandleInput();
-        if (!GameManager.instance.IsPaused) stateMachine.currentState.LogicUpdate();
+        if (!GameManager.instance.isPaused) stateMachine.currentState.LogicUpdate();
 
         if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//DEBUG: X MORTE
 
         if (stackDiSangue < 0) stackDiSangue = 0;
         else if (stackDiSangue > 3) stackDiSangue = 3;
+
+        if (cooldownStanceAttuale > 0) cooldownStanceAttuale -= Time.deltaTime;
     }
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
@@ -203,7 +187,7 @@ public class Player : Character
 
         if (Input.ReloadGameDown) SceneManager.LoadScene(1, LoadSceneMode.Single);//TODO: Spostare nel game manager
 
-        if (!GameManager.instance.IsPaused)
+        if (!GameManager.instance.isPaused)
         {
             if (Input.DashDown && Input.X != 0) dashToConsume = true;
             if (Input.JumpDown)
@@ -213,7 +197,7 @@ public class Player : Character
             }
 
             //STANCE
-            if (Input.CambiaStanceDown)
+            if (Input.CambiaStanceDown && cooldownStanceAttuale <= 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState))
             {
                 if (stance == Stance.Agile) CambiaStance(Stance.Brutale);
                 else if (stance == Stance.Brutale) CambiaStance(Stance.Agile);
@@ -228,7 +212,10 @@ public class Player : Character
         if (stanceAttivata == Stance.Agile)
         {
             anim.runtimeAnimatorController = animatorAgile;
-            //extAnim.animator.runtimeAnimatorController = animatorAgile;
+            cooldownStanceAttuale = cooldownStance;
+            colliderAgile.gameObject.SetActive(true);
+            colliderBrutale.gameObject.SetActive(false);
+            coll = colliderAgile;
             stance = Stance.Agile;
             doubleJumpAbility = true;
             moveClamp = 13;
@@ -239,7 +226,10 @@ public class Player : Character
         if (stanceAttivata == Stance.Brutale)
         {
             anim.runtimeAnimatorController = animatorBrutale;
-            //extAnim.animator.runtimeAnimatorController = animatorBrutale;
+            cooldownStanceAttuale = cooldownStance;
+            colliderAgile.gameObject.SetActive(false);
+            colliderBrutale.gameObject.SetActive(true);
+            coll = colliderBrutale;
             stance = Stance.Brutale;
             doubleJumpAbility = false;
             moveClamp = 5;
@@ -352,11 +342,7 @@ public class Player : Character
             topPoint = Mathf.InverseLerp(jumpTopLimit, 0, Mathf.Abs(velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
             fallSpeed = Mathf.Lerp(minFallSpeed, maxFallSpeed, topPoint);
         }
-        else
-        {
-            //if (stateMachine.currentState != standingState && !crouching) stateMachine.ChangeState(standingState);//Senza questo controllo rimane sullo standing
-            topPoint = 0;
-        }
+        else topPoint = 0;
     }
     #endregion
 
@@ -444,11 +430,17 @@ public class Player : Character
     }
     #endregion
 
+    #region Vita
+    public void TakeDamage(int damageTaken)
+    {
+        if (currentHP <= 0) return;
+        else currentHP -= damageTaken;
+    }
+    #endregion
+
     #region Debug
     private void OnDrawGizmos()
     {
-        if (!coll) coll = GetComponent<BoxCollider2D>();
-
         Gizmos.color = Color.blue;
         var b = coll.bounds;
         b.Expand(rayLengthDetection);
@@ -470,7 +462,6 @@ public class Player : Character
     public void OnDoubleJumpingInvoke() => OnDoubleJumping?.Invoke();
     public void OnStartAttackChangedInvoke() => OnStartAttackChanged?.Invoke();
     public void OnStartBrutalAttackChangedInvoke() => OnStartBrutalAttackChanged?.Invoke();
-    public void OnCrouchingChangedInvoke(bool state) => OnCrouchingChanged?.Invoke(state);
     public void OnDashingChangedInvoke(bool state) => OnDashingChanged?.Invoke(state);
     #endregion
 }

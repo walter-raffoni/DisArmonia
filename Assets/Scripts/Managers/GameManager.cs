@@ -13,12 +13,9 @@ public class GameManager : MonoBehaviour
     [Header("Texts")]
     [SerializeField] TextMeshProUGUI stateText;
 
-    public int currentLevel = 0;
-
-    #region Campi "pubblici"
+    #region Campi vari
     public static GameManager instance;
-    private bool isPaused;
-    public bool IsPaused => isPaused;
+    [HideInInspector] public bool isPaused;
     #endregion
 
     private void Awake() => instance = this;
