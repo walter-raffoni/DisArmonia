@@ -22,6 +22,16 @@ public class AirborneState : State
             player.didBufferedJump = true;
             player.OnJumpingInvoke();
         }
+
+        if (player.isGrounded)//Fa riprodurre il particellare solo quando è a terra
+        {
+            player.SetColor(player.jumpParticles);
+            player.SetColor(player.launchParticles);
+            player.jumpParticles.Play();
+        }
+
+        if (player.stance == Player.Stance.Brutale) player.anim.Play("Jump");
+        else if (player.stance == Player.Stance.Agile) player.anim.Play("JumpAgile");
     }
 
     public override void HandleInput()
@@ -32,7 +42,7 @@ public class AirborneState : State
 
         if (player.dashToConsume && player.canDash && player.Input.X != 0 && player.stance == Player.Stance.Agile) player.stateMachine.ChangeState(player.dashingState);
 
-        if (player.Input.AttackDown) stateMachine.ChangeState(player.verticalAttackState);
+        if (player.Input.AttackDown && player.stance == Player.Stance.Brutale) stateMachine.ChangeState(player.verticalAttackState);
     }
 
     public override void PhysicsUpdate()

@@ -4,33 +4,35 @@ public class EnemyRanged : MonoBehaviour
 {
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
-    [HideInInspector] public int currentHP;
+    private int currentHP;
 
     [Header("Movement System")]
     public float speed;
     public Transform startPoint;
     public Transform endPoint;
     public LayerMask layerOstacoli;
-    public Vector3 offsetRilevazione;
-    [HideInInspector] public Rigidbody2D rb;
-    [HideInInspector] public bool facingRight = true;
+    private bool facingRight = true;
+    public bool FacingRight => facingRight;
 
     [Header("Attack System")]
     public GameObject target;
-    public float speedAttacco;
     public int puntiDanno = 2;
     public GameObject projectilePrefab;
     public GameObject firePoint;
-    public float distanzaRilevamentoGiocatore = 5;
+    public float distPgTroppoVicino = 1.5f;
+    public float distPgTroppoLontano = 5f;
+    public float distAttaccoPg = 3f;
 
     [Header("Stance System")]
-    public int stanceMaggioreDanno;
     public ParticleSystem particleStance;
     public Color coloreStanceAgile = Color.blue;
     public Color coloreStanceBrutale = Color.red;
+    private int stanceMaggioreDanno;
 
-    [Header("Animation System")]
-    public Animator anim;
+    #region Campi privati
+    private Animator anim;
+    public Animator Anim => anim;
+    #endregion
 
     #region FSM
     public StateMachine stateMachine;
@@ -40,7 +42,7 @@ public class EnemyRanged : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
         currentHP = maxHP;
 
@@ -57,31 +59,9 @@ public class EnemyRanged : MonoBehaviour
         else if (stanceMaggioreDanno == 1) main.startColor = coloreStanceBrutale;
     }
 
-    private void Update()
-    {
-        if (!GameManager.instance.isPaused) stateMachine.currentState.LogicUpdate();
-
-        if (currentHP <= 0) Destroy(gameObject);
-
-        if (Vector3.Distance(target.transform.position, transform.position) < distanzaRilevamentoGiocatore)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
-            if (target.transform.position.x > transform.position.x && !facingRight) Flip();
-            if (target.transform.position.x < transform.position.x && facingRight) Flip();
-        }
-    }
+    private void Update() => stateMachine.currentState.LogicUpdate();
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.TryGetComponent(out Player _)) stateMachine.ChangeState(attackState);
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.TryGetComponent(out Player _)) stateMachine.ChangeState(patrollingState);
-    }
 
     public void Flip()
     {
@@ -95,7 +75,7 @@ public class EnemyRanged : MonoBehaviour
 
     public void TakeDamage(int damageTaken)
     {
-        if (currentHP <= 0) return;
+        if (currentHP <= 0) Destroy(gameObject);
         else currentHP -= damageTaken;
     }
 }

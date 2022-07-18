@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -63,12 +62,24 @@ public class Player : MonoBehaviour
 
     [Header("Stack System")]
     public int stackDiSangue = 0;
-    public AnimatorController animatorAgile;
-    public AnimatorController animatorBrutale;
+    public RuntimeAnimatorController animatorAgile;
+    public RuntimeAnimatorController animatorBrutale;
 
     [Header("Health System")]
-    [SerializeField] int maxHP = 10;
-    [HideInInspector] public int currentHP;
+    public int maxHP = 10;
+    private int currentHP;
+    public int CurrentHP => currentHP;
+
+    [Header("Particle System")]
+    public ParticleSystem moveParticles;
+    public ParticleSystem dashParticles;
+    public ParticleSystem dashRingParticles;
+    public ParticleSystem launchParticles;
+    public ParticleSystem jumpParticles;
+    public ParticleSystem doubleJumpParticles;
+    public ParticleSystem landParticles;
+    public float maxFallSpeedParticles = -40;
+    private ParticleSystem.MinMaxGradient currentGradient;
     #endregion
 
     #region Campi misti
@@ -131,7 +142,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         input = GetComponent<ExtendedInputActions>();
 
         defaultSizeCollider = coll.size;
@@ -155,7 +166,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         stateMachine.currentState.HandleInput();
-        if (!GameManager.instance.isPaused) stateMachine.currentState.LogicUpdate();
+        if (!GameManager.instance.IsPaused) stateMachine.currentState.LogicUpdate();
 
         if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//DEBUG: X MORTE
 
@@ -187,7 +198,7 @@ public class Player : MonoBehaviour
 
         if (Input.ReloadGameDown) SceneManager.LoadScene(1, LoadSceneMode.Single);//TODO: Spostare nel game manager
 
-        if (!GameManager.instance.isPaused)
+        if (!GameManager.instance.IsPaused)
         {
             if (Input.DashDown && Input.X != 0) dashToConsume = true;
             if (Input.JumpDown)
@@ -463,5 +474,25 @@ public class Player : MonoBehaviour
     public void OnStartAttackChangedInvoke() => OnStartAttackChanged?.Invoke();
     public void OnStartBrutalAttackChangedInvoke() => OnStartBrutalAttackChanged?.Invoke();
     public void OnDashingChangedInvoke(bool state) => OnDashingChanged?.Invoke(state);
+    #endregion
+
+    #region Sistema particellare
+    public void SetColor(ParticleSystem ps)
+    {
+        var main = ps.main;
+        main.startColor = currentGradient;
+    }
+
+    public void DetectGroundColor()
+    {
+        var groundHits = Physics2D.RaycastAll(transform.position, Vector3.down, 2, groundLayer);//Rileva il colore del terreno per il particellare
+        foreach (var hit in groundHits)
+        {
+            if (!hit || hit.collider.isTrigger || !hit.transform.TryGetComponent(out SpriteRenderer r)) continue;
+            currentGradient = new ParticleSystem.MinMaxGradient(r.color * 0.9f, r.color * 1.2f);
+            SetColor(moveParticles);
+            return;
+        }
+    }
     #endregion
 }

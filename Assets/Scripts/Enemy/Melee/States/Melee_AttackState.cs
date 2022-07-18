@@ -8,12 +8,18 @@ public class Melee_AttackState : State
         stateMachine = _stateMachine;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        enemyMelee.Anim.Play("MeleeAttackAnimation");
+    }
+
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        enemyMelee.anim.SetTrigger("VistoNemico");
-
-        if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.target.transform.position) > 3f) stateMachine.ChangeState(enemyMelee.patrollingState);
+        if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.target.transform.position) > enemyMelee.distanzaAttaccoGiocatore) stateMachine.ChangeState(enemyMelee.followingState);
+        else if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.target.transform.position) > enemyMelee.distanzaRilevamentoGiocatore) stateMachine.ChangeState(enemyMelee.patrollingState);
     }
 }

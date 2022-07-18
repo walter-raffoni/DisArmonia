@@ -19,6 +19,10 @@ public class Ranged_AttackState : State
     {
         base.PhysicsUpdate();
 
-        enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.target.transform.position, enemyRanged.speedAttacco * Time.fixedDeltaTime);
+        if (enemyRanged.target.transform.position.x > enemyRanged.transform.position.x && !enemyRanged.FacingRight) enemyRanged.Flip();
+        if (enemyRanged.target.transform.position.x < enemyRanged.transform.position.x && enemyRanged.FacingRight) enemyRanged.Flip();
+
+        if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.target.transform.position) >= enemyRanged.distPgTroppoLontano) stateMachine.ChangeState(enemyRanged.patrollingState);
+        else if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.target.transform.position) <= enemyRanged.distPgTroppoVicino) enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.transform.position + Vector3.right, enemyRanged.speed * Time.fixedDeltaTime);
     }
 }

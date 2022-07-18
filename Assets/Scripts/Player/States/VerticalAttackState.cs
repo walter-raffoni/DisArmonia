@@ -10,7 +10,7 @@ public class VerticalAttackState : AirborneState
     {
         base.Enter();
 
-        player.anim.SetTrigger("StartedAirAttack");
+        player.anim.Play("AttaccoSalto");
     }
 
     public override void HandleInput() { } //DEVE RIMANERE VUOTO, COSì NON SI MUOVE DURANTE LA CADUTA

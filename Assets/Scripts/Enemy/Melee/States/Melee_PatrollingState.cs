@@ -12,24 +12,25 @@ public class Melee_PatrollingState : State
     {
         base.Enter();
 
-        enemyMelee.anim.ResetTrigger("VistoNemico");
+        enemyMelee.Anim.Play("MeleeIdleAnimation");
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        if (enemyMelee.facingRight)
+        if (enemyMelee.FacingRight)
         {
             enemyMelee.transform.position = Vector2.MoveTowards(enemyMelee.transform.position, enemyMelee.endPoint.transform.position, enemyMelee.speed * Time.fixedDeltaTime);
             if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.endPoint.position) < 0.5f) enemyMelee.Flip();
         }
-        else if (!enemyMelee.facingRight)
+        else if (!enemyMelee.FacingRight)
         {
             enemyMelee.transform.position = Vector2.MoveTowards(enemyMelee.transform.position, enemyMelee.startPoint.transform.position, enemyMelee.speed * Time.fixedDeltaTime);
             if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.startPoint.position) < 0.5f) enemyMelee.Flip();
         }
 
-        if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.target.transform.position) < 3f) stateMachine.ChangeState(enemyMelee.attackState);
+        if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.target.transform.position) <= enemyMelee.distanzaRilevamentoGiocatore) stateMachine.ChangeState(enemyMelee.followingState);
+        else if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.target.transform.position) <= enemyMelee.distanzaAttaccoGiocatore) stateMachine.ChangeState(enemyMelee.attackState);
     }
 }

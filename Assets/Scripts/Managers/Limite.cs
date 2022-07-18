@@ -4,6 +4,6 @@ public class Limite : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.GetComponent<Player>() != null) other.gameObject.GetComponent<Player>().currentHP = 0;
+        if (other.gameObject.TryGetComponent(out Player player)) player.TakeDamage(player.maxHP);
     }
 }

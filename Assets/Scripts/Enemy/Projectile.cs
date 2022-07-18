@@ -16,14 +16,14 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        if (enemy.facingRight) rb.AddForce(transform.right * velocitaProiettile, ForceMode2D.Impulse);
-        else if (!enemy.facingRight) rb.AddForce(-transform.right * velocitaProiettile, ForceMode2D.Impulse);
+        if (enemy.FacingRight) rb.AddForce(transform.right * velocitaProiettile, ForceMode2D.Impulse);
+        else if (!enemy.FacingRight) rb.AddForce(-transform.right * velocitaProiettile, ForceMode2D.Impulse);
 
         Destroy(gameObject, destroyTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent(out Player player)) player.TakeDamage(1);
+        if(other.gameObject.GetComponentInParent<Player>() != null) other.gameObject.GetComponentInParent<Player>().TakeDamage(1);
     }
 }

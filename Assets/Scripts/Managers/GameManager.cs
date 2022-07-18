@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
 
     #region Campi vari
     public static GameManager instance;
-    [HideInInspector] public bool isPaused;
+    private bool isPaused;
+    public bool IsPaused => isPaused;
     #endregion
 
     private void Awake() => instance = this;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     {
         if (stateText != null) stateText.text = player.stateMachine.currentState.ToString();
 
-        barraVita.value = player.currentHP;
+        barraVita.value = player.CurrentHP;
         stackDiSangue.value = player.stackDiSangue;
     }
 
