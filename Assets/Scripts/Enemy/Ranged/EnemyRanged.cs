@@ -13,6 +13,7 @@ public class EnemyRanged : MonoBehaviour
 
     [Header("Attack System")]
     [SerializeField] Transform target;
+    [SerializeField] int puntiDanno = 1;
     [SerializeField] Transform firePoint;
     [SerializeField] float distPgTroppoVicino = 3f;
     [SerializeField] float distPgTroppoLontano = 8f;
@@ -28,18 +29,17 @@ public class EnemyRanged : MonoBehaviour
     [SerializeField] Color coloreStanceAgile = Color.blue;
     [SerializeField] Color coloreStanceBrutale = Color.red;
 
-    #region Campi visibili ma non modificabili
+    #region Campi pubblici
     public float Speed => speed;
     public Animator Anim => anim;
     public Transform Target => target;
     public Transform EndPoint => endPoint;
     public bool FacingRight => facingRight;
+    public Transform FirePoint => firePoint;
     public Transform StartPoint => startPoint;
     public float DistAttaccoPg => distAttaccoPg;
-    public float VelocitaProiettile => velocitaProiettile;
     public float DistPgTroppoVicino => distPgTroppoVicino;
     public float DistPgTroppoLontano => distPgTroppoLontano;
-    public float DestroyTimeProiettile => destroyTimeProiettile;
     #endregion
 
     #region Campi privati
@@ -97,5 +97,16 @@ public class EnemyRanged : MonoBehaviour
         barraVita.gameObject.transform.localScale = new Vector3(barValue, 0.2f, 1);
     }
 
-    public void Spara() => Instantiate(projectilePrefab, firePoint.position, firePoint.rotation, firePoint);
+    public void Spara()
+    {
+        GameObject proiettileIstanziato = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+        if (proiettileIstanziato.TryGetComponent(out Projectile projectile))
+        {
+            projectile.VelocitaProiettile = velocitaProiettile;
+            projectile.PuntiDanno = puntiDanno;
+            projectile.DestroyTimeProiettile = destroyTimeProiettile;
+            projectile.Target = target;
+        }
+    }
 }

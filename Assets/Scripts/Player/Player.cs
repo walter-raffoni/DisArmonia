@@ -273,10 +273,14 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        stateMachine.currentState.HandleInput();
+        if (input.HandleInput().PauseDown) GameManager.instance.PauseGame();//TODO: Spostare nel game manager
 
-        if (!GameManager.instance.IsPaused) stateMachine.currentState.LogicUpdate();
-
+        if (!GameManager.instance.IsPaused)
+        {
+            stateMachine.currentState.HandleInput();
+            stateMachine.currentState.LogicUpdate();
+        }
+        
         if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//DEBUG: X MORTE
 
         if (stackDiSangue < 0) stackDiSangue = 0;
@@ -319,8 +323,6 @@ public class Player : MonoBehaviour
     public void HandleInput()
     {
         Input = input.HandleInput();
-
-        if (Input.PauseDown) GameManager.instance.PauseGame();//TODO: Spostare nel game manager
 
         if (Input.ReloadGameDown) SceneManager.LoadScene(1, LoadSceneMode.Single);//TODO: Spostare nel game manager
 
