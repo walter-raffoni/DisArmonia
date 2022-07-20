@@ -4,8 +4,8 @@ public class BackgroundParallax : MonoBehaviour
 {
     private Vector2 startPosition;
 
-    [Header("Camera")]
-    [SerializeField] Camera roomCamera;
+    [Header("View")]
+    [SerializeField] Player playerView;
 
     [Header("Multipliers")]
     [SerializeField] float parallaxMultiplierX;
@@ -15,7 +15,7 @@ public class BackgroundParallax : MonoBehaviour
 
     void Update()
     {
-        Vector2 distance = new Vector2(roomCamera.transform.position.x * parallaxMultiplierX, roomCamera.transform.position.y * parallaxMultiplierY);
+        Vector2 distance = new Vector2(playerView.transform.position.x * parallaxMultiplierX, playerView.transform.position.y * parallaxMultiplierY);
 
         transform.position = startPosition + distance;
     }

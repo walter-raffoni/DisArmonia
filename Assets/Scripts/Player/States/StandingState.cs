@@ -15,7 +15,8 @@ public class StandingState : State
         player.DashToConsume = false;
         player.ComboAttacco = 0;
 
-        player.Anim.Play("IdleAgile");
+        if (player.Stance == Player.TipoStance.Agile) player.Anim.Play("IdleAgile");
+        else if (player.Stance == Player.TipoStance.Brutale) player.Anim.Play("Idle");
     }
 
     public override void HandleInput()

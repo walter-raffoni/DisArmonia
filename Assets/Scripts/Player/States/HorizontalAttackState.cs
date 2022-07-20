@@ -14,15 +14,20 @@ public class HorizontalAttackState : State
 
         if (player.Stance == Player.TipoStance.Agile)
         {
-            player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile;
-            if (player.ComboAttacco == 0) player.Anim.Play("Attacco1Agile");
+            if (player.ComboAttacco == 0)
+            {
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile;
+                player.Anim.Play("Attacco1Agile");
+            }
             else if (player.ComboAttacco == 1)
             {
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile / 2;
                 player.Anim.Play("Attacco2Agile");
                 player.ComboAttacco = 0;
             }
             else if (player.ComboAttacco == 2)
             {
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile / 2;
                 player.Anim.Play("Attacco3Agile");
                 player.ComboAttacco = 0;
             }

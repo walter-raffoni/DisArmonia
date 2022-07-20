@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
     public float TempoAttaccoBrutale => tempoAttaccoBrutale;
     public float TempoAttaccoOrizAgile => tempoAttaccoOrizAgile;
     public float MaxFallSpeedParticles => maxFallSpeedParticles;
-    public float TempoAttaccoOrizBrutale => TempoAttaccoOrizBrutale;
+    public float TempoAttaccoOrizBrutale => tempoAttaccoOrizBrutale;
     public float HorizontalMultiplierDashEnd => horizontalMultiplierDashEnd;
     public float TimeLeftGrounded
     {
@@ -247,13 +247,13 @@ public class Player : MonoBehaviour
     public DashingState dashingState;
     public BrutalAttackState brutalAttackState;
     public VerticalAttackState verticalAttackState;
-    public HorizontalAttackState horizontalAttackState;    
+    public HorizontalAttackState horizontalAttackState;
     #endregion
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
         input = GetComponent<ExtendedInputActions>();
 
         currentHP = maxHP;
@@ -274,6 +274,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         stateMachine.currentState.HandleInput();
+
         if (!GameManager.instance.IsPaused) stateMachine.currentState.LogicUpdate();
 
         if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//DEBUG: X MORTE
@@ -289,14 +290,16 @@ public class Player : MonoBehaviour
         //Extended animator
         var inputPoint = Mathf.Abs(Input.X);
 
-        if (Input.X != 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState)) transform.localScale = new Vector3(Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
+        if (!GameManager.instance.IsPaused)//Per non fargli ribaltare lo sprite in pausa
+        {
+            if (Input.X != 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState)) transform.localScale = new Vector3(Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
+        }
 
         anim.SetFloat("IdleSpeed", Mathf.Lerp(1, maxIdleSpeed, inputPoint));//Fa aumentare la velocità dell'animazione quando corre
 
         DetectGroundColor();
 
         moveParticles.transform.localScale = Vector3.MoveTowards(moveParticles.transform.localScale, Vector3.one * inputPoint, 2 * Time.deltaTime);
-
     }
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
@@ -482,6 +485,7 @@ public class Player : MonoBehaviour
     #region Movimento avanzato
     public void Move()//Viene fatto un cast dei limiti prima di muoversi in modo da evitare collisioni future
     {
+
         RawMovement = Speed;//Per usare la velocità esternamente
         var move = RawMovement * Time.fixedDeltaTime;
 
@@ -492,6 +496,8 @@ public class Player : MonoBehaviour
         rb.MovePosition(rb.position + move);
 
         RunCornerPrevention();
+
+
     }
     #endregion
 

@@ -300,6 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 88803293}
   - component: {fileID: 88803292}
+  - component: {fileID: 88803294}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -336,6 +337,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &88803294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88803291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de059b5d0632cab4b9821c96eb9735a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &110142917
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +372,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110142917}
-  m_LocalRotation: {x: -0.14521313, y: 0.000000019443762, z: 0.000000002853738, w: 0.98940045}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -805,7 +818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08728acc8e7232945b651ba4d338530b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomCamera: {fileID: 519420031}
+  playerView: {fileID: 1852010289007548564}
   parallaxMultiplierX: 0.9
   parallaxMultiplierY: 0.7
 --- !u!1 &323433873
@@ -6358,7 +6371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08728acc8e7232945b651ba4d338530b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomCamera: {fileID: 519420031}
+  playerView: {fileID: 1852010289007548564}
   parallaxMultiplierX: 0.7
   parallaxMultiplierY: 0.5
 --- !u!1 &539600582
@@ -6559,7 +6572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08728acc8e7232945b651ba4d338530b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomCamera: {fileID: 519420031}
+  playerView: {fileID: 1852010289007548564}
   parallaxMultiplierX: 0.8
   parallaxMultiplierY: 0.7
 --- !u!1 &594954261
@@ -7538,7 +7551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1232961886
 Transform:
   m_ObjectHideFlags: 0
@@ -7652,7 +7665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08728acc8e7232945b651ba4d338530b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomCamera: {fileID: 519420031}
+  playerView: {fileID: 1852010289007548564}
   parallaxMultiplierX: 0.7
   parallaxMultiplierY: 0.7
 --- !u!1 &1341764682
@@ -17694,7 +17707,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Origin: {x: -47, y: -13, z: 0}
   m_Size: {x: 184, y: 13, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}

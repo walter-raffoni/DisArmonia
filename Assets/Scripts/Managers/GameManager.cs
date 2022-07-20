@@ -1,18 +1,17 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Player")]
+    [Header("Player System")]
     public Player player;
     [SerializeField] TextMeshProUGUI stateText;
 
+    [Header("Pause System")]
     [SerializeField] GameObject pauseObject;
 
+    #region Campi pubblici
     public static GameManager instance;
-
-    #region Campi visibili ma non modificabili
     public bool IsPaused => isPaused;
     #endregion
 
@@ -24,10 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Start() => Time.timeScale = 1;
 
-    private void Update()
-    {
-        if (stateText != null) stateText.text = player.stateMachine.currentState.ToString();
-    }
+    private void Update() => stateText.text = player.stateMachine.currentState.ToString();
 
     public void PauseGame()
     {
@@ -35,8 +31,8 @@ public class GameManager : MonoBehaviour
         {
             isPaused = true;
             pauseObject.SetActive(true);
-            player.BarraVita.gameObject.SetActive(true);
-            player.BarraStackDiSangue.gameObject.SetActive(true);
+            player.BarraVita.gameObject.SetActive(false);
+            player.BarraStackDiSangue.gameObject.SetActive(false);
             stateText.gameObject.SetActive(false);
             Time.timeScale = 0;
         }
@@ -44,8 +40,8 @@ public class GameManager : MonoBehaviour
         {
             isPaused = false;
             pauseObject.SetActive(false);
-            player.BarraVita.gameObject.SetActive(false);
-            player.BarraStackDiSangue.gameObject.SetActive(false);
+            player.BarraVita.gameObject.SetActive(true);
+            player.BarraStackDiSangue.gameObject.SetActive(true);
             stateText.gameObject.SetActive(true);
             Time.timeScale = 1;
         }
