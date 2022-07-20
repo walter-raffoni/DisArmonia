@@ -19,13 +19,13 @@ public class Melee_FollowingState : State
     {
         base.PhysicsUpdate();
 
-        if (enemyMelee.target.transform.position.x > enemyMelee.transform.position.x && !enemyMelee.FacingRight) enemyMelee.Flip();
-        if (enemyMelee.target.transform.position.x < enemyMelee.transform.position.x && enemyMelee.FacingRight) enemyMelee.Flip();
+        if (enemyMelee.Target.position.x > enemyMelee.transform.position.x && !enemyMelee.FacingRight) enemyMelee.Flip();
+        if (enemyMelee.Target.position.x < enemyMelee.transform.position.x && enemyMelee.FacingRight) enemyMelee.Flip();
 
-        enemyMelee.transform.position = Vector2.MoveTowards(enemyMelee.transform.position, enemyMelee.target.transform.position, enemyMelee.speed * Time.fixedDeltaTime);
+        enemyMelee.transform.position = Vector2.MoveTowards(enemyMelee.transform.position, enemyMelee.Target.position, enemyMelee.Speed * Time.fixedDeltaTime);
 
-        if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.target.transform.position) <= enemyMelee.distanzaAttaccoGiocatore) stateMachine.ChangeState(enemyMelee.attackState);
+        if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.Target.position) <= enemyMelee.AttaccoGiocatoreDist) stateMachine.ChangeState(enemyMelee.attackState);
 
-        else if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.target.transform.position) > enemyMelee.distanzaRilevamentoGiocatore) stateMachine.ChangeState(enemyMelee.patrollingState);
+        else if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.Target.position) > enemyMelee.GiocatoreRilevatoDist) stateMachine.ChangeState(enemyMelee.patrollingState);
     }
 }

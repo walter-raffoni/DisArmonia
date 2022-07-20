@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 8620bcf7fa769e94fa548c2fc0325ef4, type: 3}
   m_Color: {r: 0.9150943, g: 0.25467247, b: 0.91362524, a: 1}
   m_FlipX: 0
@@ -95,7 +95,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -113,8 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644fd0a6ee3db2b43a1c2d150a6bc592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTime: 0.25
-  velocitaProiettile: 1
 --- !u!50 &282960703614601256
 Rigidbody2D:
   serializedVersion: 4
@@ -127,7 +125,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -135,4 +133,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

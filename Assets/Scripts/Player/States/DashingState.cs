@@ -31,30 +31,30 @@ public class DashingState : State
 
     void Dash()
     {
-        if (player.dashToConsume && player.canDash)
+        if (player.DashToConsume && player.CanDash)
         {
-            var vel = new Vector2(player.Input.X, player.isGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
-            if (vel == Vector2.zero) { player.dashToConsume = false; return; }
-            player.dashVelocity = vel * player.dashPower;
-            player.OnDashingChangedInvoke(true);
-            player.canDash = false;
-            player.hasStartedDashing = player.fixedFrame;
+            var vel = new Vector2(player.Input.X, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
+            if (vel == Vector2.zero) { player.DashToConsume = false; return; }
+            player.DashVelocity = vel * player.DashPower;
+            player.OnDashingChanged(true);
+            player.CanDash = false;
+            player.HasStartedDashing = player.FixedFrame;
 
-            player.forceBuildup = Vector2.zero;//Toglie ogni forza aggiunta dall'esterno
+            player.ForceBuildup = Vector2.zero;//Toglie ogni forza aggiunta dall'esterno
         }
 
-        player.speed.x = player.dashVelocity.x;
-        player.speed.y = player.dashVelocity.y;
+        player.Speed.x = player.DashVelocity.x;
+        player.Speed.y = player.DashVelocity.y;
 
         //Annulla la corsa quando il tempo è finita o è stata raggiunta la distanza di sicurezza mssima
-        if (player.hasStartedDashing + player.dashLength < player.fixedFrame)
+        if (player.HasStartedDashing + player.DashLength < player.FixedFrame)
         {
-            player.OnDashingChangedInvoke(false);
-            if (player.speed.y > 0) player.speed.y = 0;
-            player.speed.x *= player.horizontalMultiplierDashEnd;
-            if (player.isGrounded) player.canDash = true;
+            player.OnDashingChanged(false);
+            if (player.Speed.y > 0) player.Speed.y = 0;
+            player.Speed.x *= player.HorizontalMultiplierDashEnd;
+            if (player.IsGrounded) player.CanDash = true;
             stateMachine.ChangeState(player.standingState);
         }
-        player.dashToConsume = false;
+        player.DashToConsume = false;
     }
 }

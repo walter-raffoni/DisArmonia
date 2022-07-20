@@ -4,34 +4,48 @@ public class EnemyRanged : MonoBehaviour
 {
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
-    private int currentHP;
+    [SerializeField] GameObject barraVita;
 
     [Header("Movement System")]
-    public float speed;
-    public Transform startPoint;
-    public Transform endPoint;
-    public LayerMask layerOstacoli;
-    private bool facingRight = true;
-    public bool FacingRight => facingRight;
+    [SerializeField] float speed;
+    [SerializeField] Transform startPoint;
+    [SerializeField] Transform endPoint;
 
     [Header("Attack System")]
-    public GameObject target;
-    public int puntiDanno = 2;
-    public GameObject projectilePrefab;
-    public GameObject firePoint;
-    public float distPgTroppoVicino = 1.5f;
-    public float distPgTroppoLontano = 5f;
-    public float distAttaccoPg = 3f;
+    [SerializeField] Transform target;
+    [SerializeField] Transform firePoint;
+    [SerializeField] float distPgTroppoVicino = 3f;
+    [SerializeField] float distPgTroppoLontano = 8f;
+    [SerializeField] float distAttaccoPg = 5f;
+
+    [Header("Projectile System")]
+    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] float destroyTimeProiettile = 2;
+    [SerializeField] float velocitaProiettile = 1;
 
     [Header("Stance System")]
-    public ParticleSystem particleStance;
-    public Color coloreStanceAgile = Color.blue;
-    public Color coloreStanceBrutale = Color.red;
-    private int stanceMaggioreDanno;
+    [SerializeField] ParticleSystem particleStance;
+    [SerializeField] Color coloreStanceAgile = Color.blue;
+    [SerializeField] Color coloreStanceBrutale = Color.red;
+
+    #region Campi visibili ma non modificabili
+    public float Speed => speed;
+    public Animator Anim => anim;
+    public Transform Target => target;
+    public Transform EndPoint => endPoint;
+    public bool FacingRight => facingRight;
+    public Transform StartPoint => startPoint;
+    public float DistAttaccoPg => distAttaccoPg;
+    public float VelocitaProiettile => velocitaProiettile;
+    public float DistPgTroppoVicino => distPgTroppoVicino;
+    public float DistPgTroppoLontano => distPgTroppoLontano;
+    public float DestroyTimeProiettile => destroyTimeProiettile;
+    #endregion
 
     #region Campi privati
     private Animator anim;
-    public Animator Anim => anim;
+    private bool facingRight = true;
+    private int currentHP, stanceMaggioreDanno;
     #endregion
 
     #region FSM
@@ -44,13 +58,13 @@ public class EnemyRanged : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
-        currentHP = maxHP;
-
         stateMachine = new StateMachine();
         patrollingState = new Ranged_PatrollingState(this, stateMachine);
         attackState = new Ranged_AttackState(this, stateMachine);
 
         stateMachine.Initialize(patrollingState);
+
+        currentHP = maxHP;
 
         stanceMaggioreDanno = Random.Range(0, 2);
 
@@ -59,7 +73,12 @@ public class EnemyRanged : MonoBehaviour
         else if (stanceMaggioreDanno == 1) main.startColor = coloreStanceBrutale;
     }
 
-    private void Update() => stateMachine.currentState.LogicUpdate();
+    private void Update()
+    {
+        stateMachine.currentState.LogicUpdate();
+
+        if (currentHP <= 0) Destroy(gameObject);
+    }
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
 
@@ -71,11 +90,12 @@ public class EnemyRanged : MonoBehaviour
         facingRight = !facingRight;
     }
 
-    public void Spara() => Instantiate(projectilePrefab, firePoint.transform.position, firePoint.transform.rotation, transform);
-
     public void TakeDamage(int damageTaken)
     {
-        if (currentHP <= 0) Destroy(gameObject);
-        else currentHP -= damageTaken;
+        currentHP -= damageTaken;
+        float barValue = (float)currentHP / maxHP;
+        barraVita.gameObject.transform.localScale = new Vector3(barValue, 0.2f, 1);
     }
+
+    public void Spara() => Instantiate(projectilePrefab, firePoint.position, firePoint.rotation, firePoint);
 }

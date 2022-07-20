@@ -2,88 +2,229 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
-    #region Campi modificabili
-    [Header("Abilities")]
-    public bool creepingAbility;//Walking
-    public bool doubleJumpAbility, dashAbility;
+    [Header("Health System")]
+    [SerializeField] int maxHP = 10;
+    [SerializeField] Slider barraVita;
 
-    [Header("Stance System")]
-    public float cooldownStance = 1;
-    [HideInInspector] public float cooldownStanceAttuale;
-    public Stance stance;
-    public enum Stance { Agile, Brutale }
-    public CapsuleCollider2D colliderAgile;
-    public CapsuleCollider2D colliderBrutale;
-
-    [Header("Collision System")]
-    public LayerMask groundLayer;
-    public float rayLengthDetection = 0.1f;
-
-    [Header("Effectors System")]
-    public float forceDecay = 1;
-
-    [Header("Walk System")]
-    public float slowingValue = 60;
-    public float moveClamp = 13;
-    public float speedingValue = 120;
-    public float jumpTopBonus = 100;
+    [Header("Movement System")]
+    [SerializeField] float slowingValue = 60;
+    [SerializeField] float moveClamp = 13;
+    [SerializeField] float speedingValue = 120;
+    [SerializeField] float forceDecay = 1;//Effectors
+    [SerializeField, Range(0f, 3f)] float maxIdleSpeed = 2;
 
     [Header("Gravity System")]
-    public float fallClamp = -60;
-    public float minFallSpeed = 80;
-    public float maxFallSpeed = 160;
-    [Range(0, -10)] public float gravityPower = -1.5f;
+    [SerializeField] float fallClamp = -60;
+    [SerializeField] float minFallSpeed = 80;
+    [SerializeField] float maxFallSpeed = 160;
+    [SerializeField, Range(0, -10)] float gravityPower = -1.5f;
 
     [Header("Jump System")]
-    public int jumpBuffer = 7;
-    public float jumpHeight = 35;
-    public float jumpTopLimit = 40;
-    public int coyoteTimeLimit = 7;
-    public float gravityModifierJumpEndedEarly = 3;
+    [SerializeField] float jumpTopBonus = 100;
+    [SerializeField] int jumpBuffer = 7;
+    [SerializeField] float jumpHeight = 35;
+    [SerializeField] float jumpTopLimit = 40;
+    [SerializeField] int coyoteTimeLimit = 7;
+    [SerializeField] float gravityModifierJumpEndedEarly = 3;
+
+    [Header("Collision System")]
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float rayLengthDetection = 0.1f;
 
     [Header("Dash System")]
-    public int dashLength = 6;
-    public float dashPower = 30;
-    public float horizontalMultiplierDashEnd = 0.25f;
+    [SerializeField] int dashLength = 6;
+    [SerializeField] float dashPower = 30;
+    [SerializeField] float horizontalMultiplierDashEnd = 0.25f;
 
     [Header("Attack System")]
-    public Transform attackPoint;
-    public Transform verticalAttackPoint;
-    public float attackRange = 0.5f;
-    public float verticalAttackRange = 0.5f;
-    public LayerMask enemyLayers;
-    public int dannoAlNemico = 2;
-    public float tempoAttacco = 0.75f;
-    [HideInInspector] public float tempoAttaccoAttuale;
-    [HideInInspector] public bool isAttackOver;
+    [SerializeField] Transform attackPoint;
+    [SerializeField] Transform verticalAttackPoint;
+    [SerializeField] float attackRange = 0.5f;
+    [SerializeField] float verticalAttackRange = 0.5f;
+    [SerializeField] LayerMask enemyLayers;
+    [SerializeField] int dannoAlNemico = 2;
+    [SerializeField] float tempoAttaccoOrizAgile = 0.75f;
+    [SerializeField] float tempoAttaccoOrizBrutale = 0.75f;
+    [SerializeField] float tempoAttaccoBrutale = 0.75f;
 
     [Header("Stack System")]
-    public int stackDiSangue = 0;
-    public RuntimeAnimatorController animatorAgile;
-    public RuntimeAnimatorController animatorBrutale;
+    [SerializeField] Slider barraStackDiSangue;
+    [SerializeField] RuntimeAnimatorController animatorAgile;
+    [SerializeField] RuntimeAnimatorController animatorBrutale;
 
-    [Header("Health System")]
-    public int maxHP = 10;
-    private int currentHP;
-    public int CurrentHP => currentHP;
+    [Header("Stance System")]
+    [SerializeField] float cooldownStance = 1;
+    [SerializeField] CapsuleCollider2D colliderAgile;
+    [SerializeField] CapsuleCollider2D colliderBrutale;
 
     [Header("Particle System")]
-    public ParticleSystem moveParticles;
-    public ParticleSystem dashParticles;
-    public ParticleSystem dashRingParticles;
-    public ParticleSystem launchParticles;
-    public ParticleSystem jumpParticles;
-    public ParticleSystem doubleJumpParticles;
-    public ParticleSystem landParticles;
-    public float maxFallSpeedParticles = -40;
-    private ParticleSystem.MinMaxGradient currentGradient;
-    #endregion
+    [SerializeField] ParticleSystem moveParticles;
+    [SerializeField] ParticleSystem dashParticles;
+    [SerializeField] ParticleSystem dashRingParticles;
+    [SerializeField] ParticleSystem launchParticles;
+    [SerializeField] ParticleSystem jumpParticles;
+    [SerializeField] ParticleSystem doubleJumpParticles;
+    [SerializeField] ParticleSystem landParticles;
+    [SerializeField] float maxFallSpeedParticles = -40;
+    [SerializeField] Transform dashRingTransform;
+
+    [Header("Audio System")]
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip[] footsteps;
+    [SerializeField] AudioClip dashClip;
+    [SerializeField] AudioClip[] slideClips;
+    [SerializeField] AudioClip doubleJumpClip;
 
     #region Campi misti
+    [HideInInspector] internal Vector2 DashVelocity, LastPos, ForceBuildup, LastPosition, Velocity, Speed;
+
+    public FrameInput Input { get; private set; }
+    public Vector2 RawMovement { get; private set; }
+    #endregion  
+
+    #region Campi pubblici
+    public int MaxHP => maxHP;
+    public int CurrentHP => currentHP;
+    public int FixedFrame => fixedFrame;
+    public int DashLength => dashLength;
+    public int ComboAttacco
+    {
+        get { return comboAttacco; }
+        set { comboAttacco = value; }
+    }
+    public int StackDiSangue
+    {
+        get { return stackDiSangue; }
+        set { stackDiSangue = value; }
+    }
+
+    public Animator Anim => anim;
+
+    public Slider BarraVita => barraVita;
+    public Slider BarraStackDiSangue => barraStackDiSangue;
+
+    public bool IsGrounded => isGrounded;
+    public bool DashAbility => dashAbility;
+    public bool HasHitUp => hasHitUp;
+    public bool DoubleJumpAbility => doubleJumpAbility;
+    public bool CanDoubleJump => canUseDoubleJump && !canUseCoyotePriv;
+    public bool CanUseCoyote => canUseCoyotePriv && !isGrounded && timeLeftGrounded + coyoteTimeLimit > fixedFrame;
+    public bool HasBufferedJump => ((isGrounded && !didBufferedJump) || isStuckInCorner) && lastJumpPressed + jumpBuffer > fixedFrame;
+    public bool DidBufferedJump
+    {
+        get { return didBufferedJump; }
+        set { didBufferedJump = value; }
+    }
+    public bool CanDash
+    {
+        get { return canDash; }
+        set { canDash = value; }
+    }
+    public bool CanUseCoyotePriv
+    {
+        get { return canUseCoyotePriv; }
+        set { canUseCoyotePriv = value; }
+    }
+    public bool CanUseDoubleJump
+    {
+        get { return canUseDoubleJump; }
+        set { canUseDoubleJump = value; }
+    }
+    public bool JumpToConsume
+    {
+        get { return jumpToConsume; }
+        set { jumpToConsume = value; }
+    }
+    public bool DashToConsume
+    {
+        get { return dashToConsume; }
+        set { dashToConsume = value; }
+    }
+    public bool EndedJumpEarly
+    {
+        get { return endedJumpEarly; }
+        set { endedJumpEarly = value; }
+    }
+
+    public float DashPower => dashPower;
+    public float JumpHeight => jumpHeight;
+    public float JumpTopLimit => jumpTopLimit;
+    public float MinFallSpeed => minFallSpeed;
+    public float MaxFallSpeed => maxFallSpeed;
+    public float TempoAttaccoBrutale => tempoAttaccoBrutale;
+    public float TempoAttaccoOrizAgile => tempoAttaccoOrizAgile;
+    public float MaxFallSpeedParticles => maxFallSpeedParticles;
+    public float TempoAttaccoOrizBrutale => TempoAttaccoOrizBrutale;
+    public float HorizontalMultiplierDashEnd => horizontalMultiplierDashEnd;
+    public float TimeLeftGrounded
+    {
+        get { return timeLeftGrounded; }
+        set { timeLeftGrounded = value; }
+    }
+    public float FallSpeed
+    {
+        get { return fallSpeed; }
+        set { fallSpeed = value; }
+    }
+    public float HasStartedDashing
+    {
+        get { return hasStartedDashing; }
+        set { hasStartedDashing = value; }
+    }
+    public float TopPoint
+    {
+        get { return topPoint; }
+        set { topPoint = value; }
+    }
+    public float TempoAttaccoAttuale
+    {
+        get { return tempoAttaccoAttuale; }
+        set { tempoAttaccoAttuale = value; }
+    }
+
+    public TipoStance Stance => stance;
+    public enum TipoStance { Agile, Brutale }
+    public enum PlayerForce { Burst, Decay } //Burst: Aggiunta direttamente alla velocità di movimento del pg, da controllare con la decelerazione standard | Decay: Forza additiva gestita dal sistema di decadimento
+
+    public ParticleSystem MoveParticles => moveParticles;
+    public ParticleSystem DashParticles => dashParticles;
+    public ParticleSystem DashRingParticles => dashRingParticles;
+    public ParticleSystem LaunchParticles => launchParticles;
+    public ParticleSystem JumpParticles => jumpParticles;
+    public ParticleSystem DoubleJumpParticles => doubleJumpParticles;
+    public ParticleSystem LandParticles => landParticles;
+
+    public AudioSource AudioSource => audioSource;
+
+    public AudioClip DashClip => dashClip;
+    public AudioClip DoubleJumpClip => doubleJumpClip;
+    public AudioClip[] Footsteps => footsteps;
+
+    public Transform DashRingTransform => dashRingTransform;
+
+    public CapsuleCollider2D Coll => coll;
+    #endregion
+
+    #region Campi privati
+    private Animator anim;
+
+    private Rigidbody2D rb;
+
+    private TipoStance stance;
+
+    private CapsuleCollider2D coll;
+
     private ExtendedInputActions input;
+
+    private int currentHP, comboAttacco, stackDiSangue, fixedFrame;
+
+    private bool doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyotePriv, canUseDoubleJump, canDash;
+    private bool endedJumpEarly = true;
 
     private RaycastHit2D[] hitsUp = new RaycastHit2D[1];
     private RaycastHit2D[] hitsDown = new RaycastHit2D[3];
@@ -92,39 +233,11 @@ public class Player : MonoBehaviour
 
     private readonly List<IPlayerEffector> usedEffectors = new List<IPlayerEffector>();
 
-    [HideInInspector] public bool endedJumpEarly = true;
+    private float tempoAttaccoAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing;
     private float lastJumpPressed = float.MinValue;
+    private float topPoint;//Diventa 1 in cima al salto
 
-    [HideInInspector] public float topPoint;//Diventa 1 in cima al salto
-    [HideInInspector] public bool CanDoubleJump => canUseDoubleJump && !canUseCoyote;
-    [HideInInspector] public bool CanUseCoyote => canUseCoyote && !isGrounded && timeLeftGrounded + coyoteTimeLimit > fixedFrame;
-    [HideInInspector] public bool HasBufferedJump => ((isGrounded && !didBufferedJump) || isStuckInCorner) && lastJumpPressed + jumpBuffer > fixedFrame;
-
-    [HideInInspector] public Animator anim;
-    public FrameInput Input { get; private set; }
-    public Vector2 RawMovement { get; private set; }
-    public event Action<bool> OnGroundedChanged;
-    public event Action<bool> OnDashingChanged;
-    public event Action OnStartAttackChanged, OnStartBrutalAttackChanged;
-    public event Action OnJumping, OnDoubleJumping;
-
-    private Rigidbody2D rb;
-    public CapsuleCollider2D coll;//per impostare quello predefinito e non avere errori quando si avvia il progetto
-    [HideInInspector] public int fixedFrame;
-    [HideInInspector] public float timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing;
-    [HideInInspector] public Vector2 defaultSizeCollider, defaultOffsetCollider, dashVelocity, lastPos, forceBuildup, lastPosition, velocity, speed;
-    [HideInInspector] public bool isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyote, canUseDoubleJump, canDash;
-
-    public enum PlayerForce { Burst, Decay } //Burst: Aggiunta direttamente alla velocità di movimento del pg, da controllare con la decelerazione standard | Decay: Forza additiva gestita dal sistema di decadimento
-
-    public bool CanStand
-    {
-        get
-        {
-            var col = Physics2D.OverlapBox((Vector2)transform.position + defaultOffsetCollider, defaultSizeCollider * (0.95f * transform.localScale.y), 0, groundLayer);
-            return (col == null || col.isTrigger);
-        }
-    }
+    private ParticleSystem.MinMaxGradient currentGradient;
     #endregion
 
     #region FSM
@@ -132,11 +245,9 @@ public class Player : MonoBehaviour
     public StandingState standingState;
     public AirborneState airborneState;
     public DashingState dashingState;
-    public HorizontalAttackState horizontalAttackState;
+    public BrutalAttackState brutalAttackState;
     public VerticalAttackState verticalAttackState;
-    public BrutalAttackState1 brutalAttackState1;
-    public BrutalAttackState2 brutalAttackState2;
-    public BrutalAttackState3 brutalAttackState3;
+    public HorizontalAttackState horizontalAttackState;    
     #endregion
 
     void Awake()
@@ -144,9 +255,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         input = GetComponent<ExtendedInputActions>();
-
-        defaultSizeCollider = coll.size;
-        defaultOffsetCollider = coll.offset;
 
         currentHP = maxHP;
 
@@ -156,12 +264,12 @@ public class Player : MonoBehaviour
         dashingState = new DashingState(this, stateMachine);
         horizontalAttackState = new HorizontalAttackState(this, stateMachine);
         verticalAttackState = new VerticalAttackState(this, stateMachine);
-        brutalAttackState1 = new BrutalAttackState1(this, stateMachine);
-        brutalAttackState2 = new BrutalAttackState2(this, stateMachine);
-        brutalAttackState3 = new BrutalAttackState3(this, stateMachine);
+        brutalAttackState = new BrutalAttackState(this, stateMachine);
 
         stateMachine.Initialize(standingState);
     }
+
+    private void Start() => CambiaStance(TipoStance.Agile);
 
     private void Update()
     {
@@ -174,6 +282,21 @@ public class Player : MonoBehaviour
         else if (stackDiSangue > 3) stackDiSangue = 3;
 
         if (cooldownStanceAttuale > 0) cooldownStanceAttuale -= Time.deltaTime;
+
+        barraVita.value = currentHP;
+        barraStackDiSangue.value = stackDiSangue;
+
+        //Extended animator
+        var inputPoint = Mathf.Abs(Input.X);
+
+        if (Input.X != 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState)) transform.localScale = new Vector3(Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
+
+        anim.SetFloat("IdleSpeed", Mathf.Lerp(1, maxIdleSpeed, inputPoint));//Fa aumentare la velocità dell'animazione quando corre
+
+        DetectGroundColor();
+
+        moveParticles.transform.localScale = Vector3.MoveTowards(moveParticles.transform.localScale, Vector3.one * inputPoint, 2 * Time.deltaTime);
+
     }
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
@@ -184,8 +307,8 @@ public class Player : MonoBehaviour
         fixedFrame++;
         frameClamp = moveClamp;
 
-        velocity = (rb.position - lastPosition) / Time.fixedDeltaTime;//Calcola la velocità del pg
-        lastPosition = rb.position;
+        Velocity = (rb.position - LastPosition) / Time.fixedDeltaTime;//Calcola la velocità del pg
+        LastPosition = rb.position;
     }
     #endregion
 
@@ -210,38 +333,38 @@ public class Player : MonoBehaviour
             //STANCE
             if (Input.CambiaStanceDown && cooldownStanceAttuale <= 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState))
             {
-                if (stance == Stance.Agile) CambiaStance(Stance.Brutale);
-                else if (stance == Stance.Brutale) CambiaStance(Stance.Agile);
+                if (stance == TipoStance.Agile) CambiaStance(TipoStance.Brutale);
+                else if (stance == TipoStance.Brutale) CambiaStance(TipoStance.Agile);
             }
         }
     }
     #endregion
 
     #region Stance
-    public void CambiaStance(Stance stanceAttivata)
+    public void CambiaStance(TipoStance stanceAttivata)
     {
-        if (stanceAttivata == Stance.Agile)
+        if (stanceAttivata == TipoStance.Agile)
         {
             anim.runtimeAnimatorController = animatorAgile;
             cooldownStanceAttuale = cooldownStance;
             colliderAgile.gameObject.SetActive(true);
             colliderBrutale.gameObject.SetActive(false);
             coll = colliderAgile;
-            stance = Stance.Agile;
+            stance = TipoStance.Agile;
             doubleJumpAbility = true;
             moveClamp = 13;
             dashAbility = true;
             dashToConsume = false;//Sennò dasha appena rientri nella stance dall'altra
         }
 
-        if (stanceAttivata == Stance.Brutale)
+        if (stanceAttivata == TipoStance.Brutale)
         {
             anim.runtimeAnimatorController = animatorBrutale;
             cooldownStanceAttuale = cooldownStance;
             colliderAgile.gameObject.SetActive(false);
             colliderBrutale.gameObject.SetActive(true);
             coll = colliderBrutale;
-            stance = Stance.Brutale;
+            stance = TipoStance.Brutale;
             doubleJumpAbility = false;
             moveClamp = 5;
             dashAbility = false;
@@ -263,16 +386,16 @@ public class Player : MonoBehaviour
         if (isGrounded && !hasHitDown)
         {
             timeLeftGrounded = fixedFrame;//Si triggera solo quando lascia il terreno la prima volta
-            OnGroundedChanged?.Invoke(false);
+            OnGroundedChanged(false);
         }
         else if (!isGrounded && hasHitDown)
         {
-            canUseCoyote = true;//Si triggera solo quando tocca il terreno per la prima volta
+            canUseCoyotePriv = true;//Si triggera solo quando tocca il terreno per la prima volta
             didBufferedJump = false;
             canUseDoubleJump = true;
             canDash = true;
-            OnGroundedChanged?.Invoke(true);
-            speed.y = 0;
+            OnGroundedChanged(true);
+            Speed.y = 0;
         }
 
         isGrounded = hasHitDown;
@@ -299,17 +422,16 @@ public class Player : MonoBehaviour
         if (Input.X != 0)
         {
             //Imposta la velocità di movimento orizzontale
-            if (creepingAbility) speed.x = Mathf.MoveTowards(speed.x, frameClamp * Input.X, speedingValue * Time.fixedDeltaTime);
-            else speed.x += Input.X * speedingValue * Time.fixedDeltaTime;
+            Speed.x += Input.X * speedingValue * Time.fixedDeltaTime;
 
-            speed.x = Mathf.Clamp(speed.x, -frameClamp, frameClamp);//Fa il clamp con il massimo movimento del frame
+            Speed.x = Mathf.Clamp(Speed.x, -frameClamp, frameClamp);//Fa il clamp con il massimo movimento del frame
 
             var topBonus = Mathf.Sign(Input.X) * jumpTopBonus * topPoint;//Applica il bonus in cima al salto
-            speed.x += topBonus * Time.fixedDeltaTime;
+            Speed.x += topBonus * Time.fixedDeltaTime;
         }
-        else speed.x = Mathf.MoveTowards(speed.x, 0, slowingValue * Time.fixedDeltaTime);//Se non ci sono input rallenta il pg
+        else Speed.x = Mathf.MoveTowards(Speed.x, 0, slowingValue * Time.fixedDeltaTime);//Se non ci sono input rallenta il pg
 
-        if (!isGrounded && (speed.x > 0 && hasHitRight || speed.x < 0 && hasHitLeft)) speed.x = 0;//Non aumentare la velocità in verticale, solo in orizzontale, per evitare che si appiccichi ai muri mentre è in aria
+        if (!isGrounded && (Speed.x > 0 && hasHitRight || Speed.x < 0 && hasHitLeft)) Speed.x = 0;//Non aumentare la velocità in verticale, solo in orizzontale, per evitare che si appiccichi ai muri mentre è in aria
     }
     #endregion
 
@@ -321,7 +443,7 @@ public class Player : MonoBehaviour
             if (Input.X == 0) return;
 
             //Pendenze
-            speed.y = gravityPower;
+            Speed.y = gravityPower;
             foreach (var hit in hitsDown)
             {
                 if (hit.collider.isTrigger) continue;
@@ -330,27 +452,27 @@ public class Player : MonoBehaviour
 
                 if (slopeAngle != 0)//Fa sì che vengta data priorità a cosa viene colpito davanti per una scivolata dalle pendenze migliore
                 {
-                    speed.y = speed.x * -slopePerp.y;
-                    speed.y += gravityPower;
+                    Speed.y = Speed.x * -slopePerp.y;
+                    Speed.y += gravityPower;
                     break;
                 }
             }
         }
         else
         {
-            var fallingSpeed = endedJumpEarly && speed.y > 0 ? fallSpeed * gravityModifierJumpEndedEarly : fallSpeed;//Aggiunge una forza che butta giù il pg mentre sale se il salto viene concluso prima del previsto
+            var fallingSpeed = endedJumpEarly && Speed.y > 0 ? fallSpeed * gravityModifierJumpEndedEarly : fallSpeed;//Aggiunge una forza che butta giù il pg mentre sale se il salto viene concluso prima del previsto
 
-            speed.y -= fallingSpeed * Time.fixedDeltaTime;//Caduta
+            Speed.y -= fallingSpeed * Time.fixedDeltaTime;//Caduta
 
-            if (speed.y < fallClamp) speed.y = fallClamp;//Fa il clamp della velocità
+            if (Speed.y < fallClamp) Speed.y = fallClamp;//Fa il clamp della velocità
         }
     }
 
-    public void TopPoint()
+    public void IsTopPoint()
     {
         if (!isGrounded)
         {
-            topPoint = Mathf.InverseLerp(jumpTopLimit, 0, Mathf.Abs(velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
+            topPoint = Mathf.InverseLerp(jumpTopLimit, 0, Mathf.Abs(Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
             fallSpeed = Mathf.Lerp(minFallSpeed, maxFallSpeed, topPoint);
         }
         else topPoint = 0;
@@ -360,7 +482,7 @@ public class Player : MonoBehaviour
     #region Movimento avanzato
     public void Move()//Viene fatto un cast dei limiti prima di muoversi in modo da evitare collisioni future
     {
-        RawMovement = speed;//Per usare la velocità esternamente
+        RawMovement = Speed;//Per usare la velocità esternamente
         var move = RawMovement * Time.fixedDeltaTime;
 
         //Applica gli effector
@@ -377,9 +499,9 @@ public class Player : MonoBehaviour
     void RunCornerPrevention()//Fa camminare e saltare anche sul bordo di una piattaforma
     {
         //Le linee sotto sono per quando i raggi non rilevano il terreno e il collider non entra nello spazio dell'oggetto in collisione, determina se il pg si muove o no. || TODO: Fixa il fatto che se sta su un angolo e salta di sotto senza muoversi sembra non triggerare il rilevamento del terreno quando lo tocca
-        isStuckInCorner = !isGrounded && lastPos == rb.position && lastJumpPressed + 1 < fixedFrame;
-        speed.y = isStuckInCorner ? 0 : speed.y;
-        lastPos = rb.position;
+        isStuckInCorner = !isGrounded && LastPos == rb.position && lastJumpPressed + 1 < fixedFrame;
+        Speed.y = isStuckInCorner ? 0 : Speed.y;
+        LastPos = rb.position;
     }
     #endregion
 
@@ -412,15 +534,15 @@ public class Player : MonoBehaviour
     #region Forze
     public void AddForce(Vector2 force, PlayerForce mode = PlayerForce.Burst, bool cancelMovement = true)
     {
-        if (cancelMovement) speed = Vector2.zero;
+        if (cancelMovement) Speed = Vector2.zero;
 
         switch (mode)
         {
             case PlayerForce.Burst:
-                speed += force;
+                Speed += force;
                 break;
             case PlayerForce.Decay:
-                forceBuildup += force * Time.fixedDeltaTime;
+                ForceBuildup += force * Time.fixedDeltaTime;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
@@ -430,12 +552,12 @@ public class Player : MonoBehaviour
     private Vector2 EvaluateForces()
     {
         //Previene il rimbalzo
-        if (hasHitLeft || hasHitRight) forceBuildup.x = 0;
-        if (isGrounded || hasHitUp) forceBuildup.y = 0;
+        if (hasHitLeft || hasHitRight) ForceBuildup.x = 0;
+        if (isGrounded || hasHitUp) ForceBuildup.y = 0;
 
-        var force = forceBuildup;
+        var force = ForceBuildup;
 
-        forceBuildup = Vector2.MoveTowards(forceBuildup, Vector2.zero, forceDecay * Time.fixedDeltaTime);
+        ForceBuildup = Vector2.MoveTowards(ForceBuildup, Vector2.zero, forceDecay * Time.fixedDeltaTime);
 
         return force;
     }
@@ -450,15 +572,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Debug
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        var b = coll.bounds;
-        b.Expand(rayLengthDetection);
-
-        Gizmos.DrawWireCube(b.center, b.size);
-    }
-
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;
@@ -466,14 +579,6 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         Gizmos.DrawWireSphere(verticalAttackPoint.position, verticalAttackRange);
     }
-    #endregion
-
-    #region Invocazioni
-    public void OnJumpingInvoke() => OnJumping?.Invoke();
-    public void OnDoubleJumpingInvoke() => OnDoubleJumping?.Invoke();
-    public void OnStartAttackChangedInvoke() => OnStartAttackChanged?.Invoke();
-    public void OnStartBrutalAttackChangedInvoke() => OnStartBrutalAttackChanged?.Invoke();
-    public void OnDashingChangedInvoke(bool state) => OnDashingChanged?.Invoke(state);
     #endregion
 
     #region Sistema particellare
@@ -495,4 +600,77 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+
+    public void DealDamage()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);//rileva nemici nel raggio dell'attacco
+
+        //danneggia i nemici
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            stackDiSangue++;
+            if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico);
+            if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico);
+        }
+    }
+
+    public void DealVerticalDamage()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(verticalAttackPoint.position, verticalAttackRange, enemyLayers);//rileva nemici nel raggio dell'attacco
+
+        //danneggia i nemici
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            stackDiSangue++;
+            if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico);
+            if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico);
+        }
+    }
+
+    private void OnEnable() => moveParticles.Play();
+
+    private void OnDisable() => moveParticles.Stop();
+
+    private void OnGroundedChanged(bool grounded)
+    {
+        if (grounded)
+        {
+            anim.SetTrigger("Grounded");
+            audioSource.PlayOneShot(footsteps[Random.Range(0, footsteps.Length)]);
+            moveParticles.Play();
+
+            landParticles.transform.localScale = Vector3.one * Mathf.InverseLerp(0, maxFallSpeedParticles, RawMovement.y);
+            SetColor(landParticles);
+            landParticles.Play();
+        }
+        else moveParticles.Stop();
+    }
+
+    public void OnJumping()
+    {
+        if (isGrounded)//Fa riprodurre il particellare solo quando è a terra
+        {
+            SetColor(jumpParticles);
+            SetColor(launchParticles);
+            jumpParticles.Play();
+        }
+    }
+
+    public void OnDoubleJumping()
+    {
+        audioSource.PlayOneShot(doubleJumpClip);
+        doubleJumpParticles.Play();
+    }
+
+    public void OnDashingChanged(bool isDashing)
+    {
+        if (isDashing)
+        {
+            dashParticles.Play();
+            dashRingTransform.up = new Vector3(Input.X, Input.Y);
+            dashRingParticles.Play();
+            audioSource.PlayOneShot(dashClip);
+        }
+        else dashParticles.Stop();
+    }
 }

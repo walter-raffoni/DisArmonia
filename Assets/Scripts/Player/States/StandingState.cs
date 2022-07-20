@@ -12,10 +12,10 @@ public class StandingState : State
     {
         base.Enter();
 
-        player.coll.size = player.defaultSizeCollider;
-        player.coll.offset = player.defaultOffsetCollider;
+        player.DashToConsume = false;
+        player.ComboAttacco = 0;
 
-        player.dashToConsume = false;
+        player.Anim.Play("IdleAgile");
     }
 
     public override void HandleInput()
@@ -25,13 +25,11 @@ public class StandingState : State
         player.HandleInput();
 
         if (player.Input.AttackDown) stateMachine.ChangeState(player.horizontalAttackState);
-        
-        if(player.Input.BrutalAttackDown /*&& player.stance == Player.Stance.Brutale*/)
+
+        if (player.Input.BrutalAttackDown && player.Stance == Player.TipoStance.Brutale)
         {
-            if (player.stackDiSangue == 0) return;
-            else if (player.stackDiSangue == 1) stateMachine.ChangeState(player.brutalAttackState1);
-            else if (player.stackDiSangue == 2) stateMachine.ChangeState(player.brutalAttackState2);
-            else if (player.stackDiSangue == 3) stateMachine.ChangeState(player.brutalAttackState3);
+            if (player.StackDiSangue == 0) return;
+            else if (player.StackDiSangue >= 1 && player.StackDiSangue <= 3) stateMachine.ChangeState(player.brutalAttackState);
         }
     }
 
@@ -44,40 +42,31 @@ public class StandingState : State
         player.CollisionsChecks();
 
         player.HorizontalMovement();
-        TopPoint();
+        IsTopPoint();
         player.Gravity();
         CanJump();
         CanDash();
         player.Move();
     }
 
-    public override void Exit()
+    void IsTopPoint()
     {
-        base.Exit();
-
-        player.isAttackOver = false;
-    }
-
-    void TopPoint()
-    {
-        if (!player.isGrounded)
+        if (!player.IsGrounded)
         {
-            player.topPoint = Mathf.InverseLerp(player.jumpTopLimit, 0, Mathf.Abs(player.velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
-            player.fallSpeed = Mathf.Lerp(player.minFallSpeed, player.maxFallSpeed, player.topPoint);
+            player.TopPoint = Mathf.InverseLerp(player.JumpTopLimit, 0, Mathf.Abs(player.Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
+            player.FallSpeed = Mathf.Lerp(player.MinFallSpeed, player.MaxFallSpeed, player.TopPoint);
         }
-        else player.topPoint = 0;
+        else player.TopPoint = 0;
     }
 
     void CanJump()
     {
-        if (!player.CanStand) return;
-
         //Controlla se: Ha premuto il tasto di salto o comunque nella soglia possibile per il salto "coyote" || Se c'è un buffer per il salto sufficiente || È a terra
-        if ((player.jumpToConsume && player.CanUseCoyote) || player.HasBufferedJump || !player.isGrounded) stateMachine.ChangeState(player.airborneState);
+        if ((player.JumpToConsume && player.CanUseCoyote) || player.HasBufferedJump || !player.IsGrounded) stateMachine.ChangeState(player.airborneState);
     }
 
     void CanDash()
     {
-        if (player.dashToConsume && player.canDash && player.Input.X != 0 && player.dashAbility) stateMachine.ChangeState(player.dashingState);
+        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.DashAbility) stateMachine.ChangeState(player.dashingState);
     }
 }

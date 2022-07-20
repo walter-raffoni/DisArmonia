@@ -12,9 +12,36 @@ public class HorizontalAttackState : State
     {
         base.Enter();
 
-        player.tempoAttaccoAttuale = player.tempoAttacco;
-
-        player.OnStartAttackChangedInvoke();
+        if (player.Stance == Player.TipoStance.Agile)
+        {
+            player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile;
+            if (player.ComboAttacco == 0) player.Anim.Play("Attacco1Agile");
+            else if (player.ComboAttacco == 1)
+            {
+                player.Anim.Play("Attacco2Agile");
+                player.ComboAttacco = 0;
+            }
+            else if (player.ComboAttacco == 2)
+            {
+                player.Anim.Play("Attacco3Agile");
+                player.ComboAttacco = 0;
+            }
+        }
+        else if (player.Stance == Player.TipoStance.Brutale)
+        {
+            player.TempoAttaccoAttuale = player.TempoAttaccoOrizBrutale;
+            if (player.ComboAttacco == 0) player.Anim.Play("Attacco1");
+            else if (player.ComboAttacco == 1)
+            {
+                player.Anim.Play("Attacco2");
+                player.ComboAttacco = 0;
+            }
+            else if (player.ComboAttacco == 2)
+            {
+                player.Anim.Play("Attacco3");
+                player.ComboAttacco = 0;
+            }
+        }
     }
 
     public override void HandleInput()
@@ -23,14 +50,19 @@ public class HorizontalAttackState : State
 
         player.HandleInput();
 
-        if (player.Input.AttackDown) player.stateMachine.ChangeState(player.horizontalAttackState);
+        if (player.Input.AttackDown && player.ComboAttacco < 2) player.ComboAttacco++;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (player.tempoAttaccoAttuale > 0) player.tempoAttaccoAttuale -= Time.deltaTime;
-        else player.stateMachine.ChangeState(player.standingState);
+        if (player.TempoAttaccoAttuale > 0) player.TempoAttaccoAttuale -= Time.deltaTime;
+        else
+        {
+            if (player.ComboAttacco == 0) player.stateMachine.ChangeState(player.standingState);
+            else if (player.ComboAttacco == 1) player.stateMachine.ChangeState(player.horizontalAttackState);
+            else if (player.ComboAttacco == 2) player.stateMachine.ChangeState(player.horizontalAttackState);
+        }
     }
 }

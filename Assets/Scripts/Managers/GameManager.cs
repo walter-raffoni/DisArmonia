@@ -4,19 +4,20 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Objects")]
+    [Header("Player")]
     public Player player;
-    [SerializeField] GameObject pauseObject;
-    [SerializeField] Slider barraVita;
-    public Slider stackDiSangue;
-
-    [Header("Texts")]
     [SerializeField] TextMeshProUGUI stateText;
 
-    #region Campi vari
+    [SerializeField] GameObject pauseObject;
+
     public static GameManager instance;
-    private bool isPaused;
+
+    #region Campi visibili ma non modificabili
     public bool IsPaused => isPaused;
+    #endregion
+
+    #region Campi privati
+    private bool isPaused;
     #endregion
 
     private void Awake() => instance = this;
@@ -26,9 +27,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (stateText != null) stateText.text = player.stateMachine.currentState.ToString();
-
-        barraVita.value = player.CurrentHP;
-        stackDiSangue.value = player.stackDiSangue;
     }
 
     public void PauseGame()
@@ -37,6 +35,8 @@ public class GameManager : MonoBehaviour
         {
             isPaused = true;
             pauseObject.SetActive(true);
+            player.BarraVita.gameObject.SetActive(true);
+            player.BarraStackDiSangue.gameObject.SetActive(true);
             stateText.gameObject.SetActive(false);
             Time.timeScale = 0;
         }
@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
         {
             isPaused = false;
             pauseObject.SetActive(false);
+            player.BarraVita.gameObject.SetActive(false);
+            player.BarraStackDiSangue.gameObject.SetActive(false);
             stateText.gameObject.SetActive(true);
             Time.timeScale = 1;
         }
