@@ -408,8 +408,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112faf005e4e18543bbce151fde4359b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateText: {fileID: 0}
   player: {fileID: 0}
+  stateText: {fileID: 0}
+  pauseObject: {fileID: 0}
 --- !u!4 &622386466
 Transform:
   m_ObjectHideFlags: 0
@@ -629,7 +630,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME TITLE
+  m_text: DIS/ARMONIA
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 00430abaff62c744c8c7a17400883cf1, type: 2}
   m_sharedMaterial: {fileID: 5180352160327709938, guid: 00430abaff62c744c8c7a17400883cf1, type: 2}

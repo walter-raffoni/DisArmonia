@@ -29,9 +29,6 @@ public class AirborneState : State
             player.SetColor(player.LaunchParticles);
             player.JumpParticles.Play();
         }
-
-        if (player.Stance == Player.TipoStance.Brutale) player.Anim.Play("Jump");
-        else if (player.Stance == Player.TipoStance.Agile) player.Anim.Play("JumpAgile");
     }
 
     public override void HandleInput()
@@ -58,6 +55,18 @@ public class AirborneState : State
         player.Gravity();
         Jump();
         player.Move();
+
+        if (player.Stance == Player.TipoStance.Brutale)
+        {
+            if (player.Velocity.y >= 0) player.Anim.Play("Jump");
+            else if (player.Velocity.y < 0) player.Anim.Play("AirborneAtterra");
+
+        }
+        else if (player.Stance == Player.TipoStance.Agile)
+        {
+            if (player.Velocity.y >= 0) player.Anim.Play("JumpAgile");
+            else if (player.Velocity.y < 0) player.Anim.Play("AirborneAtterraAgile");
+        }
     }
 
     void Jump()
@@ -87,6 +96,7 @@ public class AirborneState : State
         {
             player.TopPoint = Mathf.InverseLerp(player.JumpTopLimit, 0, Mathf.Abs(player.Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
             player.FallSpeed = Mathf.Lerp(player.MinFallSpeed, player.MaxFallSpeed, player.TopPoint);
+            //Debug.Log("topPoint: " + player.TopPoint);
         }
         else stateMachine.ChangeState(player.standingState);
     }

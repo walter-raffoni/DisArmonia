@@ -18,9 +18,7 @@ public struct FrameInput
     public bool JumpHeld;
     public bool DashDown;
     public bool AttackDown;
-    public bool BaseAttackReleased;
     public bool BrutalAttackDown;
-    public bool BrutalAttackReleased;
     public bool CambiaStanceDown;
 
     //Game

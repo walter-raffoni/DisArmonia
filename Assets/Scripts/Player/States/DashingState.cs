@@ -29,6 +29,13 @@ public class DashingState : State
         player.Move();
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        player.JumpToConsume = false;//impedisce che salti se premi il tasto mentre in dash
+    }
+
     void Dash()
     {
         if (player.DashToConsume && player.CanDash)
@@ -52,8 +59,12 @@ public class DashingState : State
             player.OnDashingChanged(false);
             if (player.Speed.y > 0) player.Speed.y = 0;
             player.Speed.x *= player.HorizontalMultiplierDashEnd;
-            if (player.IsGrounded) player.CanDash = true;
-            stateMachine.ChangeState(player.standingState);
+            if (player.IsGrounded)
+            {
+                player.CanDash = true;
+                stateMachine.ChangeState(player.standingState);
+            }
+            else stateMachine.ChangeState(player.airborneState);//così non passa allo stato di standing per un attimo anche se in aria
         }
         player.DashToConsume = false;
     }

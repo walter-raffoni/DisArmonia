@@ -30,7 +30,7 @@ public class EnemyMelee : MonoBehaviour
     public bool FacingRight => facingRight;
     public Transform StartPoint => startPoint;
     public float AttaccoGiocatoreDist => attaccoGiocatoreDist;
-    public float GiocatoreRilevatoDist => giocatoreRilevatoDist;    
+    public float GiocatoreRilevatoDist => giocatoreRilevatoDist;
     #endregion
 
     #region Campi privati

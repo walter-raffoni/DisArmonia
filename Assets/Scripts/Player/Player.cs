@@ -280,7 +280,7 @@ public class Player : MonoBehaviour
             stateMachine.currentState.HandleInput();
             stateMachine.currentState.LogicUpdate();
         }
-        
+
         if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//DEBUG: X MORTE
 
         if (stackDiSangue < 0) stackDiSangue = 0;
@@ -407,7 +407,7 @@ public class Player : MonoBehaviour
 
         bool RunDetection(Vector2 direction, out RaycastHit2D[] hits)
         {
-            hits = Physics2D.BoxCastAll(bounds.center, bounds.size, 0, direction, rayLengthDetection, groundLayer);
+            hits = Physics2D.CapsuleCastAll(bounds.center, bounds.size, CapsuleDirection2D.Vertical, 0, direction, rayLengthDetection, groundLayer);//evita bug strani tipo che si appiccica alle piattaforme di lato
 
             foreach (var hit in hits)
             {
@@ -445,8 +445,6 @@ public class Player : MonoBehaviour
     {
         if (isGrounded)
         {
-            if (Input.X == 0) return;
-
             //Pendenze
             Speed.y = gravityPower;
             foreach (var hit in hitsDown)
@@ -455,7 +453,7 @@ public class Player : MonoBehaviour
                 var slopePerp = Vector2.Perpendicular(hit.normal).normalized;
                 var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-                if (slopeAngle != 0)//Fa sì che vengta data priorità a cosa viene colpito davanti per una scivolata dalle pendenze migliore
+                if (slopeAngle != 0)//Fa sì che venga data priorità a cosa viene colpito davanti per una scivolata dalle pendenze migliore
                 {
                     Speed.y = Speed.x * -slopePerp.y;
                     Speed.y += gravityPower;
@@ -498,8 +496,6 @@ public class Player : MonoBehaviour
         rb.MovePosition(rb.position + move);
 
         RunCornerPrevention();
-
-
     }
     #endregion
 
@@ -586,6 +582,7 @@ public class Player : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         Gizmos.DrawWireSphere(verticalAttackPoint.position, verticalAttackRange);
+        //Gizmos.DrawLine(hitsDown, Vector2.down);
     }
     #endregion
 
@@ -609,6 +606,7 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    #region Attacco
     public void DealDamage()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);//rileva nemici nel raggio dell'attacco
@@ -634,7 +632,9 @@ public class Player : MonoBehaviour
             if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico);
         }
     }
+    #endregion
 
+    #region Animator
     private void OnEnable() => moveParticles.Play();
 
     private void OnDisable() => moveParticles.Stop();
@@ -681,4 +681,5 @@ public class Player : MonoBehaviour
         }
         else dashParticles.Stop();
     }
+    #endregion
 }

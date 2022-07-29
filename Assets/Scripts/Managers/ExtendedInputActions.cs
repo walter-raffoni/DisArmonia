@@ -36,9 +36,7 @@ public class ExtendedInputActions : MonoBehaviour
             JumpHeld = jump.IsPressed(),
             DashDown = dash.WasPressedThisFrame(),
             AttackDown = baseAttack.WasPressedThisFrame(),
-            BaseAttackReleased = baseAttack.WasReleasedThisFrame(),
             BrutalAttackDown = brutalAttack.WasPressedThisFrame(),
-            BrutalAttackReleased = brutalAttack.WasReleasedThisFrame(),
             CambiaStanceDown = cambiaStance.WasPressedThisFrame(),
 
             X = move.ReadValue<Vector2>().x,

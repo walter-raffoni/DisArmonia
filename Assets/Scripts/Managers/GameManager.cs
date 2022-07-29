@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake() => instance = this;
 
-    private void Start() => Time.timeScale = 1;
+    private void Start() => Time.timeScale = 0.5f;
 
     private void Update() => stateText.text = player.stateMachine.currentState.ToString();
 
