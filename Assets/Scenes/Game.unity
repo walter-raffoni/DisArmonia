@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1852010289007548564}
-  stateText: {fileID: 323433875}
+  stanceChangeCooldownText: {fileID: 323433875}
   pauseObject: {fileID: 110142917}
 --- !u!4 &88803293
 Transform:
@@ -833,7 +833,7 @@ GameObject:
   - component: {fileID: 323433876}
   - component: {fileID: 323433875}
   m_Layer: 5
-  m_Name: State Text
+  m_Name: Cooldown Stance Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -878,7 +878,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STATE TEXT
+  m_text: COOLDOWN STANCE TEXT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 00430abaff62c744c8c7a17400883cf1, type: 2}
   m_sharedMaterial: {fileID: 5180352160327709938, guid: 00430abaff62c744c8c7a17400883cf1, type: 2}
@@ -905,8 +905,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6082,7 +6082,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491683967}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.48, y: -5.51, z: -2}
+  m_LocalPosition: {x: 7.16, y: 29.72, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 398314387}
@@ -6237,7 +6237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.48, y: -5.51, z: -2}
+  m_LocalPosition: {x: 7.16, y: 29.72, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -27907,7 +27907,7 @@ MonoBehaviour:
   barraStackDiSangue: {fileID: 1674197988}
   animatorAgile: {fileID: 9100000, guid: 7203596e2446eb14082c543e45c3091f, type: 2}
   animatorBrutale: {fileID: 9100000, guid: 9ae76c4a0a092db489f56b28cf59b26b, type: 2}
-  cooldownStance: 1
+  cooldownStance: 3
   colliderAgile: {fileID: 964230808}
   colliderBrutale: {fileID: 272186845}
   moveParticles: {fileID: 1852010290524208157}
@@ -28215,7 +28215,7 @@ Animator:
   m_GameObject: {fileID: 1852010289007548563}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7203596e2446eb14082c543e45c3091f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9ae76c4a0a092db489f56b28cf59b26b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -42819,7 +42819,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852010289007548563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.98, y: -5.51, z: 0}
+  m_LocalPosition: {x: 6.66, y: 29.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1852010290115113642}

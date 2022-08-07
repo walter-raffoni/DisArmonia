@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
     [SerializeField] float rayLengthDetection = 0.1f;
 
     [Header("Dash System")]
+    [SerializeField] float cooldownDash = 2;
     [SerializeField] int dashLength = 6;
     [SerializeField] float dashPower = 30;
     [SerializeField] float horizontalMultiplierDashEnd = 0.25f;
@@ -44,13 +46,15 @@ public class Player : MonoBehaviour
     [Header("Attack System")]
     [SerializeField] Transform attackPoint;
     [SerializeField] Transform verticalAttackPoint;
-    [SerializeField] float attackRange = 0.5f;
+    [SerializeField] float attackRangeAgile = 0.5f;
+    [SerializeField] float attackRangeBrutale = 0.42f;
     [SerializeField] float verticalAttackRange = 0.5f;
     [SerializeField] LayerMask enemyLayers;
     [SerializeField] int dannoAlNemico = 2;
     [SerializeField] float tempoAttaccoOrizAgile = 0.75f;
     [SerializeField] float tempoAttaccoOrizBrutale = 0.75f;
     [SerializeField] float tempoAttaccoBrutale = 0.75f;
+    [SerializeField] float moltiplicatoreRimbalzoAttaccoVerticale = 50;
 
     [Header("Stack System")]
     [SerializeField] Slider barraStackDiSangue;
@@ -112,6 +116,7 @@ public class Player : MonoBehaviour
     public bool DashAbility => dashAbility;
     public bool HasHitUp => hasHitUp;
     public bool DoubleJumpAbility => doubleJumpAbility;
+    public bool DashFacingRight => dashFacingRight;
     public bool CanDoubleJump => canUseDoubleJump && !canUseCoyotePriv;
     public bool CanUseCoyote => canUseCoyotePriv && !isGrounded && timeLeftGrounded + coyoteTimeLimit > fixedFrame;
     public bool HasBufferedJump => ((isGrounded && !didBufferedJump) || isStuckInCorner) && lastJumpPressed + jumpBuffer > fixedFrame;
@@ -151,6 +156,8 @@ public class Player : MonoBehaviour
         set { endedJumpEarly = value; }
     }
 
+    public float CooldownStanceAttuale => cooldownStanceAttuale;
+    public float CooldownDash => cooldownDash;
     public float DashPower => dashPower;
     public float JumpHeight => jumpHeight;
     public float JumpTopLimit => jumpTopLimit;
@@ -185,6 +192,10 @@ public class Player : MonoBehaviour
     {
         get { return tempoAttaccoAttuale; }
         set { tempoAttaccoAttuale = value; }
+    }
+    public float CooldownDashAttuale {
+        get { return cooldownDashAttuale; }
+        set { cooldownDashAttuale = value; }
     }
 
     public TipoStance Stance => stance;
@@ -223,7 +234,7 @@ public class Player : MonoBehaviour
 
     private int currentHP, comboAttacco, stackDiSangue, fixedFrame;
 
-    private bool doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyotePriv, canUseDoubleJump, canDash;
+    private bool doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyotePriv, canUseDoubleJump, canDash, dashFacingRight;
     private bool endedJumpEarly = true;
 
     private RaycastHit2D[] hitsUp = new RaycastHit2D[1];
@@ -231,11 +242,10 @@ public class Player : MonoBehaviour
     private RaycastHit2D[] hitsLeft = new RaycastHit2D[1];
     private RaycastHit2D[] hitsRight = new RaycastHit2D[1];
 
-    private readonly List<IPlayerEffector> usedEffectors = new List<IPlayerEffector>();
-
-    private float tempoAttaccoAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing;
+    private float tempoAttaccoAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale;
     private float lastJumpPressed = float.MinValue;
     private float topPoint;//Diventa 1 in cima al salto
+    private float attackRange;
 
     private ParticleSystem.MinMaxGradient currentGradient;
     #endregion
@@ -288,6 +298,8 @@ public class Player : MonoBehaviour
 
         if (cooldownStanceAttuale > 0) cooldownStanceAttuale -= Time.deltaTime;
 
+        if (cooldownDashAttuale > 0) cooldownDashAttuale -= Time.deltaTime;
+
         barraVita.value = currentHP;
         barraStackDiSangue.value = stackDiSangue;
 
@@ -296,7 +308,10 @@ public class Player : MonoBehaviour
 
         if (!GameManager.instance.IsPaused)//Per non fargli ribaltare lo sprite in pausa
         {
-            if (Input.X != 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState)) transform.localScale = new Vector3(Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
+            if (Input.X != 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState))
+            {
+                transform.localScale = new Vector3(Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
+            }
         }
 
         anim.SetFloat("IdleSpeed", Mathf.Lerp(1, maxIdleSpeed, inputPoint));//Fa aumentare la velocità dell'animazione quando corre
@@ -304,6 +319,11 @@ public class Player : MonoBehaviour
         DetectGroundColor();
 
         moveParticles.transform.localScale = Vector3.MoveTowards(moveParticles.transform.localScale, Vector3.one * inputPoint, 2 * Time.deltaTime);
+
+        Vector3 ray = Camera.main.ScreenToViewportPoint(Mouse.current.position.ReadValue()); //con il viewport ha dei valori che non cambiano se ti muovi nello schermo
+
+        if (ray.x < 0.47) dashFacingRight = false;
+        else if (ray.x > 0.47) dashFacingRight = true;
     }
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
@@ -359,6 +379,7 @@ public class Player : MonoBehaviour
             doubleJumpAbility = true;
             moveClamp = 13;
             dashAbility = true;
+            attackRange = attackRangeAgile;
             dashToConsume = false;//Sennò dasha appena rientri nella stance dall'altra
         }
 
@@ -373,6 +394,7 @@ public class Player : MonoBehaviour
             doubleJumpAbility = false;
             moveClamp = 5;
             dashAbility = false;
+            attackRange = attackRangeBrutale;
         }
     }
     #endregion
@@ -485,12 +507,10 @@ public class Player : MonoBehaviour
     #region Movimento avanzato
     public void Move()//Viene fatto un cast dei limiti prima di muoversi in modo da evitare collisioni future
     {
-
         RawMovement = Speed;//Per usare la velocità esternamente
         var move = RawMovement * Time.fixedDeltaTime;
 
         //Applica gli effector
-        move += EvaluateEffectors();
         move += EvaluateForces();
 
         rb.MovePosition(rb.position + move);
@@ -506,32 +526,6 @@ public class Player : MonoBehaviour
         isStuckInCorner = !isGrounded && LastPos == rb.position && lastJumpPressed + 1 < fixedFrame;
         Speed.y = isStuckInCorner ? 0 : Speed.y;
         LastPos = rb.position;
-    }
-    #endregion
-
-    #region Effector
-    private Vector2 EvaluateEffectors()//Per più effetti di forza passivi, come piattaforme in movimento, sott'acqua e così via
-    {
-        var effectorDirection = Vector2.zero;
-        effectorDirection += Process(hitsDown);//Lo fa ripetere per ogni direzione e anche per effector ad area come le zone di vento, ecc...
-
-        usedEffectors.Clear();
-        return effectorDirection;
-
-        Vector2 Process(IEnumerable<RaycastHit2D> hits)
-        {
-            foreach (var hit2D in hits)
-            {
-                if (!hit2D.transform) return Vector2.zero;
-                if (hit2D.transform.TryGetComponent(out IPlayerEffector effector))
-                {
-                    if (usedEffectors.Contains(effector)) continue;
-                    usedEffectors.Add(effector);
-                    return effector.EvaluateEffector();
-                }
-            }
-            return Vector2.zero;
-        }
     }
     #endregion
 
@@ -582,7 +576,6 @@ public class Player : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         Gizmos.DrawWireSphere(verticalAttackPoint.position, verticalAttackRange);
-        //Gizmos.DrawLine(hitsDown, Vector2.down);
     }
     #endregion
 
@@ -628,8 +621,16 @@ public class Player : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             stackDiSangue++;
-            if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico);
-            if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico);
+            if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
+            {
+                melee.TakeDamage(dannoAlNemico);
+                rb.AddForce(Vector2.up * moltiplicatoreRimbalzoAttaccoVerticale, ForceMode2D.Force);
+            }
+            if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged))
+            {
+                ranged.TakeDamage(dannoAlNemico);
+                rb.AddForce(Vector2.up * moltiplicatoreRimbalzoAttaccoVerticale, ForceMode2D.Force);
+            }
         }
     }
     #endregion
@@ -682,4 +683,27 @@ public class Player : MonoBehaviour
         else dashParticles.Stop();
     }
     #endregion
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (stateMachine.currentState == dashingState)
+        {
+            if (other.gameObject.TryGetComponent(out EnemyMelee melee))
+            {
+                melee.TakeDamage(dannoAlNemico);
+                melee.GetComponent<CapsuleCollider2D>().isTrigger = true;
+            }
+            else if (other.gameObject.TryGetComponent(out EnemyRanged ranged))
+            {
+                ranged.TakeDamage(dannoAlNemico);
+                ranged.GetComponent<CapsuleCollider2D>().isTrigger = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.TryGetComponent(out EnemyMelee melee)) melee.GetComponent<CapsuleCollider2D>().isTrigger = false;
+        else if (other.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.GetComponent<CapsuleCollider2D>().isTrigger = false;
+    }
 }

@@ -70,7 +70,12 @@ public class EnemyMelee : MonoBehaviour
     {
         stateMachine.currentState.LogicUpdate();
 
-        if (currentHP <= 0) Destroy(gameObject);
+        if (currentHP <= 0)
+        {
+            Destroy(gameObject);
+            target.GetComponent<Player>().CooldownDashAttuale = 0;
+            target.GetComponent<Player>().JumpToConsume = true;
+        }
     }
 
     private void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();

@@ -37,7 +37,7 @@ public class AirborneState : State
 
         player.HandleInput();
 
-        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.Stance == Player.TipoStance.Agile) player.stateMachine.ChangeState(player.dashingState);
+        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.Stance == Player.TipoStance.Agile && player.CooldownDashAttuale <= 0) player.stateMachine.ChangeState(player.dashingState);
 
         if (player.Input.AttackDown && player.Stance == Player.TipoStance.Brutale) stateMachine.ChangeState(player.verticalAttackState);
     }
@@ -56,13 +56,12 @@ public class AirborneState : State
         Jump();
         player.Move();
 
-        if (player.Stance == Player.TipoStance.Brutale)
+        if (player.Stance == Player.TipoStance.Brutale && stateMachine.currentState != player.verticalAttackState)
         {
             if (player.Velocity.y >= 0) player.Anim.Play("Jump");
             else if (player.Velocity.y < 0) player.Anim.Play("AirborneAtterra");
-
         }
-        else if (player.Stance == Player.TipoStance.Agile)
+        else if (player.Stance == Player.TipoStance.Agile && stateMachine.currentState != player.verticalAttackState)
         {
             if (player.Velocity.y >= 0) player.Anim.Play("JumpAgile");
             else if (player.Velocity.y < 0) player.Anim.Play("AirborneAtterraAgile");
@@ -96,7 +95,6 @@ public class AirborneState : State
         {
             player.TopPoint = Mathf.InverseLerp(player.JumpTopLimit, 0, Mathf.Abs(player.Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
             player.FallSpeed = Mathf.Lerp(player.MinFallSpeed, player.MaxFallSpeed, player.TopPoint);
-            //Debug.Log("topPoint: " + player.TopPoint);
         }
         else stateMachine.ChangeState(player.standingState);
     }

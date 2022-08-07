@@ -1,15 +1,5 @@
 using UnityEngine;
 
-public interface IVita<T>
-{
-    void TakeDamage(T damageTaken);
-}
-
-public interface IPlayerEffector
-{
-    public Vector2 EvaluateEffector();
-}
-
 public struct FrameInput
 {
     //Player

@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Player System")]
     public Player player;
-    [SerializeField] TextMeshProUGUI stateText;
+    [SerializeField] TextMeshProUGUI stanceChangeCooldownText;
 
     [Header("Pause System")]
     [SerializeField] GameObject pauseObject;
@@ -21,9 +21,19 @@ public class GameManager : MonoBehaviour
 
     private void Awake() => instance = this;
 
-    private void Start() => Time.timeScale = 0.5f;
+    private void Start()
+    {
+        Time.timeScale = 1;
 
-    private void Update() => stateText.text = player.stateMachine.currentState.ToString();
+        int cooldown = (int)player.CooldownStanceAttuale;
+        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldown.ToString() + "s";
+    }
+
+    private void Update()
+    {
+        int cooldown = (int)player.CooldownStanceAttuale;
+        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldown.ToString() + "s";
+    }
 
     public void PauseGame()
     {
@@ -33,7 +43,7 @@ public class GameManager : MonoBehaviour
             pauseObject.SetActive(true);
             player.BarraVita.gameObject.SetActive(false);
             player.BarraStackDiSangue.gameObject.SetActive(false);
-            stateText.gameObject.SetActive(false);
+            stanceChangeCooldownText.gameObject.SetActive(false);
             Time.timeScale = 0;
         }
         else
@@ -42,7 +52,7 @@ public class GameManager : MonoBehaviour
             pauseObject.SetActive(false);
             player.BarraVita.gameObject.SetActive(true);
             player.BarraStackDiSangue.gameObject.SetActive(true);
-            stateText.gameObject.SetActive(true);
+            stanceChangeCooldownText.gameObject.SetActive(true);
             Time.timeScale = 1;
         }
     }

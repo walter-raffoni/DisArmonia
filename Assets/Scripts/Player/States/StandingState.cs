@@ -68,6 +68,6 @@ public class StandingState : State
 
     void CanDash()
     {
-        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.DashAbility) stateMachine.ChangeState(player.dashingState);
+        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.DashAbility && player.CooldownDashAttuale <= 0) stateMachine.ChangeState(player.dashingState);
     }
 }
