@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -55,6 +54,7 @@ public class Player : MonoBehaviour
     [SerializeField] float tempoAttaccoOrizBrutale = 0.75f;
     [SerializeField] float tempoAttaccoBrutale = 0.75f;
     [SerializeField] float moltiplicatoreRimbalzoAttaccoVerticale = 50;
+    [SerializeField] float probabilitaCritico = 25;   
 
     [Header("Stack System")]
     [SerializeField] Slider barraStackDiSangue;
@@ -193,7 +193,8 @@ public class Player : MonoBehaviour
         get { return tempoAttaccoAttuale; }
         set { tempoAttaccoAttuale = value; }
     }
-    public float CooldownDashAttuale {
+    public float CooldownDashAttuale
+    {
         get { return cooldownDashAttuale; }
         set { cooldownDashAttuale = value; }
     }
@@ -324,9 +325,54 @@ public class Player : MonoBehaviour
 
         if (ray.x < 0.47) dashFacingRight = false;
         else if (ray.x > 0.47) dashFacingRight = true;
+
+        //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico), da sistemare, così è scritto male
+        if(stackDiSangue == 0)
+        {
+            dannoAlNemico = 2;
+            probabilitaCritico = 0;
+        }
+        else if (stackDiSangue == 1)
+        {
+            dannoAlNemico = 3;
+            probabilitaCritico = 25;
+        }
+        else if (stackDiSangue == 2)
+        {
+            dannoAlNemico = 4;
+            probabilitaCritico = 50;
+        }
+        else if (stackDiSangue == 3)
+        {
+            dannoAlNemico = 5;
+            probabilitaCritico = 75;
+        }
     }
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
+
+    // TODO: Probabilità critico e danno critico: Con la probabilità di critico 10 % significa che un colpo su 10 è critico
+    void IncreaseCritChance(float critInc)
+    {
+        probabilitaCritico += critInc; 
+
+        //Never let the crit chance go out of range
+        if (probabilitaCritico > 100.0f) probabilitaCritico = 100.0f;
+    }
+
+    void DoAttack()
+    {
+        float randValue = Random.value;
+
+        if (randValue < probabilitaCritico)
+        {
+            //Do crit attack
+        }
+        else
+        {
+            //Do normal attack
+        }
+    }
 
     #region Movimento di base
     public void BaseMovement()
