@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     [SerializeField] float tempoAttaccoOrizBrutale = 0.75f;
     [SerializeField] float tempoAttaccoBrutale = 0.75f;
     [SerializeField] float moltiplicatoreRimbalzoAttaccoVerticale = 50;
-    [SerializeField] float probabilitaCritico = 25;   
+    [SerializeField] float probabilitaCritico = 25;
 
     [Header("Stack System")]
     [SerializeField] Slider barraStackDiSangue;
@@ -284,8 +284,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (input.HandleInput().PauseDown) GameManager.instance.PauseGame();//TODO: Spostare nel game manager
-
         if (!GameManager.instance.IsPaused)
         {
             stateMachine.currentState.HandleInput();
@@ -326,8 +324,10 @@ public class Player : MonoBehaviour
         if (ray.x < 0.47) dashFacingRight = false;
         else if (ray.x > 0.47) dashFacingRight = true;
 
+        Debug.Log(dashFacingRight);
+
         //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico), da sistemare, così è scritto male
-        if(stackDiSangue == 0)
+        if (stackDiSangue == 0)
         {
             dannoAlNemico = 2;
             probabilitaCritico = 0;
@@ -352,27 +352,27 @@ public class Player : MonoBehaviour
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
 
     // TODO: Probabilità critico e danno critico: Con la probabilità di critico 10 % significa che un colpo su 10 è critico
-    void IncreaseCritChance(float critInc)
-    {
-        probabilitaCritico += critInc; 
+    //void IncreaseCritChance(float critInc)
+    //{
+    //    probabilitaCritico += critInc;
 
-        //Never let the crit chance go out of range
-        if (probabilitaCritico > 100.0f) probabilitaCritico = 100.0f;
-    }
+    //    //Never let the crit chance go out of range
+    //    if (probabilitaCritico > 100.0f) probabilitaCritico = 100.0f;
+    //}
 
-    void DoAttack()
-    {
-        float randValue = Random.value;
+    //void DoAttack()
+    //{
+    //    float randValue = Random.value;
 
-        if (randValue < probabilitaCritico)
-        {
-            //Do crit attack
-        }
-        else
-        {
-            //Do normal attack
-        }
-    }
+    //    if (randValue < probabilitaCritico)
+    //    {
+    //        //Do crit attack
+    //    }
+    //    else
+    //    {
+    //        //Do normal attack
+    //    }
+    //}
 
     #region Movimento di base
     public void BaseMovement()
@@ -389,8 +389,6 @@ public class Player : MonoBehaviour
     public void HandleInput()
     {
         Input = input.HandleInput();
-
-        if (Input.ReloadGameDown) SceneManager.LoadScene(1, LoadSceneMode.Single);//TODO: Spostare nel game manager
 
         if (!GameManager.instance.IsPaused)
         {
@@ -568,7 +566,7 @@ public class Player : MonoBehaviour
     #region Prevenzione incastro negli angoli
     void RunCornerPrevention()//Fa camminare e saltare anche sul bordo di una piattaforma
     {
-        //Le linee sotto sono per quando i raggi non rilevano il terreno e il collider non entra nello spazio dell'oggetto in collisione, determina se il pg si muove o no. || TODO: Fixa il fatto che se sta su un angolo e salta di sotto senza muoversi sembra non triggerare il rilevamento del terreno quando lo tocca
+        //Le linee sotto sono per quando i raggi non rilevano il terreno e il collider non entra nello spazio dell'oggetto in collisione, determina se il pg si muove o no.
         isStuckInCorner = !isGrounded && LastPos == rb.position && lastJumpPressed + 1 < fixedFrame;
         Speed.y = isStuckInCorner ? 0 : Speed.y;
         LastPos = rb.position;
@@ -730,6 +728,7 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    #region Miscellaneous
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (stateMachine.currentState == dashingState)
@@ -745,6 +744,8 @@ public class Player : MonoBehaviour
                 ranged.GetComponent<CapsuleCollider2D>().isTrigger = true;
             }
         }
+
+        if (other.gameObject.CompareTag("Limite")) TakeDamage(MaxHP);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -752,4 +753,5 @@ public class Player : MonoBehaviour
         if (other.gameObject.TryGetComponent(out EnemyMelee melee)) melee.GetComponent<CapsuleCollider2D>().isTrigger = false;
         else if (other.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.GetComponent<CapsuleCollider2D>().isTrigger = false;
     }
+    #endregion
 }

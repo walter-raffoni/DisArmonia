@@ -8,6 +8,13 @@ public class DashingState : State
         stateMachine = _stateMachine;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        player.Anim.Play("DashAgile");
+    }
+
     public override void HandleInput()
     {
         base.HandleInput();

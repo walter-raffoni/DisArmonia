@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,9 +18,14 @@ public class GameManager : MonoBehaviour
 
     #region Campi privati
     private bool isPaused;
+    private ExtendedInputActions input;
     #endregion
 
-    private void Awake() => instance = this;
+    private void Awake()
+    {
+        instance = this;
+        input = instance.GetComponent<ExtendedInputActions>();
+    }
 
     private void Start()
     {
@@ -33,6 +39,10 @@ public class GameManager : MonoBehaviour
     {
         int cooldown = (int)player.CooldownStanceAttuale;
         stanceChangeCooldownText.text = "Cooldown Stance: " + cooldown.ToString() + "s";
+
+        if (input.HandleInput().PauseDown) instance.PauseGame();
+
+        if (input.HandleInput().ReloadGameDown) SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     public void PauseGame()

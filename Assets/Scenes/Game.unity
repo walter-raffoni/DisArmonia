@@ -6585,10 +6585,9 @@ GameObject:
   m_Component:
   - component: {fileID: 594954262}
   - component: {fileID: 594954263}
-  - component: {fileID: 594954264}
   m_Layer: 0
   m_Name: LimiteDX
-  m_TagString: Untagged
+  m_TagString: Limite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6633,18 +6632,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 50}
   m_EdgeRadius: 0
---- !u!114 &594954264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 594954261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed1a345175b0f0642ae4fb337f23401b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &618700596
 GameObject:
   m_ObjectHideFlags: 0
@@ -17822,10 +17809,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1794498817}
   - component: {fileID: 1794498818}
-  - component: {fileID: 1794498819}
   m_Layer: 0
   m_Name: LimiteSX
-  m_TagString: Untagged
+  m_TagString: Limite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17870,18 +17856,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 50}
   m_EdgeRadius: 0
---- !u!114 &1794498819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1794498816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed1a345175b0f0642ae4fb337f23401b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1796063385
 GameObject:
   m_ObjectHideFlags: 0
@@ -27890,20 +27864,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   rayLengthDetection: 0.05
+  cooldownDash: 2
   dashLength: 6
   dashPower: 30
   horizontalMultiplierDashEnd: 0.25
   attackPoint: {fileID: 728065158}
   verticalAttackPoint: {fileID: 282860524}
-  attackRange: 0.42
+  attackRangeAgile: 0.5
+  attackRangeBrutale: 0.42
   verticalAttackRange: 0.42
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
   dannoAlNemico: 2
-  tempoAttaccoOrizAgile: 0.5
+  tempoAttaccoOrizAgile: 0.75
   tempoAttaccoOrizBrutale: 0.75
   tempoAttaccoBrutale: 0.75
+  moltiplicatoreRimbalzoAttaccoVerticale: 50
+  probabilitaCritico: 25
   barraStackDiSangue: {fileID: 1674197988}
   animatorAgile: {fileID: 9100000, guid: 7203596e2446eb14082c543e45c3091f, type: 2}
   animatorBrutale: {fileID: 9100000, guid: 9ae76c4a0a092db489f56b28cf59b26b, type: 2}
@@ -28215,7 +28193,7 @@ Animator:
   m_GameObject: {fileID: 1852010289007548563}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ae76c4a0a092db489f56b28cf59b26b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7203596e2446eb14082c543e45c3091f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

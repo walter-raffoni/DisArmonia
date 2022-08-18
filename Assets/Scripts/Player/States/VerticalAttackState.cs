@@ -31,7 +31,7 @@ public class VerticalAttackState : State
         player.Move();
     }
 
-    void IsTopPoint()//permette all'nimazione di atterraggio di airbornestate di non buggare tutto
+    void IsTopPoint()//permette all'animazione di atterraggio di airbornestate di non buggare tutto
     {
         if (!player.IsGrounded)
         {

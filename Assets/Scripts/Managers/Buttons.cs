@@ -23,8 +23,4 @@ public class Buttons : MonoBehaviour
         Application.Quit();
 #endif
     }
-
-    //public void AddStack() => GameManager.instance.player.StackDiSangue++;
-
-    //public void RemoveStack() => GameManager.instance.player.StackDiSangue--;
 }
