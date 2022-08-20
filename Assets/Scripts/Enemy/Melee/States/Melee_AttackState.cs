@@ -12,7 +12,7 @@ public class Melee_AttackState : State
     {
         base.Enter();
 
-        enemyMelee.Anim.Play("MeleeAttackAnimation");
+        enemyMelee.Anim.Play("Melee_Attack");
     }
 
     public override void PhysicsUpdate()

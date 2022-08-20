@@ -322,6 +322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1852010289007548564}
   stanceChangeCooldownText: {fileID: 323433875}
+  barraStackDiSangue: {fileID: 1674197988}
+  barraVita: {fileID: 280523956}
   pauseObject: {fileID: 110142917}
 --- !u!4 &88803293
 Transform:
@@ -27844,12 +27846,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
-  barraVita: {fileID: 280523956}
   slowingValue: 60
   moveClamp: 13
   speedingValue: 120
   forceDecay: 1
-  maxIdleSpeed: 2
   fallClamp: -60
   minFallSpeed: 80
   maxFallSpeed: 160
@@ -27882,9 +27882,6 @@ MonoBehaviour:
   tempoAttaccoBrutale: 0.75
   moltiplicatoreRimbalzoAttaccoVerticale: 50
   probabilitaCritico: 25
-  barraStackDiSangue: {fileID: 1674197988}
-  animatorAgile: {fileID: 9100000, guid: 7203596e2446eb14082c543e45c3091f, type: 2}
-  animatorBrutale: {fileID: 9100000, guid: 9ae76c4a0a092db489f56b28cf59b26b, type: 2}
   cooldownStance: 3
   colliderAgile: {fileID: 964230808}
   colliderBrutale: {fileID: 272186845}
@@ -28193,7 +28190,7 @@ Animator:
   m_GameObject: {fileID: 1852010289007548563}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7203596e2446eb14082c543e45c3091f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9ae76c4a0a092db489f56b28cf59b26b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

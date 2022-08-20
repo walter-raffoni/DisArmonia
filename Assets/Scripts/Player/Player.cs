@@ -9,14 +9,12 @@ public class Player : MonoBehaviour
 {
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
-    [SerializeField] Slider barraVita;
 
     [Header("Movement System")]
     [SerializeField] float slowingValue = 60;
     [SerializeField] float moveClamp = 13;
     [SerializeField] float speedingValue = 120;
     [SerializeField] float forceDecay = 1;//Effectors
-    [SerializeField, Range(0f, 3f)] float maxIdleSpeed = 2;
 
     [Header("Gravity System")]
     [SerializeField] float fallClamp = -60;
@@ -55,11 +53,6 @@ public class Player : MonoBehaviour
     [SerializeField] float tempoAttaccoBrutale = 0.75f;
     [SerializeField] float moltiplicatoreRimbalzoAttaccoVerticale = 50;
     [SerializeField] float probabilitaCritico = 25;
-
-    [Header("Stack System")]
-    [SerializeField] Slider barraStackDiSangue;
-    [SerializeField] RuntimeAnimatorController animatorAgile;
-    [SerializeField] RuntimeAnimatorController animatorBrutale;
 
     [Header("Stance System")]
     [SerializeField] float cooldownStance = 1;
@@ -108,9 +101,6 @@ public class Player : MonoBehaviour
     }
 
     public Animator Anim => anim;
-
-    public Slider BarraVita => barraVita;
-    public Slider BarraStackDiSangue => barraStackDiSangue;
 
     public bool IsGrounded => isGrounded;
     public bool DashAbility => dashAbility;
@@ -299,21 +289,30 @@ public class Player : MonoBehaviour
 
         if (cooldownDashAttuale > 0) cooldownDashAttuale -= Time.deltaTime;
 
-        barraVita.value = currentHP;
-        barraStackDiSangue.value = stackDiSangue;
+        GameManager.instance.BarraVita.value = currentHP;
+        GameManager.instance.BarraStackDiSangue.value = stackDiSangue;
 
         //Extended animator
         var inputPoint = Mathf.Abs(Input.X);
 
         if (!GameManager.instance.IsPaused)//Per non fargli ribaltare lo sprite in pausa
         {
-            if (Input.X != 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState))
-            {
-                transform.localScale = new Vector3(Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
-            }
+            if (Input.X != 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState)) transform.localScale = new Vector3(Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
         }
 
-        anim.SetFloat("IdleSpeed", Mathf.Lerp(1, maxIdleSpeed, inputPoint));//Fa aumentare la velocità dell'animazione quando corre
+        if (stateMachine.currentState == standingState)
+        {
+            if (stance == TipoStance.Agile)
+            {
+                if (inputPoint == 0) anim.Play("Agile_Idle");
+                else if (inputPoint > 0) anim.Play("Agile_Running");
+            }
+            else if (stance == TipoStance.Brutale)
+            {
+                if (inputPoint == 0) anim.Play("Brutale_Idle");
+                else if (inputPoint > 0) anim.Play("Brutale_Running");
+            }
+        }
 
         DetectGroundColor();
 
@@ -323,8 +322,6 @@ public class Player : MonoBehaviour
 
         if (ray.x < 0.47) dashFacingRight = false;
         else if (ray.x > 0.47) dashFacingRight = true;
-
-        Debug.Log(dashFacingRight);
 
         //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico), da sistemare, così è scritto male
         if (stackDiSangue == 0)
@@ -414,7 +411,6 @@ public class Player : MonoBehaviour
     {
         if (stanceAttivata == TipoStance.Agile)
         {
-            anim.runtimeAnimatorController = animatorAgile;
             cooldownStanceAttuale = cooldownStance;
             colliderAgile.gameObject.SetActive(true);
             colliderBrutale.gameObject.SetActive(false);
@@ -429,7 +425,6 @@ public class Player : MonoBehaviour
 
         if (stanceAttivata == TipoStance.Brutale)
         {
-            anim.runtimeAnimatorController = animatorBrutale;
             cooldownStanceAttuale = cooldownStance;
             colliderAgile.gameObject.SetActive(false);
             colliderBrutale.gameObject.SetActive(true);
@@ -688,7 +683,6 @@ public class Player : MonoBehaviour
     {
         if (grounded)
         {
-            anim.SetTrigger("Grounded");
             audioSource.PlayOneShot(footsteps[Random.Range(0, footsteps.Length)]);
             moveParticles.Play();
 

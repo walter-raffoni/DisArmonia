@@ -12,7 +12,7 @@ public class VerticalAttackState : State
     {
         base.Enter();
 
-        player.Anim.Play("AttaccoSalto");
+        player.Anim.Play("Brutale_AttaccoSalto");
     }
 
     public override void HandleInput() { } //DEVE RIMANERE VUOTO, COSì NON SI MUOVE DURANTE LA CADUTA

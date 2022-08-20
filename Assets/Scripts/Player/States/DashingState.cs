@@ -12,7 +12,7 @@ public class DashingState : State
     {
         base.Enter();
 
-        player.Anim.Play("DashAgile");
+        player.Anim.Play("Agile_Dash");
     }
 
     public override void HandleInput()
@@ -47,44 +47,53 @@ public class DashingState : State
 
     void Dash()
     {
-        float floatFacingRight = 0;
+        int intFacingRight = 0;
+        Vector2 velocityExt = Vector2.zero;
 
-        if (player.DashFacingRight == false) floatFacingRight = -1;
-        else if (player.DashFacingRight == true) floatFacingRight = 1;
+        if (player.DashFacingRight == false) intFacingRight = -1;
+        else if (player.DashFacingRight == true) intFacingRight = 1;
 
-        if (floatFacingRight - player.transform.localScale.x == 0)
+        if (player.DashToConsume && player.CanDash)
         {
-            if (player.DashToConsume && player.CanDash)
-            {
-                var vel = new Vector2(floatFacingRight, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
-                if (vel == Vector2.zero) { player.DashToConsume = false; return; }
-                //if (floatFacingRight - player.transform.localScale.x != 0) stateMachine.ChangeState(player.standingState);
-                player.DashVelocity = vel * player.DashPower;
-                player.OnDashingChanged(true);
-                player.CanDash = false;
-                player.HasStartedDashing = player.FixedFrame;
+            if ((intFacingRight == -1) && (intFacingRight - player.Input.X == 0)) velocityExt = new Vector2(-1, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
+            else if ((intFacingRight == 1) && (intFacingRight - player.Input.X == 0)) velocityExt = new Vector2(1, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
 
-                player.ForceBuildup = Vector2.zero;//Toglie ogni forza aggiunta dall'esterno
+            else if ((intFacingRight == -1) && (intFacingRight - player.Input.X != 0))
+            {
+                velocityExt = new Vector2(intFacingRight, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
+                player.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if ((intFacingRight == 1) && (intFacingRight - player.Input.X != 0))
+            {
+                velocityExt = new Vector2(intFacingRight, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
+                player.GetComponent<SpriteRenderer>().flipX = false;
             }
 
-            player.Speed.x = player.DashVelocity.x;
-            player.Speed.y = player.DashVelocity.y;
+            if (velocityExt == Vector2.zero) { player.DashToConsume = false; return; }
+            player.DashVelocity = velocityExt * player.DashPower;
+            player.OnDashingChanged(true);
+            player.CanDash = false;
+            player.HasStartedDashing = player.FixedFrame;
 
-            //Annulla la corsa quando il tempo è finita o è stata raggiunta la distanza di sicurezza mssima
-            if (player.HasStartedDashing + player.DashLength < player.FixedFrame)
-            {
-                player.OnDashingChanged(false);
-                if (player.Speed.y > 0) player.Speed.y = 0;
-                player.Speed.x *= player.HorizontalMultiplierDashEnd;
-                if (player.IsGrounded)
-                {
-                    player.CanDash = true;
-                    stateMachine.ChangeState(player.standingState);
-                }
-                else stateMachine.ChangeState(player.airborneState);//così non passa allo stato di standing per un attimo anche se in aria
-            }
-            player.DashToConsume = false;
+            player.ForceBuildup = Vector2.zero;//Toglie ogni forza aggiunta dall'esterno
         }
-        else stateMachine.ChangeState(player.standingState);
+
+        player.Speed.x = player.DashVelocity.x;
+        player.Speed.y = player.DashVelocity.y;
+
+        //Annulla la corsa quando il tempo è finita o è stata raggiunta la distanza di sicurezza mssima
+        if (player.HasStartedDashing + player.DashLength < player.FixedFrame)
+        {
+            player.OnDashingChanged(false);
+            if (player.Speed.y > 0) player.Speed.y = 0;
+            player.Speed.x *= player.HorizontalMultiplierDashEnd;
+            if (player.IsGrounded)
+            {
+                player.CanDash = true;
+                stateMachine.ChangeState(player.standingState);
+            }
+            else stateMachine.ChangeState(player.airborneState);//così non passa allo stato di standing per un attimo anche se in aria
+        }
+        player.DashToConsume = false;
     }
 }

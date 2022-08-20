@@ -14,8 +14,10 @@ public class StandingState : State
 
         player.DashToConsume = false;
 
-        if (player.Stance == Player.TipoStance.Agile) player.Anim.Play("IdleAgile");
-        else if (player.Stance == Player.TipoStance.Brutale) player.Anim.Play("Idle");
+        player.GetComponent<SpriteRenderer>().flipX = false;//serve per togliere il flip dato dal dash in direzione del mouse
+
+        if (player.Stance == Player.TipoStance.Agile) player.Anim.Play("Agile_Idle");
+        else if (player.Stance == Player.TipoStance.Brutale) player.Anim.Play("Brutale_Idle");
     }
 
     public override void HandleInput()

@@ -58,13 +58,13 @@ public class AirborneState : State
 
         if (player.Stance == Player.TipoStance.Brutale && stateMachine.currentState != player.verticalAttackState)
         {
-            if (player.Velocity.y >= 0) player.Anim.Play("Jump");
-            else if (player.Velocity.y < 0) player.Anim.Play("AirborneAtterra");
+            if (player.Velocity.y >= 0) player.Anim.Play("Brutale_Jump");
+            else if (player.Velocity.y < 0) player.Anim.Play("Brutale_AirborneAtterra");
         }
         else if (player.Stance == Player.TipoStance.Agile && stateMachine.currentState != player.verticalAttackState)
         {
-            if (player.Velocity.y >= 0) player.Anim.Play("JumpAgile");
-            else if (player.Velocity.y < 0) player.Anim.Play("AirborneAtterraAgile");
+            if (player.Velocity.y >= 0) player.Anim.Play("Agile_Jump");
+            else if (player.Velocity.y < 0) player.Anim.Play("Agile_AirborneAtterra");
         }
     }
 

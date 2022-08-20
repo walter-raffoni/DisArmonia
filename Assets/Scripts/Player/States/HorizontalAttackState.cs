@@ -22,23 +22,20 @@ public class HorizontalAttackState : State
             if (player.ComboAttacco == 0)
             {
                 player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile;
-                player.Anim.Play("Attacco1Agile");
-                Debug.Log("AGILE 0 " + player.ComboAttacco.ToString());
+                player.Anim.Play("Agile_Attacco1");
                 player.ComboAttacco++;
             }
             else if (player.ComboAttacco == 1)
             {
                 player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile * .5f;
-                player.Anim.Play("Attacco2Agile");
-                Debug.Log("AGILE 1 " + player.ComboAttacco.ToString());
+                player.Anim.Play("Agile_Attacco2");
                 player.ComboAttacco++;
             }
             else if (player.ComboAttacco == 2)
             {
                 player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile;
-                player.Anim.Play("Attacco3Agile");
+                player.Anim.Play("Agile_Attacco3");
                 player.ComboAttacco = 0;
-                Debug.Log("AGILE 2 " + player.ComboAttacco.ToString());
             }
         }
         else if (player.Stance == Player.TipoStance.Brutale)
@@ -46,17 +43,17 @@ public class HorizontalAttackState : State
             player.TempoAttaccoAttuale = player.TempoAttaccoOrizBrutale;
             if (player.ComboAttacco == 0)
             {
-                player.Anim.Play("Attacco1");
+                player.Anim.Play("Brutale_Attacco1");
                 player.ComboAttacco++;
             }
             else if (player.ComboAttacco == 1)
             {
-                player.Anim.Play("Attacco2");
+                player.Anim.Play("Brutale_Attacco2");
                 player.ComboAttacco++;
             }
             else if (player.ComboAttacco == 2)
             {
-                player.Anim.Play("Attacco3");
+                player.Anim.Play("Brutale_Attacco3");
                 player.ComboAttacco = 0;
             }
         }

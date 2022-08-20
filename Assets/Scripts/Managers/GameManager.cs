@@ -1,12 +1,15 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Player System")]
-    public Player player;
-    [SerializeField] TextMeshProUGUI stanceChangeCooldownText;
+    [SerializeField] Player player;
+    [SerializeField] Slider barraVita;
+    [SerializeField] Slider barraStackDiSangue;
+    [SerializeField] TextMeshProUGUI stanceChangeCooldownText;   
 
     [Header("Pause System")]
     [SerializeField] GameObject pauseObject;
@@ -14,6 +17,8 @@ public class GameManager : MonoBehaviour
     #region Campi pubblici
     public static GameManager instance;
     public bool IsPaused => isPaused;
+    public Slider BarraVita => barraVita;
+    public Slider BarraStackDiSangue => barraStackDiSangue;
     #endregion
 
     #region Campi privati
@@ -51,8 +56,8 @@ public class GameManager : MonoBehaviour
         {
             isPaused = true;
             pauseObject.SetActive(true);
-            player.BarraVita.gameObject.SetActive(false);
-            player.BarraStackDiSangue.gameObject.SetActive(false);
+            barraVita.gameObject.SetActive(false);
+            barraStackDiSangue.gameObject.SetActive(false);
             stanceChangeCooldownText.gameObject.SetActive(false);
             Time.timeScale = 0;
         }
@@ -60,8 +65,8 @@ public class GameManager : MonoBehaviour
         {
             isPaused = false;
             pauseObject.SetActive(false);
-            player.BarraVita.gameObject.SetActive(true);
-            player.BarraStackDiSangue.gameObject.SetActive(true);
+            barraVita.gameObject.SetActive(true);
+            barraStackDiSangue.gameObject.SetActive(true);
             stanceChangeCooldownText.gameObject.SetActive(true);
             Time.timeScale = 1;
         }

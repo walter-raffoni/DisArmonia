@@ -12,7 +12,7 @@ public class Melee_FollowingState : State
     {
         base.Enter();
 
-        enemyMelee.Anim.Play("MeleeIdleAnimation");
+        enemyMelee.Anim.Play("Melee_Idle");
     }
 
     public override void PhysicsUpdate()

@@ -13,9 +13,9 @@ public class BrutalAttackState : State
         base.Enter();
 
         player.TempoAttaccoAttuale = player.TempoAttaccoBrutale;
-        if (player.StackDiSangue == 1) player.Anim.Play("BassaCarica");
-        else if (player.StackDiSangue == 2) player.Anim.Play("MediaCarica");
-        else if (player.StackDiSangue == 3) player.Anim.Play("PienaCarica");
+        if (player.StackDiSangue == 1) player.Anim.Play("Brutale_BassaCarica");
+        else if (player.StackDiSangue == 2) player.Anim.Play("Brutale_MediaCarica");
+        else if (player.StackDiSangue == 3) player.Anim.Play("Brutale_PienaCarica");
     }
 
     public override void LogicUpdate()

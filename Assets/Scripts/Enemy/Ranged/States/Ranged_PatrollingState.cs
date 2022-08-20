@@ -12,7 +12,7 @@ public class Ranged_PatrollingState : State
     {
         base.Enter();
 
-        enemyRanged.Anim.Play("RangedAnimation");
+        enemyRanged.Anim.Play("Ranged_IdleAndAttack");
 
         enemyRanged.CancelInvoke("Spara");//sennò continua a sparare
     }
