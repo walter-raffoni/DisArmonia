@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Slider barraVita;
     [SerializeField] Slider barraStackDiSangue;
-    [SerializeField] TextMeshProUGUI stanceChangeCooldownText;   
+    [SerializeField] TextMeshProUGUI stanceChangeCooldownText;
+    [SerializeField] TextMeshProUGUI dashCooldownText;
 
     [Header("Pause System")]
     [SerializeField] GameObject pauseObject;
@@ -36,14 +37,20 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        int cooldown = (int)player.CooldownStanceAttuale;
-        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldown.ToString() + "s";
+        int cooldownStance = (int)player.CooldownStanceAttuale;
+        int cooldownDash = (int)player.CooldownDashAttuale;
+
+        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldownStance.ToString() + "s";
+        dashCooldownText.text = "Cooldown Dash: " + cooldownDash.ToString() + "s";
     }
 
     private void Update()
     {
-        int cooldown = (int)player.CooldownStanceAttuale;
-        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldown.ToString() + "s";
+        int cooldownStance = (int)player.CooldownStanceAttuale;
+        int cooldownDash = (int)player.CooldownDashAttuale;
+
+        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldownStance.ToString() + "s";
+        dashCooldownText.text = "Cooldown Dash: " + cooldownDash.ToString() + "s";
 
         if (input.HandleInput().PauseDown) instance.PauseGame();
 
