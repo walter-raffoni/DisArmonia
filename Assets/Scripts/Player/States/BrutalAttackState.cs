@@ -16,6 +16,9 @@ public class BrutalAttackState : State
         if (player.StackDiSangue == 1) player.Anim.Play("Brutale_BassaCarica");
         else if (player.StackDiSangue == 2) player.Anim.Play("Brutale_MediaCarica");
         else if (player.StackDiSangue == 3) player.Anim.Play("Brutale_PienaCarica");
+
+        player.MinFallSpeed = 80;
+        player.MaxFallSpeed = 160;
     }
 
     public override void LogicUpdate()

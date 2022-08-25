@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
@@ -15,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] float moveClamp = 13;
     [SerializeField] float speedingValue = 120;
     [SerializeField] float forceDecay = 1;//Effectors
+    [SerializeField] float rimbalzoOrizzontale = 5;
 
     [Header("Gravity System")]
     [SerializeField] float fallClamp = -60;
@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     [SerializeField] float tempoAttaccoBrutale = 0.75f;
     [SerializeField] float moltiplicatoreRimbalzoAttaccoVerticale = 50;
     [SerializeField] float probabilitaCritico = 25;
+    [SerializeField] int dannoCriticoAggiuntivo = 2;
 
     [Header("Stance System")]
     [SerializeField] float cooldownStance = 1;
@@ -151,8 +152,16 @@ public class Player : MonoBehaviour
     public float DashPower => dashPower;
     public float JumpHeight => jumpHeight;
     public float JumpTopLimit => jumpTopLimit;
-    public float MinFallSpeed => minFallSpeed;
-    public float MaxFallSpeed => maxFallSpeed;
+    public float MinFallSpeed
+    {
+        get { return minFallSpeed; }
+        set { minFallSpeed = value; }
+    }
+    public float MaxFallSpeed
+    {
+        get { return maxFallSpeed; }
+        set { maxFallSpeed = value; }
+    }
     public float TempoAttaccoBrutale => tempoAttaccoBrutale;
     public float TempoAttaccoOrizAgile => tempoAttaccoOrizAgile;
     public float MaxFallSpeedParticles => maxFallSpeedParticles;
@@ -323,7 +332,7 @@ public class Player : MonoBehaviour
         if (ray.x < 0.47) dashFacingRight = false;
         else if (ray.x > 0.47) dashFacingRight = true;
 
-        //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico), da sistemare, così è scritto male
+        //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico)
         if (stackDiSangue == 0)
         {
             dannoAlNemico = 2;
@@ -347,29 +356,6 @@ public class Player : MonoBehaviour
     }
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
-
-    // TODO: Probabilità critico e danno critico: Con la probabilità di critico 10 % significa che un colpo su 10 è critico
-    //void IncreaseCritChance(float critInc)
-    //{
-    //    probabilitaCritico += critInc;
-
-    //    //Never let the crit chance go out of range
-    //    if (probabilitaCritico > 100.0f) probabilitaCritico = 100.0f;
-    //}
-
-    //void DoAttack()
-    //{
-    //    float randValue = Random.value;
-
-    //    if (randValue < probabilitaCritico)
-    //    {
-    //        //Do crit attack
-    //    }
-    //    else
-    //    {
-    //        //Do normal attack
-    //    }
-    //}
 
     #region Movimento di base
     public void BaseMovement()
@@ -641,15 +627,31 @@ public class Player : MonoBehaviour
     #region Attacco
     public void DealDamage()
     {
+        // TODO: Probabilità critico e danno critico: Con la probabilità di critico 10 % significa che un colpo su 10 è critico
+        float randValue = Random.value * 100;
+
+        if (randValue > 100) randValue = 100;
+
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);//rileva nemici nel raggio dell'attacco
 
         //danneggia i nemici
         foreach (Collider2D enemy in hitEnemies)
         {
-            stackDiSangue++;
-            if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico);
-            if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico);
+            if (randValue < probabilitaCritico)
+            {
+                stackDiSangue++;
+                if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
+                if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
+            }
+            else
+            {
+                stackDiSangue++;
+                if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico);
+                if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico);
+            }
+
         }
+        Debug.Log(randValue);
     }
 
     public void DealVerticalDamage()
@@ -736,6 +738,18 @@ public class Player : MonoBehaviour
             {
                 ranged.TakeDamage(dannoAlNemico);
                 ranged.GetComponent<CapsuleCollider2D>().isTrigger = true;
+            }
+        }
+
+        if (stateMachine.currentState == standingState)
+        {
+            if (other.gameObject.TryGetComponent(out EnemyMelee melee))
+            {
+                rb.AddForce(Vector2.left * rimbalzoOrizzontale, ForceMode2D.Force);
+            }
+            else if (other.gameObject.TryGetComponent(out EnemyRanged ranged))
+            {
+                rb.AddForce(Vector2.left * rimbalzoOrizzontale, ForceMode2D.Force);
             }
         }
 

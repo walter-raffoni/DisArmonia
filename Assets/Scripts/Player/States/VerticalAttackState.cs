@@ -13,9 +13,12 @@ public class VerticalAttackState : State
         base.Enter();
 
         player.Anim.Play("Brutale_AttaccoSalto");
+
+        player.MinFallSpeed = 40;
+        player.MaxFallSpeed = 70;
     }
 
-    public override void HandleInput() { } //DEVE RIMANERE VUOTO, COSì NON SI MUOVE DURANTE LA CADUTA
+    public override void HandleInput() { } //Deve rimanere vuoto, così non si muove durante la caduta
 
     public override void PhysicsUpdate()
     {

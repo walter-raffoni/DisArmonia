@@ -23,6 +23,10 @@ public class Ranged_AttackState : State
         if (enemyRanged.Target.position.x < enemyRanged.transform.position.x && enemyRanged.FacingRight) enemyRanged.Flip();
 
         if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.Target.position) >= enemyRanged.DistPgTroppoLontano) stateMachine.ChangeState(enemyRanged.patrollingState);
-        else if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.Target.position) <= enemyRanged.DistPgTroppoVicino) enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.transform.position + Vector3.right, enemyRanged.Speed * Time.fixedDeltaTime);
+        else if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.Target.position) <= enemyRanged.DistPgTroppoVicino)
+        {
+            if (enemyRanged.FacingRight) enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.transform.position + Vector3.left, enemyRanged.Speed * Time.fixedDeltaTime);
+            else if (!enemyRanged.FacingRight) enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.transform.position + Vector3.right, enemyRanged.Speed * Time.fixedDeltaTime);
+        }
     }
 }

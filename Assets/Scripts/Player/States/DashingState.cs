@@ -13,6 +13,11 @@ public class DashingState : State
         base.Enter();
 
         player.Anim.Play("Agile_Dash");
+
+        player.MinFallSpeed = 80;
+        player.MaxFallSpeed = 160;
+
+        //Debug.Log(stateMachine.currentState);
     }
 
     public override void HandleInput()
@@ -58,15 +63,10 @@ public class DashingState : State
             if ((intFacingRight == -1) && (intFacingRight - player.Input.X == 0)) velocityExt = new Vector2(-1, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
             else if ((intFacingRight == 1) && (intFacingRight - player.Input.X == 0)) velocityExt = new Vector2(1, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
 
-            else if ((intFacingRight == -1) && (intFacingRight - player.Input.X != 0))
+            else if ((intFacingRight == -1) && (intFacingRight - player.Input.X != 0) || (intFacingRight == 1) && (intFacingRight - player.Input.X != 0))
             {
                 velocityExt = new Vector2(intFacingRight, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
                 player.GetComponent<SpriteRenderer>().flipX = true;
-            }
-            else if ((intFacingRight == 1) && (intFacingRight - player.Input.X != 0))
-            {
-                velocityExt = new Vector2(intFacingRight, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
-                player.GetComponent<SpriteRenderer>().flipX = false;
             }
 
             if (velocityExt == Vector2.zero) { player.DashToConsume = false; return; }

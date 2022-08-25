@@ -29,6 +29,9 @@ public class AirborneState : State
             player.SetColor(player.LaunchParticles);
             player.JumpParticles.Play();
         }
+
+        player.MinFallSpeed = 80;
+        player.MaxFallSpeed = 160;
     }
 
     public override void HandleInput()

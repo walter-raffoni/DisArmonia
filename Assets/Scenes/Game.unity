@@ -1373,7 +1373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 443491378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.725, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 618700601}
@@ -6185,7 +6185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491683967}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 75.8, y: 0.9, z: -2}
+  m_LocalPosition: {x: 9.68, y: -0.53, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 398314387}
@@ -6340,7 +6340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 75.8, y: 0.9, z: -2}
+  m_LocalPosition: {x: 9.68, y: -0.53, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -18190,7 +18190,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117459978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.85, z: 0}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 618700601}
@@ -27811,7 +27811,7 @@ MonoBehaviour:
   verticalAttackPoint: {fileID: 282860524}
   attackRangeAgile: 0.5
   attackRangeBrutale: 0.42
-  verticalAttackRange: 0.42
+  verticalAttackRange: 1
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
@@ -27819,7 +27819,7 @@ MonoBehaviour:
   tempoAttaccoOrizAgile: 0.75
   tempoAttaccoOrizBrutale: 0.75
   tempoAttaccoBrutale: 0.75
-  moltiplicatoreRimbalzoAttaccoVerticale: 50
+  moltiplicatoreRimbalzoAttaccoVerticale: 2.5
   probabilitaCritico: 25
   cooldownStance: 3
   colliderAgile: {fileID: 964230808}
@@ -27844,6 +27844,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b18b6bd081c46eb48890d12e052cbbd9, type: 3}
   - {fileID: 8300000, guid: a42ad5ad97b59d042bb11c6713a26100, type: 3}
   doubleJumpClip: {fileID: 8300000, guid: 0d11fd7368b306b4c900241e3dadf28f, type: 3}
+  rimbalzoOrizzontale: 2.5
 --- !u!82 &1852010289007548565
 AudioSource:
   m_ObjectHideFlags: 0
@@ -42733,7 +42734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852010289007548563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 75.3, y: 0.9, z: 0}
+  m_LocalPosition: {x: 9.18, y: -0.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1852010290115113642}

@@ -57,6 +57,9 @@ public class HorizontalAttackState : State
                 player.ComboAttacco = 0;
             }
         }
+
+        player.MinFallSpeed = 80;
+        player.MaxFallSpeed = 160;
     }
 
     public override void HandleInput()
