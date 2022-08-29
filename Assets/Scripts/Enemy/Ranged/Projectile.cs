@@ -43,7 +43,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponentInParent<Player>() != null)
+        if (other.GetComponentInParent<Player>() != null && !other.GetComponentInParent<Player>().IsInvulnerable)
         {
             other.GetComponentInParent<Player>().TakeDamage(puntiDanno);
             Destroy(gameObject);

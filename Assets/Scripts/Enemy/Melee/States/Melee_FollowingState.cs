@@ -13,6 +13,8 @@ public class Melee_FollowingState : State
         base.Enter();
 
         enemyMelee.Anim.Play("Melee_Idle");
+
+        enemyMelee.AttackEnded = false;
     }
 
     public override void PhysicsUpdate()

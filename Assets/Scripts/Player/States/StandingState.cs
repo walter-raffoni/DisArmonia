@@ -22,7 +22,7 @@ public class StandingState : State
         player.MinFallSpeed = 80;
         player.MaxFallSpeed = 160;
 
-        //Debug.Log(stateMachine.currentState);
+        player.ComboAttacco = 0;
     }
 
     public override void HandleInput()
@@ -74,6 +74,6 @@ public class StandingState : State
 
     void CanDash()
     {
-        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.DashAbility && player.CooldownDashAttuale <= 0) stateMachine.ChangeState(player.dashingState);
+        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.DashAbility && player.CooldownDashAttuale <= 0 && !player.EnemyTouched) stateMachine.ChangeState(player.dashingState);
     }
 }

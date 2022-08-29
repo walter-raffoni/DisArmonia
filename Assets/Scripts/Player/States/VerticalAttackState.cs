@@ -16,9 +16,16 @@ public class VerticalAttackState : State
 
         player.MinFallSpeed = 40;
         player.MaxFallSpeed = 70;
+
+        player.ComboAttacco = 0;
     }
 
-    public override void HandleInput() { } //Deve rimanere vuoto, così non si muove durante la caduta
+    public override void HandleInput() //se non si vuole il movimento è da lasciare vuota ma non da rimuovere
+    { 
+        base.HandleInput();
+
+        player.HandleInput();
+    }
 
     public override void PhysicsUpdate()
     {

@@ -31,12 +31,18 @@ public class EnemyMelee : MonoBehaviour
     public Transform StartPoint => startPoint;
     public float AttaccoGiocatoreDist => attaccoGiocatoreDist;
     public float GiocatoreRilevatoDist => giocatoreRilevatoDist;
+    public bool AttackEnded
+    {
+        get { return attackEnded; }
+        set { attackEnded = value; }
+    }
     #endregion
 
     #region Campi privati
     private Animator anim;
     private bool facingRight = true;
     private int currentHP, stanceMaggioreDanno;
+    private bool attackEnded;
     #endregion
 
     #region FSM
@@ -100,7 +106,9 @@ public class EnemyMelee : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.transform.position) < attaccoGiocatoreDist)
         {
-            if (target.TryGetComponent(out Player player)) player.TakeDamage(puntiDanno);
+            if (target.TryGetComponent(out Player player) && !player.IsInvulnerable) player.TakeDamage(puntiDanno);
         }
     }
+
+    public void OnAttackEnd() => attackEnded = true;
 }

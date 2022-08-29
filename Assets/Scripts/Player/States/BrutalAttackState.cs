@@ -19,6 +19,8 @@ public class BrutalAttackState : State
 
         player.MinFallSpeed = 80;
         player.MaxFallSpeed = 160;
+
+        player.ComboAttacco = 0;
     }
 
     public override void LogicUpdate()

@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     [SerializeField] float moveClamp = 13;
     [SerializeField] float speedingValue = 120;
     [SerializeField] float forceDecay = 1;//Effectors
-    [SerializeField] float rimbalzoOrizzontale = 5;
 
     [Header("Gravity System")]
     [SerializeField] float fallClamp = -60;
@@ -51,7 +50,7 @@ public class Player : MonoBehaviour
     [SerializeField] float tempoAttaccoOrizAgile = 0.75f;
     [SerializeField] float tempoAttaccoOrizBrutale = 0.75f;
     [SerializeField] float tempoAttaccoBrutale = 0.75f;
-    [SerializeField] float moltiplicatoreRimbalzoAttaccoVerticale = 50;
+    [SerializeField] float rimbalzoVerticale = 2.5f;
     [SerializeField] float probabilitaCritico = 25;
     [SerializeField] int dannoCriticoAggiuntivo = 2;
 
@@ -104,6 +103,7 @@ public class Player : MonoBehaviour
     public Animator Anim => anim;
 
     public bool IsGrounded => isGrounded;
+    public bool EnemyTouched => enemyTouched;
     public bool DashAbility => dashAbility;
     public bool HasHitUp => hasHitUp;
     public bool DoubleJumpAbility => doubleJumpAbility;
@@ -115,6 +115,11 @@ public class Player : MonoBehaviour
     {
         get { return didBufferedJump; }
         set { didBufferedJump = value; }
+    }
+    public bool IsInvulnerable
+    {
+        get { return isInvulnerable; }
+        set { isInvulnerable = value; }
     }
     public bool CanDash
     {
@@ -234,7 +239,7 @@ public class Player : MonoBehaviour
 
     private int currentHP, comboAttacco, stackDiSangue, fixedFrame;
 
-    private bool doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyotePriv, canUseDoubleJump, canDash, dashFacingRight;
+    private bool enemyTouched, doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyotePriv, canUseDoubleJump, canDash, dashFacingRight, isInvulnerable;
     private bool endedJumpEarly = true;
 
     private RaycastHit2D[] hitsUp = new RaycastHit2D[1];
@@ -665,12 +670,12 @@ public class Player : MonoBehaviour
             if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
             {
                 melee.TakeDamage(dannoAlNemico);
-                rb.AddForce(Vector2.up * moltiplicatoreRimbalzoAttaccoVerticale, ForceMode2D.Force);
+                rb.AddForce(Vector2.up * rimbalzoVerticale, ForceMode2D.Force);
             }
             if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged))
             {
                 ranged.TakeDamage(dannoAlNemico);
-                rb.AddForce(Vector2.up * moltiplicatoreRimbalzoAttaccoVerticale, ForceMode2D.Force);
+                rb.AddForce(Vector2.up * rimbalzoVerticale, ForceMode2D.Force);
             }
         }
     }
@@ -741,19 +746,32 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (stateMachine.currentState == standingState)
-        {
-            if (other.gameObject.TryGetComponent(out EnemyMelee melee))
-            {
-                rb.AddForce(Vector2.left * rimbalzoOrizzontale, ForceMode2D.Force);
-            }
-            else if (other.gameObject.TryGetComponent(out EnemyRanged ranged))
-            {
-                rb.AddForce(Vector2.left * rimbalzoOrizzontale, ForceMode2D.Force);
-            }
-        }
-
         if (other.gameObject.CompareTag("Limite")) TakeDamage(MaxHP);
+
+        if (other.gameObject.TryGetComponent(out EnemyMelee meleeT))
+        {
+            enemyTouched = true;//così il dash non è fattibile se a contatto con il nemico
+            dashToConsume = false;
+        }
+        else if (other.gameObject.TryGetComponent(out EnemyRanged rangedT))
+        {
+            enemyTouched = true;
+            dashToConsume = false;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.TryGetComponent(out EnemyMelee meleeT))
+        {
+            enemyTouched = false;
+            dashToConsume = false;
+        }
+        else if (other.gameObject.TryGetComponent(out EnemyRanged rangedT))
+        {
+            enemyTouched = false;
+            dashToConsume = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)

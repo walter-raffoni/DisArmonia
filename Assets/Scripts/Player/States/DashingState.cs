@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DashingState : State
 {
+    //TODO: Lla direzione verso la quale sta puntando con il mouse o con la levetta analogica sinistra
     public DashingState(Player _player, StateMachine _stateMachine) : base(_player, _stateMachine)
     {
         player = _player;
@@ -17,7 +18,9 @@ public class DashingState : State
         player.MinFallSpeed = 80;
         player.MaxFallSpeed = 160;
 
-        //Debug.Log(stateMachine.currentState);
+        player.ComboAttacco = 0;
+
+        player.IsInvulnerable = true;
     }
 
     public override void HandleInput()
@@ -48,6 +51,8 @@ public class DashingState : State
         player.JumpToConsume = false;//impedisce che salti se premi il tasto mentre in dash
 
         player.CooldownDashAttuale = player.CooldownDash;
+
+        player.IsInvulnerable = false;
     }
 
     void Dash()

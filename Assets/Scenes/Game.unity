@@ -6185,7 +6185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491683967}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.68, y: -0.53, z: -2}
+  m_LocalPosition: {x: 7.6, y: 28.8, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 398314387}
@@ -6340,7 +6340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.68, y: -0.53, z: -2}
+  m_LocalPosition: {x: 7.6, y: 28.8, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -27789,6 +27789,7 @@ MonoBehaviour:
   moveClamp: 13
   speedingValue: 120
   forceDecay: 1
+  rimbalzoOrizzontale: 2.5
   fallClamp: -60
   minFallSpeed: 80
   maxFallSpeed: 160
@@ -27819,8 +27820,9 @@ MonoBehaviour:
   tempoAttaccoOrizAgile: 0.75
   tempoAttaccoOrizBrutale: 0.75
   tempoAttaccoBrutale: 0.75
-  moltiplicatoreRimbalzoAttaccoVerticale: 2.5
+  rimbalzoVerticale: 2.5
   probabilitaCritico: 25
+  dannoCriticoAggiuntivo: 2
   cooldownStance: 3
   colliderAgile: {fileID: 964230808}
   colliderBrutale: {fileID: 272186845}
@@ -27844,7 +27846,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b18b6bd081c46eb48890d12e052cbbd9, type: 3}
   - {fileID: 8300000, guid: a42ad5ad97b59d042bb11c6713a26100, type: 3}
   doubleJumpClip: {fileID: 8300000, guid: 0d11fd7368b306b4c900241e3dadf28f, type: 3}
-  rimbalzoOrizzontale: 2.5
+  enemyTouched: 0
 --- !u!82 &1852010289007548565
 AudioSource:
   m_ObjectHideFlags: 0
@@ -28108,7 +28110,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_Sprite: {fileID: 2372086811554147733, guid: 3be3cc6a5503b2d479e44dc5aebbaf2f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -42734,7 +42736,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852010289007548563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.18, y: -0.53, z: 0}
+  m_LocalPosition: {x: 7.1, y: 28.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1852010290115113642}

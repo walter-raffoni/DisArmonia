@@ -32,6 +32,8 @@ public class AirborneState : State
 
         player.MinFallSpeed = 80;
         player.MaxFallSpeed = 160;
+
+        player.ComboAttacco = 0;
     }
 
     public override void HandleInput()
