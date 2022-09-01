@@ -42,7 +42,7 @@ public class AirborneState : State
 
         player.HandleInput();
 
-        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.Stance == Player.TipoStance.Agile && player.CooldownDashAttuale <= 0) player.stateMachine.ChangeState(player.dashingState);
+        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.Stance == Player.TipoStance.Agile && player.CooldownDashAttuale <= 0 && !player.EnemyTouched) player.stateMachine.ChangeState(player.dashingState);//impedisce che dashi non appena salti dopo aver toccato il nemico e dashato
 
         if (player.Input.AttackDown && player.Stance == Player.TipoStance.Brutale) stateMachine.ChangeState(player.verticalAttackState);
     }

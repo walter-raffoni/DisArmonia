@@ -22,15 +22,15 @@ public class EnemyMelee : MonoBehaviour
     [SerializeField] Color coloreStanceAgile = Color.blue;
     [SerializeField] Color coloreStanceBrutale = Color.red;
 
-    #region Campi visibili ma non modificabili
+    #region Campi pubblici
     public float Speed => speed;
+    public float AttaccoGiocatoreDist => attaccoGiocatoreDist;
+    public float GiocatoreRilevatoDist => giocatoreRilevatoDist;
     public Animator Anim => anim;
     public Transform Target => target;
     public Transform EndPoint => endPoint;
-    public bool FacingRight => facingRight;
     public Transform StartPoint => startPoint;
-    public float AttaccoGiocatoreDist => attaccoGiocatoreDist;
-    public float GiocatoreRilevatoDist => giocatoreRilevatoDist;
+    public bool FacingRight => facingRight;
     public bool AttackEnded
     {
         get { return attackEnded; }
@@ -40,9 +40,9 @@ public class EnemyMelee : MonoBehaviour
 
     #region Campi privati
     private Animator anim;
+    private bool attackEnded;
     private bool facingRight = true;
     private int currentHP, stanceMaggioreDanno;
-    private bool attackEnded;
     #endregion
 
     #region FSM

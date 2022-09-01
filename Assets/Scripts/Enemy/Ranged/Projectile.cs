@@ -8,6 +8,11 @@ public class Projectile : MonoBehaviour
         get { return target; }
         set { target = value; }
     }
+    public int PuntiDanno
+    {
+        get { return puntiDanno; }
+        set { puntiDanno = value; }
+    }
     public float VelocitaProiettile
     {
         get { return velocitaProiettile; }
@@ -18,18 +23,13 @@ public class Projectile : MonoBehaviour
         get { return destroyTimeProiettile; }
         set { destroyTimeProiettile = value; }
     }
-    public int PuntiDanno
-    {
-        get { return puntiDanno; }
-        set { puntiDanno = value; }
-    }
     #endregion
 
     #region Campi privati
-    private float velocitaProiettile, destroyTimeProiettile;
-    private int puntiDanno;
     private Rigidbody2D rb;
     private Transform target;
+    private int puntiDanno;
+    private float velocitaProiettile, destroyTimeProiettile;
     #endregion
 
     private void Start()

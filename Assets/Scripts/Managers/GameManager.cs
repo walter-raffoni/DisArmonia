@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Slider barraVita;
     [SerializeField] Slider barraStackDiSangue;
-    [SerializeField] TextMeshProUGUI stanceChangeCooldownText;
     [SerializeField] TextMeshProUGUI dashCooldownText;
+    [SerializeField] TextMeshProUGUI stanceChangeCooldownText;
 
     [Header("Pause System")]
     [SerializeField] GameObject pauseObject;

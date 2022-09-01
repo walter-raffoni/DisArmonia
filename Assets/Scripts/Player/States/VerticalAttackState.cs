@@ -21,7 +21,7 @@ public class VerticalAttackState : State
     }
 
     public override void HandleInput() //se non si vuole il movimento è da lasciare vuota ma non da rimuovere
-    { 
+    {
         base.HandleInput();
 
         player.HandleInput();

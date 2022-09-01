@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -102,39 +101,23 @@ public class Player : MonoBehaviour
 
     public Animator Anim => anim;
 
+    public bool HasHitUp => hasHitUp;
     public bool IsGrounded => isGrounded;
     public bool EnemyTouched => enemyTouched;
     public bool DashAbility => dashAbility;
-    public bool HasHitUp => hasHitUp;
     public bool DoubleJumpAbility => doubleJumpAbility;
-    public bool DashFacingRight => dashFacingRight;
     public bool CanDoubleJump => canUseDoubleJump && !canUseCoyotePriv;
     public bool CanUseCoyote => canUseCoyotePriv && !isGrounded && timeLeftGrounded + coyoteTimeLimit > fixedFrame;
     public bool HasBufferedJump => ((isGrounded && !didBufferedJump) || isStuckInCorner) && lastJumpPressed + jumpBuffer > fixedFrame;
-    public bool DidBufferedJump
-    {
-        get { return didBufferedJump; }
-        set { didBufferedJump = value; }
-    }
-    public bool IsInvulnerable
-    {
-        get { return isInvulnerable; }
-        set { isInvulnerable = value; }
-    }
     public bool CanDash
     {
         get { return canDash; }
         set { canDash = value; }
     }
-    public bool CanUseCoyotePriv
+    public bool IsInvulnerable
     {
-        get { return canUseCoyotePriv; }
-        set { canUseCoyotePriv = value; }
-    }
-    public bool CanUseDoubleJump
-    {
-        get { return canUseDoubleJump; }
-        set { canUseDoubleJump = value; }
+        get { return isInvulnerable; }
+        set { isInvulnerable = value; }
     }
     public bool JumpToConsume
     {
@@ -151,12 +134,27 @@ public class Player : MonoBehaviour
         get { return endedJumpEarly; }
         set { endedJumpEarly = value; }
     }
+    public bool DidBufferedJump
+    {
+        get { return didBufferedJump; }
+        set { didBufferedJump = value; }
+    }
+    public bool CanUseCoyotePriv
+    {
+        get { return canUseCoyotePriv; }
+        set { canUseCoyotePriv = value; }
+    }
+    public bool CanUseDoubleJump
+    {
+        get { return canUseDoubleJump; }
+        set { canUseDoubleJump = value; }
+    }
 
-    public float CooldownStanceAttuale => cooldownStanceAttuale;
-    public float CooldownDash => cooldownDash;
     public float DashPower => dashPower;
     public float JumpHeight => jumpHeight;
+    public float CooldownDash => cooldownDash;
     public float JumpTopLimit => jumpTopLimit;
+    public float CooldownStanceAttuale => cooldownStanceAttuale;
     public float MinFallSpeed
     {
         get { return minFallSpeed; }
@@ -172,35 +170,36 @@ public class Player : MonoBehaviour
     public float MaxFallSpeedParticles => maxFallSpeedParticles;
     public float TempoAttaccoOrizBrutale => tempoAttaccoOrizBrutale;
     public float HorizontalMultiplierDashEnd => horizontalMultiplierDashEnd;
-    public float TimeLeftGrounded
+    public float TopPoint
     {
-        get { return timeLeftGrounded; }
-        set { timeLeftGrounded = value; }
+        get { return topPoint; }
+        set { topPoint = value; }
     }
     public float FallSpeed
     {
         get { return fallSpeed; }
         set { fallSpeed = value; }
     }
+    public float TimeLeftGrounded
+    {
+        get { return timeLeftGrounded; }
+        set { timeLeftGrounded = value; }
+    }
     public float HasStartedDashing
     {
         get { return hasStartedDashing; }
         set { hasStartedDashing = value; }
     }
-    public float TopPoint
+
+    public float CooldownDashAttuale
     {
-        get { return topPoint; }
-        set { topPoint = value; }
+        get { return cooldownDashAttuale; }
+        set { cooldownDashAttuale = value; }
     }
     public float TempoAttaccoAttuale
     {
         get { return tempoAttaccoAttuale; }
         set { tempoAttaccoAttuale = value; }
-    }
-    public float CooldownDashAttuale
-    {
-        get { return cooldownDashAttuale; }
-        set { cooldownDashAttuale = value; }
     }
 
     public TipoStance Stance => stance;
@@ -209,11 +208,11 @@ public class Player : MonoBehaviour
 
     public ParticleSystem MoveParticles => moveParticles;
     public ParticleSystem DashParticles => dashParticles;
-    public ParticleSystem DashRingParticles => dashRingParticles;
-    public ParticleSystem LaunchParticles => launchParticles;
-    public ParticleSystem JumpParticles => jumpParticles;
-    public ParticleSystem DoubleJumpParticles => doubleJumpParticles;
     public ParticleSystem LandParticles => landParticles;
+    public ParticleSystem JumpParticles => jumpParticles;
+    public ParticleSystem LaunchParticles => launchParticles;
+    public ParticleSystem DashRingParticles => dashRingParticles;
+    public ParticleSystem DoubleJumpParticles => doubleJumpParticles;
 
     public AudioSource AudioSource => audioSource;
 
@@ -233,13 +232,15 @@ public class Player : MonoBehaviour
 
     private TipoStance stance;
 
+    private TrailRenderer trail;
+
     private CapsuleCollider2D coll;
 
     private ExtendedInputActions input;
 
     private int currentHP, comboAttacco, stackDiSangue, fixedFrame;
 
-    private bool enemyTouched, doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyotePriv, canUseDoubleJump, canDash, dashFacingRight, isInvulnerable;
+    private bool enemyTouched, doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyotePriv, canUseDoubleJump, canDash, isInvulnerable;
     private bool endedJumpEarly = true;
 
     private RaycastHit2D[] hitsUp = new RaycastHit2D[1];
@@ -247,10 +248,8 @@ public class Player : MonoBehaviour
     private RaycastHit2D[] hitsLeft = new RaycastHit2D[1];
     private RaycastHit2D[] hitsRight = new RaycastHit2D[1];
 
-    private float tempoAttaccoAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale;
+    private float tempoAttaccoAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale, attackRange, topPoint;//TopPoint diventa 1 in cima al salto
     private float lastJumpPressed = float.MinValue;
-    private float topPoint;//Diventa 1 in cima al salto
-    private float attackRange;
 
     private ParticleSystem.MinMaxGradient currentGradient;
     #endregion
@@ -267,8 +266,9 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        trail = GetComponent<TrailRenderer>();
         input = GetComponent<ExtendedInputActions>();
 
         currentHP = maxHP;
@@ -284,7 +284,13 @@ public class Player : MonoBehaviour
         stateMachine.Initialize(standingState);
     }
 
-    private void Start() => CambiaStance(TipoStance.Agile);
+    private void Start()
+    {
+        CambiaStance(TipoStance.Agile);
+
+        trail.sortingLayerName = "";//TODO: Capire come far apparire davanti il trailrenderer
+        trail.sortingOrder = 2;
+    }
 
     private void Update()
     {
@@ -331,11 +337,6 @@ public class Player : MonoBehaviour
         DetectGroundColor();
 
         moveParticles.transform.localScale = Vector3.MoveTowards(moveParticles.transform.localScale, Vector3.one * inputPoint, 2 * Time.deltaTime);
-
-        Vector3 ray = Camera.main.ScreenToViewportPoint(Mouse.current.position.ReadValue()); //con il viewport ha dei valori che non cambiano se ti muovi nello schermo
-
-        if (ray.x < 0.47) dashFacingRight = false;
-        else if (ray.x > 0.47) dashFacingRight = true;
 
         //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico)
         if (stackDiSangue == 0)

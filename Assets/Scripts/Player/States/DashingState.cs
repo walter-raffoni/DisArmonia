@@ -57,25 +57,11 @@ public class DashingState : State
 
     void Dash()
     {
-        int intFacingRight = 0;
-        Vector2 velocityExt = Vector2.zero;
-
-        if (player.DashFacingRight == false) intFacingRight = -1;
-        else if (player.DashFacingRight == true) intFacingRight = 1;
-
         if (player.DashToConsume && player.CanDash)
         {
-            if ((intFacingRight == -1) && (intFacingRight - player.Input.X == 0)) velocityExt = new Vector2(-1, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
-            else if ((intFacingRight == 1) && (intFacingRight - player.Input.X == 0)) velocityExt = new Vector2(1, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
-
-            else if ((intFacingRight == -1) && (intFacingRight - player.Input.X != 0) || (intFacingRight == 1) && (intFacingRight - player.Input.X != 0))
-            {
-                velocityExt = new Vector2(intFacingRight, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
-                player.GetComponent<SpriteRenderer>().flipX = true;
-            }
-
-            if (velocityExt == Vector2.zero) { player.DashToConsume = false; return; }
-            player.DashVelocity = velocityExt * player.DashPower;
+            var vel = new Vector2(player.Input.X, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
+            if (vel == Vector2.zero) { player.DashToConsume = false; return; }
+            player.DashVelocity = vel * player.DashPower;
             player.OnDashingChanged(true);
             player.CanDash = false;
             player.HasStartedDashing = player.FixedFrame;

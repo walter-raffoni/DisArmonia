@@ -290,8 +290,8 @@ MonoBehaviour:
   player: {fileID: 1852010289007548564}
   barraVita: {fileID: 280523956}
   barraStackDiSangue: {fileID: 1674197988}
-  stanceChangeCooldownText: {fileID: 323433875}
   dashCooldownText: {fileID: 199931425}
+  stanceChangeCooldownText: {fileID: 323433875}
   pauseObject: {fileID: 110142917}
 --- !u!4 &88803293
 Transform:
@@ -897,7 +897,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -100
+  m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: fcdd1b4db0da9b5479e69cd80150364d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6436,7 +6436,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -4
   m_Sprite: {fileID: 21300000, guid: ae0aebef034ef67418bb6ec327e21133, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6652,7 +6652,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -101
+  m_SortingOrder: -6
   m_Sprite: {fileID: 21300000, guid: ff974169e66d3e846bc4197a875997c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7652,7 +7652,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -103
+  m_SortingOrder: -7
   m_Sprite: {fileID: 21300000, guid: 75739b73aaaa74744b44d31ba092b252, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -17728,7 +17728,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: 0423ac9cf51c026459bee4ee57668cfd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -27789,7 +27789,6 @@ MonoBehaviour:
   moveClamp: 13
   speedingValue: 120
   forceDecay: 1
-  rimbalzoOrizzontale: 2.5
   fallClamp: -60
   minFallSpeed: 80
   maxFallSpeed: 160
@@ -27846,7 +27845,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b18b6bd081c46eb48890d12e052cbbd9, type: 3}
   - {fileID: 8300000, guid: a42ad5ad97b59d042bb11c6713a26100, type: 3}
   doubleJumpClip: {fileID: 8300000, guid: 0d11fd7368b306b4c900241e3dadf28f, type: 3}
-  enemyTouched: 0
 --- !u!82 &1852010289007548565
 AudioSource:
   m_ObjectHideFlags: 0
@@ -28004,7 +28002,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Time: 1
   m_Parameters:
     serializedVersion: 3

@@ -30,16 +30,16 @@ public class EnemyRanged : MonoBehaviour
     [SerializeField] Color coloreStanceBrutale = Color.red;
 
     #region Campi pubblici
-    public float Speed => speed;
-    public Animator Anim => anim;
-    public Transform Target => target;
-    public Transform EndPoint => endPoint;
     public bool FacingRight => facingRight;
-    public Transform FirePoint => firePoint;
-    public Transform StartPoint => startPoint;
+    public float Speed => speed;
     public float DistAttaccoPg => distAttaccoPg;
     public float DistPgTroppoVicino => distPgTroppoVicino;
     public float DistPgTroppoLontano => distPgTroppoLontano;
+    public Animator Anim => anim;
+    public Transform Target => target;
+    public Transform EndPoint => endPoint;
+    public Transform FirePoint => firePoint;
+    public Transform StartPoint => startPoint;
     #endregion
 
     #region Campi privati
