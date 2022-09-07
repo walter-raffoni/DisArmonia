@@ -36,7 +36,7 @@ public class StandingState : State
         if (player.Input.BrutalAttackDown && player.Stance == Player.TipoStance.Brutale)
         {
             if (player.StackDiSangue == 0) return;
-            else if (player.StackDiSangue >= 1 && player.StackDiSangue <= 3) stateMachine.ChangeState(player.brutalAttackState);
+            else if (player.StackDiSangue >= 1 && player.StackDiSangue <= 3 && player.CooldownAttaccoPotenteAttuale <= 0) stateMachine.ChangeState(player.brutalAttackState);
         }
     }
 

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
@@ -53,6 +52,7 @@ public class Player : MonoBehaviour
     [SerializeField] float rimbalzoVerticale = 2.5f;
     [SerializeField] float probabilitaCritico = 25;
     [SerializeField] int dannoCriticoAggiuntivo = 2;
+    [SerializeField] float cooldownAttaccoPotente = 1.5f;
 
     [Header("Stance System")]
     [SerializeField] float cooldownStance = 1;
@@ -154,6 +154,7 @@ public class Player : MonoBehaviour
     public float DashPower => dashPower;
     public float JumpHeight => jumpHeight;
     public float CooldownDash => cooldownDash;
+    public float CooldownAttaccoPotente => cooldownAttaccoPotente;
     public float JumpTopLimit => jumpTopLimit;
     public float CooldownStanceAttuale => cooldownStanceAttuale;
     public float MinFallSpeed
@@ -196,6 +197,11 @@ public class Player : MonoBehaviour
     {
         get { return cooldownDashAttuale; }
         set { cooldownDashAttuale = value; }
+    }
+    public float CooldownAttaccoPotenteAttuale
+    {
+        get { return cooldownAttaccoPotenteAttuale; }
+        set { cooldownAttaccoPotenteAttuale = value; }
     }
     public float TempoAttaccoAttuale
     {
@@ -249,7 +255,7 @@ public class Player : MonoBehaviour
     private RaycastHit2D[] hitsLeft = new RaycastHit2D[1];
     private RaycastHit2D[] hitsRight = new RaycastHit2D[1];
 
-    private float tempoAttaccoAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale, attackRange, topPoint;//TopPoint diventa 1 in cima al salto
+    private float tempoAttaccoAttuale, cooldownAttaccoPotenteAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale, attackRange, topPoint;//TopPoint diventa 1 in cima al salto
     private float lastJumpPressed = float.MinValue;
 
     private ParticleSystem.MinMaxGradient currentGradient;
@@ -285,13 +291,7 @@ public class Player : MonoBehaviour
         stateMachine.Initialize(standingState);
     }
 
-    private void Start()
-    {
-        CambiaStance(TipoStance.Agile);
-
-        trail.sortingLayerName = "";//TODO: Capire come far apparire davanti il trailrenderer
-        trail.sortingOrder = 2;
-    }
+    private void Start() => CambiaStance(TipoStance.Agile);
 
     private void Update()
     {
@@ -309,6 +309,8 @@ public class Player : MonoBehaviour
         if (cooldownStanceAttuale > 0) cooldownStanceAttuale -= Time.deltaTime;
 
         if (cooldownDashAttuale > 0) cooldownDashAttuale -= Time.deltaTime;
+
+        if (cooldownAttaccoPotenteAttuale > 0) cooldownAttaccoPotenteAttuale -= Time.deltaTime;
 
         GameManager.instance.BarraVita.value = currentHP;
         GameManager.instance.BarraStackDiSangue.value = stackDiSangue;
@@ -646,13 +648,13 @@ public class Player : MonoBehaviour
         {
             if (randValue < probabilitaCritico)
             {
-                stackDiSangue++;
+                if (stance == TipoStance.Brutale) stackDiSangue++;
                 if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
                 if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
             }
             else
             {
-                stackDiSangue++;
+                if (stance == TipoStance.Brutale) stackDiSangue++;
                 if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico);
                 if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico);
             }

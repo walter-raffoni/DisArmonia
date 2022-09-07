@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Slider barraStackDiSangue;
     [SerializeField] TextMeshProUGUI dashCooldownText;
     [SerializeField] TextMeshProUGUI stanceChangeCooldownText;
+    [SerializeField] TextMeshProUGUI attaccoPotenteCooldownText;
 
     [Header("Pause System")]
     [SerializeField] GameObject pauseObject;
@@ -35,22 +36,26 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 0.25f;//1
 
         int cooldownStance = (int)player.CooldownStanceAttuale;
         int cooldownDash = (int)player.CooldownDashAttuale;
+        int cooldownAttaccoPotente = (int)player.CooldownAttaccoPotenteAttuale;
 
         stanceChangeCooldownText.text = "Cooldown Stance: " + cooldownStance.ToString() + "s";
         dashCooldownText.text = "Cooldown Dash: " + cooldownDash.ToString() + "s";
+        attaccoPotenteCooldownText.text = "Cooldown Attacco Potente: " + cooldownAttaccoPotente.ToString() + "s";
     }
 
     private void Update()
     {
         int cooldownStance = (int)player.CooldownStanceAttuale;
         int cooldownDash = (int)player.CooldownDashAttuale;
+        int cooldownAttaccoPotente = (int)player.CooldownAttaccoPotenteAttuale;
 
         stanceChangeCooldownText.text = "Cooldown Stance: " + cooldownStance.ToString() + "s";
         dashCooldownText.text = "Cooldown Dash: " + cooldownDash.ToString() + "s";
+        attaccoPotenteCooldownText.text = "Cooldown Attacco Potente: " + cooldownAttaccoPotente.ToString() + "s";
 
         if (input.HandleInput().PauseDown) instance.PauseGame();
 
@@ -66,6 +71,7 @@ public class GameManager : MonoBehaviour
             barraVita.gameObject.SetActive(false);
             barraStackDiSangue.gameObject.SetActive(false);
             stanceChangeCooldownText.gameObject.SetActive(false);
+            attaccoPotenteCooldownText.gameObject.SetActive(false);
             Time.timeScale = 0;
         }
         else
@@ -75,6 +81,7 @@ public class GameManager : MonoBehaviour
             barraVita.gameObject.SetActive(true);
             barraStackDiSangue.gameObject.SetActive(true);
             stanceChangeCooldownText.gameObject.SetActive(true);
+            attaccoPotenteCooldownText.gameObject.SetActive(true);
             Time.timeScale = 1;
         }
     }
