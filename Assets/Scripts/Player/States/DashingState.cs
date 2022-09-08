@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class DashingState : State
 {
-    //TODO: Lla direzione verso la quale sta puntando con il mouse o con la levetta analogica sinistra
     public DashingState(Player _player, StateMachine _stateMachine) : base(_player, _stateMachine)
     {
         player = _player;
