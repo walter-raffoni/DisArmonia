@@ -23,6 +23,7 @@ public class EnemyMelee : MonoBehaviour
     [SerializeField] Color coloreStanceBrutale = Color.red;
 
     #region Campi pubblici
+    public int StanceMaggioreDanno => stanceMaggioreDanno;
     public float Speed => speed;
     public float AttaccoGiocatoreDist => attaccoGiocatoreDist;
     public float GiocatoreRilevatoDist => giocatoreRilevatoDist;

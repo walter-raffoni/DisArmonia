@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     [SerializeField] float probabilitaCritico = 25;
     [SerializeField] int dannoCriticoAggiuntivo = 2;
     [SerializeField] float cooldownAttaccoPotente = 1.5f;
+    [SerializeField] int dannoAlNemicoAggiuntivoPerStanceGiusta = 1;
 
     [Header("Stance System")]
     [SerializeField] float cooldownStance = 1;
@@ -416,6 +417,8 @@ public class Player : MonoBehaviour
             dashAbility = true;
             attackRange = attackRangeAgile;
             dashToConsume = false;//Sennò dasha appena rientri nella stance dall'altra
+            if (stackDiSangue > 0) currentHP += stackDiSangue;//serve per curare il pg
+            stackDiSangue = 0;
         }
 
         if (stanceAttivata == TipoStance.Brutale)
@@ -649,18 +652,38 @@ public class Player : MonoBehaviour
             if (randValue < probabilitaCritico)
             {
                 if (stance == TipoStance.Brutale) stackDiSangue++;
-                if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
-                if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
+                if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
+                {
+                    //1: brutale, 0: agile
+                    if (stance == TipoStance.Brutale && melee.StanceMaggioreDanno == 1) melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else if (stance == TipoStance.Agile && melee.StanceMaggioreDanno == 0) melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
+                }
+                if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged))
+                {
+                    if (stance == TipoStance.Brutale && melee.StanceMaggioreDanno == 1) ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else if (stance == TipoStance.Agile && melee.StanceMaggioreDanno == 0) ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
+                }
             }
             else
             {
                 if (stance == TipoStance.Brutale) stackDiSangue++;
-                if (enemy.gameObject.TryGetComponent(out EnemyMelee melee)) melee.TakeDamage(dannoAlNemico);
-                if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.TakeDamage(dannoAlNemico);
+                if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
+                {
+                    if (stance == TipoStance.Brutale && melee.StanceMaggioreDanno == 1) melee.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else if (stance == TipoStance.Agile && melee.StanceMaggioreDanno == 0) melee.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else melee.TakeDamage(dannoAlNemico);
+                }
+                if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged))
+                {
+                    if (stance == TipoStance.Brutale && ranged.StanceMaggioreDanno == 1) ranged.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else if (stance == TipoStance.Agile && ranged.StanceMaggioreDanno == 0) ranged.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else ranged.TakeDamage(dannoAlNemico);
+                }
             }
 
         }
-        Debug.Log(randValue);
     }
 
     public void DealVerticalDamage()
@@ -670,7 +693,7 @@ public class Player : MonoBehaviour
         //danneggia i nemici
         foreach (Collider2D enemy in hitEnemies)
         {
-            stackDiSangue++;
+            stackDiSangue++;//non serve il controllo sulla stance perché tanto questo attacco è fattibile solo in una stance
             if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
             {
                 melee.TakeDamage(dannoAlNemico);

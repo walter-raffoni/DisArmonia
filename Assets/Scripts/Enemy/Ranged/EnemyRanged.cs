@@ -30,6 +30,7 @@ public class EnemyRanged : MonoBehaviour
     [SerializeField] Color coloreStanceBrutale = Color.red;
 
     #region Campi pubblici
+    public int StanceMaggioreDanno => stanceMaggioreDanno;
     public bool FacingRight => facingRight;
     public float Speed => speed;
     public float DistAttaccoPg => distAttaccoPg;
