@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 0.25f;//1
+        Time.timeScale = 1;
 
         int cooldownStance = (int)player.CooldownStanceAttuale;
         int cooldownDash = (int)player.CooldownDashAttuale;

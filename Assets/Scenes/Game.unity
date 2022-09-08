@@ -611,8 +611,9 @@ GameObject:
   m_Component:
   - component: {fileID: 263696648}
   - component: {fileID: 263696649}
+  - component: {fileID: 263696650}
   m_Layer: 6
-  m_Name: GameWorld
+  m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,8 +633,10 @@ Transform:
   - {fileID: 216800826}
   - {fileID: 1794498817}
   - {fileID: 594954262}
+  - {fileID: 658869699}
+  - {fileID: 618700601}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &263696649
 BoxCollider2D:
@@ -661,6 +664,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 90, y: 45}
   m_EdgeRadius: 0
+--- !u!114 &263696650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263696647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d9d7705c8caac041a008160f7288636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalEnemies: 2
+  totaleAgile: 0
+  totalBrutale: 0
 --- !u!1 &272186844
 GameObject:
   m_ObjectHideFlags: 0
@@ -6832,7 +6850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &594954262
 Transform:
   m_ObjectHideFlags: 0
@@ -7018,15 +7036,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618700596}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 72.12, y: -4.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 443491379}
   - {fileID: 619268396833441450}
   - {fileID: 2117459979}
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 263696648}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &618700602
 Animator:
@@ -7187,14 +7205,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658869694}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 20.23, y: -4.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 762441688286420209}
   - {fileID: 2071774052}
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 263696648}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &658869700
 Animator:
@@ -7858,7 +7876,7 @@ Transform:
   - {fileID: 1722297772}
   - {fileID: 803113554}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1367880977
 GameObject:
@@ -17892,7 +17910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1794498817
 Transform:
   m_ObjectHideFlags: 0
@@ -27959,6 +27977,7 @@ MonoBehaviour:
   probabilitaCritico: 25
   dannoCriticoAggiuntivo: 2
   cooldownAttaccoPotente: 1.5
+  dannoAlNemicoAggiuntivoPerStanceGiusta: 1
   cooldownStance: 3
   colliderAgile: {fileID: 964230808}
   colliderBrutale: {fileID: 272186845}
