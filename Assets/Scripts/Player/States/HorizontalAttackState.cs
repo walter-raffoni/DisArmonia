@@ -21,38 +21,40 @@ public class HorizontalAttackState : State
         {
             if (player.ComboAttacco == 0)
             {
-                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile;
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile1;
                 player.Anim.Play("Agile_Attacco1");
                 player.ComboAttacco++;
             }
             else if (player.ComboAttacco == 1)
             {
-                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile * .5f;
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile2;
                 player.Anim.Play("Agile_Attacco2");
                 player.ComboAttacco++;
             }
             else if (player.ComboAttacco == 2)
             {
-                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile;
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizAgile3;
                 player.Anim.Play("Agile_Attacco3");
                 player.ComboAttacco = 0;
             }
         }
         else if (player.Stance == Player.TipoStance.Brutale)
         {
-            player.TempoAttaccoAttuale = player.TempoAttaccoOrizBrutale;
             if (player.ComboAttacco == 0)
             {
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizBrutale1;
                 player.Anim.Play("Brutale_Attacco1");
                 player.ComboAttacco++;
             }
             else if (player.ComboAttacco == 1)
             {
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizBrutale2;
                 player.Anim.Play("Brutale_Attacco2");
                 player.ComboAttacco++;
             }
             else if (player.ComboAttacco == 2)
             {
+                player.TempoAttaccoAttuale = player.TempoAttaccoOrizBrutale3;
                 player.Anim.Play("Brutale_Attacco3");
                 player.ComboAttacco = 0;
             }

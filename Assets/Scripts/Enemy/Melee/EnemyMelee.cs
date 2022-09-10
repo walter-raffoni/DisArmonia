@@ -55,6 +55,8 @@ public class EnemyMelee : MonoBehaviour
 
     private void Awake()
     {
+        Room room = GetComponentInParent<Room>();
+
         anim = GetComponent<Animator>();
 
         stateMachine = new StateMachine();
@@ -66,22 +68,32 @@ public class EnemyMelee : MonoBehaviour
 
         currentHP = maxHP;
 
-        Room room = GetComponentInParent<Room>();
-
-        stanceMaggioreDanno = Random.Range(0, 2);
+        stanceMaggioreDanno = Random.Range(0, 2);//0: agile, 1: brutale
 
         var main = particleStance.main;
-        if (stanceMaggioreDanno == 0)//TODO: Da fixare perché non funziona bene
+        if (stanceMaggioreDanno == 0)
         {
-            if (room.totalBrutale < 0) stanceMaggioreDanno = 1;
+            room.TotalAgile++;
+            if ((room.TotalBrutale - room.TotalAgile) != 0)
+            {
+                stanceMaggioreDanno = 1;
+                room.TotalAgile--;
+                room.TotalBrutale++;
+                main.startColor = coloreStanceBrutale;
+            }
             main.startColor = coloreStanceAgile;
-            room.totaleAgile++;
         }
         else if (stanceMaggioreDanno == 1)
         {
-            if (room.totaleAgile < 0) stanceMaggioreDanno = 0;
+            room.TotalBrutale++;
+            if ((room.TotalBrutale - room.TotalAgile) != 0)
+            {
+                stanceMaggioreDanno = 0;
+                room.TotalAgile++;
+                room.TotalBrutale--;
+                main.startColor = coloreStanceAgile;
+            }
             main.startColor = coloreStanceBrutale;
-            room.totalBrutale++;
         }
     }
 

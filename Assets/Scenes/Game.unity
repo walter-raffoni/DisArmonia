@@ -676,9 +676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9d7705c8caac041a008160f7288636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalEnemies: 2
-  totaleAgile: 0
-  totalBrutale: 0
 --- !u!1 &272186844
 GameObject:
   m_ObjectHideFlags: 0
@@ -27970,7 +27967,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   dannoAlNemico: 2
-  tempoAttaccoOrizAgile: 0.75
+  tempoAttaccoOrizAgile1: 0.75
+  tempoAttaccoOrizAgile2: 0.375
+  tempoAttaccoOrizAgile3: 0.75
   tempoAttaccoOrizBrutale: 0.75
   tempoAttaccoBrutale: 0.75
   rimbalzoVerticale: 1.05
@@ -27978,6 +27977,7 @@ MonoBehaviour:
   dannoCriticoAggiuntivo: 2
   cooldownAttaccoPotente: 1.5
   dannoAlNemicoAggiuntivoPerStanceGiusta: 1
+  tempoInvulnerabilitaDopoCollisioneConNemico: 1
   cooldownStance: 3
   colliderAgile: {fileID: 964230808}
   colliderBrutale: {fileID: 272186845}

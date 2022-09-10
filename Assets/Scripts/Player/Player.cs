@@ -46,14 +46,19 @@ public class Player : MonoBehaviour
     [SerializeField] float verticalAttackRange = 0.5f;
     [SerializeField] LayerMask enemyLayers;
     [SerializeField] int dannoAlNemico = 2;
-    [SerializeField] float tempoAttaccoOrizAgile = 0.75f;
-    [SerializeField] float tempoAttaccoOrizBrutale = 0.75f;
+    [SerializeField] float tempoAttaccoOrizAgile1 = 0.75f;
+    [SerializeField] float tempoAttaccoOrizAgile2 = 0.75f;
+    [SerializeField] float tempoAttaccoOrizAgile3 = 0.75f;
+    [SerializeField] float tempoAttaccoOrizBrutale1 = 0.75f;
+    [SerializeField] float tempoAttaccoOrizBrutale2 = 0.75f;
+    [SerializeField] float tempoAttaccoOrizBrutale3 = 0.75f;
     [SerializeField] float tempoAttaccoBrutale = 0.75f;
     [SerializeField] float rimbalzoVerticale = 2.5f;
     [SerializeField] float probabilitaCritico = 25;
     [SerializeField] int dannoCriticoAggiuntivo = 2;
     [SerializeField] float cooldownAttaccoPotente = 1.5f;
     [SerializeField] int dannoAlNemicoAggiuntivoPerStanceGiusta = 1;
+    [SerializeField] float tempoInvulnerabilitaDopoCollisioneConNemico = 1;
 
     [Header("Stance System")]
     [SerializeField] float cooldownStance = 1;
@@ -169,9 +174,13 @@ public class Player : MonoBehaviour
         set { maxFallSpeed = value; }
     }
     public float TempoAttaccoBrutale => tempoAttaccoBrutale;
-    public float TempoAttaccoOrizAgile => tempoAttaccoOrizAgile;
+    public float TempoAttaccoOrizAgile1 => tempoAttaccoOrizAgile1;
+    public float TempoAttaccoOrizAgile2 => tempoAttaccoOrizAgile2;
+    public float TempoAttaccoOrizAgile3 => tempoAttaccoOrizAgile3;
     public float MaxFallSpeedParticles => maxFallSpeedParticles;
-    public float TempoAttaccoOrizBrutale => tempoAttaccoOrizBrutale;
+    public float TempoAttaccoOrizBrutale1 => tempoAttaccoOrizBrutale1;
+    public float TempoAttaccoOrizBrutale2 => tempoAttaccoOrizBrutale2;
+    public float TempoAttaccoOrizBrutale3 => tempoAttaccoOrizBrutale3;
     public float HorizontalMultiplierDashEnd => horizontalMultiplierDashEnd;
     public float TopPoint
     {
@@ -256,7 +265,7 @@ public class Player : MonoBehaviour
     private RaycastHit2D[] hitsLeft = new RaycastHit2D[1];
     private RaycastHit2D[] hitsRight = new RaycastHit2D[1];
 
-    private float tempoAttaccoAttuale, cooldownAttaccoPotenteAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale, attackRange, topPoint;//TopPoint diventa 1 in cima al salto
+    private float tempoAttaccoAttuale, cooldownAttaccoPotenteAttuale, tempoInvulnerabilitaDopoCollisioneConNemicoAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale, attackRange, topPoint;//TopPoint diventa 1 in cima al salto
     private float lastJumpPressed = float.MinValue;
 
     private ParticleSystem.MinMaxGradient currentGradient;
@@ -302,7 +311,7 @@ public class Player : MonoBehaviour
             stateMachine.currentState.LogicUpdate();
         }
 
-        if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//DEBUG: X MORTE
+        if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//PER DEBUG MORTE
 
         if (stackDiSangue < 0) stackDiSangue = 0;
         else if (stackDiSangue > 3) stackDiSangue = 3;
@@ -312,6 +321,13 @@ public class Player : MonoBehaviour
         if (cooldownDashAttuale > 0) cooldownDashAttuale -= Time.deltaTime;
 
         if (cooldownAttaccoPotenteAttuale > 0) cooldownAttaccoPotenteAttuale -= Time.deltaTime;
+
+        if (tempoInvulnerabilitaDopoCollisioneConNemicoAttuale > 0)
+        {
+            tempoInvulnerabilitaDopoCollisioneConNemicoAttuale -= Time.deltaTime;
+            isInvulnerable = true;
+        }
+        else if (tempoInvulnerabilitaDopoCollisioneConNemicoAttuale <= 0) isInvulnerable = false;
 
         GameManager.instance.BarraVita.value = currentHP;
         GameManager.instance.BarraStackDiSangue.value = stackDiSangue;
@@ -639,7 +655,6 @@ public class Player : MonoBehaviour
     #region Attacco
     public void DealDamage()
     {
-        // TODO: Probabilità critico e danno critico: Con la probabilità di critico 10 % significa che un colpo su 10 è critico
         float randValue = Random.value * 100;
 
         if (randValue > 100) randValue = 100;
@@ -682,7 +697,6 @@ public class Player : MonoBehaviour
                     else ranged.TakeDamage(dannoAlNemico);
                 }
             }
-
         }
     }
 
@@ -697,12 +711,12 @@ public class Player : MonoBehaviour
             if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
             {
                 melee.TakeDamage(dannoAlNemico);
-                rb.AddForce(Vector2.up * rimbalzoVerticale, ForceMode2D.Force);
+                Speed.y = JumpHeight;//serve per il rimbalzo del pg quando colpisce
             }
             if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged))
             {
                 ranged.TakeDamage(dannoAlNemico);
-                rb.AddForce(Vector2.up * rimbalzoVerticale, ForceMode2D.Force);
+                Speed.y = JumpHeight;//serve per il rimbalzo del pg quando colpisce
             }
         }
     }
@@ -773,28 +787,51 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (stateMachine.currentState == airborneState)
+        {
+            if (other.gameObject.TryGetComponent(out EnemyMelee melee))
+            {
+                enemyTouched = true;
+                dashToConsume = false;
+            }
+            else if (other.gameObject.TryGetComponent(out EnemyRanged ranged))
+            {
+                enemyTouched = true;
+                dashToConsume = false;
+            }
+        }
+
         if (other.gameObject.CompareTag("Limite")) TakeDamage(MaxHP);
 
-        if (other.gameObject.TryGetComponent(out EnemyMelee meleeT))
+        if (other.gameObject.TryGetComponent(out EnemyMelee meleeP)) tempoInvulnerabilitaDopoCollisioneConNemicoAttuale = tempoInvulnerabilitaDopoCollisioneConNemico;
+        else if (other.gameObject.TryGetComponent(out EnemyRanged rangedP)) tempoInvulnerabilitaDopoCollisioneConNemicoAttuale = tempoInvulnerabilitaDopoCollisioneConNemico;
+    }
+
+    private void OnCollisionStay2D(Collision2D other)//così trapassa il nemico quando dasha
+    {
+        if (stateMachine.currentState == standingState)
         {
-            enemyTouched = true;//così il dash non è fattibile se a contatto con il nemico
-            dashToConsume = false;
-        }
-        else if (other.gameObject.TryGetComponent(out EnemyRanged rangedT))
-        {
-            enemyTouched = true;
-            dashToConsume = false;
+            if (other.gameObject.TryGetComponent(out EnemyMelee melee) && Input.DashDown)
+            {
+                melee.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                stateMachine.ChangeState(dashingState);
+            }
+            else if (other.gameObject.TryGetComponent(out EnemyRanged ranged) && Input.DashDown)
+            {
+                ranged.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                stateMachine.ChangeState(dashingState);
+            }
         }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.TryGetComponent(out EnemyMelee meleeT))
+        if (other.gameObject.TryGetComponent(out EnemyMelee melee))
         {
             enemyTouched = false;
             dashToConsume = false;
         }
-        else if (other.gameObject.TryGetComponent(out EnemyRanged rangedT))
+        else if (other.gameObject.TryGetComponent(out EnemyRanged ranged))
         {
             enemyTouched = false;
             dashToConsume = false;

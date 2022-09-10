@@ -20,7 +20,7 @@ public class ExtendedInputActions : MonoBehaviour
 
         //Game Keys
         escape = actions.Game.Pause;
-        reloadGame = actions.Game.ReloadGame;//DEBUG
+        reloadGame = actions.Game.ReloadGame;//PER DEBUG
     }
 
     private void OnEnable() => actions.Enable();

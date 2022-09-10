@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class State
 {
     public Player player;
@@ -25,10 +23,7 @@ public class State
         stateMachine = _stateMachine;
     }
 
-    public virtual void Enter()
-    {
-        //Debug.Log(stateMachine.currentState);
-    }
+    public virtual void Enter() { }
 
     public virtual void HandleInput() { }
 

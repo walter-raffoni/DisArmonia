@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public int totalEnemies = 2;
-    public int totaleAgile = 0;
-    public int totalBrutale = 0;
+    private int totalEnemies, totalAgile, totalBrutale;
 
-    private void Update()
+    public int TotalEnemies => totalEnemies;
+    public int TotalAgile
     {
-        if (totalEnemies > 1 && totalEnemies <= 5)
-        {
+        get { return totalAgile; }
+        set { totalAgile = value; }
+    }
+    public int TotalBrutale
+    {
+        get { return totalBrutale; }
+        set { totalBrutale = value; }
+    }
 
-        }
+    private void Start()
+    {
+        if (GetComponentsInChildren<EnemyMelee>() != null) totalEnemies++;
+        if (GetComponentsInChildren<EnemyRanged>() != null) totalEnemies++;
     }
 }
