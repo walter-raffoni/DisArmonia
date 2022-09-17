@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Ranged_PatrollingState : State
 {
-    public Ranged_PatrollingState(EnemyRanged _enemy, StateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public Ranged_PatrollingState(Enemy _enemy, StateMachine _stateMachine) : base(_enemy, _stateMachine)
     {
-        enemyRanged = _enemy;
+        enemy = _enemy;
         stateMachine = _stateMachine;
     }
 
@@ -12,26 +12,26 @@ public class Ranged_PatrollingState : State
     {
         base.Enter();
 
-        enemyRanged.Anim.Play("Ranged_IdleAndAttack");
+        enemy.Anim.Play("Ranged_IdleAndAttack");
 
-        enemyRanged.CancelInvoke("Spara");//sennò continua a sparare
+        enemy.CancelInvoke("Spara");//sennò continua a sparare
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        if (enemyRanged.FacingRight)
+        if (enemy.FacingRight)
         {
-            enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.EndPoint.position, enemyRanged.Speed * Time.fixedDeltaTime);
-            if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.EndPoint.position) < 0.5f) enemyRanged.Flip();
+            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.EndPoint.position, enemy.Speed * Time.fixedDeltaTime);
+            if (Vector3.Distance(enemy.transform.position, enemy.EndPoint.position) < 0.5f) enemy.Flip();
         }
-        else if (!enemyRanged.FacingRight)
+        else if (!enemy.FacingRight)
         {
-            enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.StartPoint.position, enemyRanged.Speed * Time.fixedDeltaTime);
-            if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.StartPoint.position) < 0.5f) enemyRanged.Flip();
+            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.StartPoint.position, enemy.Speed * Time.fixedDeltaTime);
+            if (Vector3.Distance(enemy.transform.position, enemy.StartPoint.position) < 0.5f) enemy.Flip();
         }
 
-        if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.Target.position) <= enemyRanged.DistAttaccoPg) stateMachine.ChangeState(enemyRanged.attackState);
+        if (Vector3.Distance(enemy.transform.position, enemy.Target.position) <= enemy.DistAttaccoPg) stateMachine.ChangeState(enemy.attackStateRanged);
     }
 }

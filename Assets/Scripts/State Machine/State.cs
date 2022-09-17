@@ -1,8 +1,7 @@
 public class State
 {
     public Player player;
-    public EnemyMelee enemyMelee;
-    public EnemyRanged enemyRanged;
+    public Enemy enemy;
     public StateMachine stateMachine;
 
     public State(Player _player, StateMachine _stateMachine)
@@ -11,15 +10,9 @@ public class State
         stateMachine = _stateMachine;
     }
 
-    public State(EnemyMelee _enemyMelee, StateMachine _stateMachine)
+    public State(Enemy _enemy, StateMachine _stateMachine)
     {
-        enemyMelee = _enemyMelee;
-        stateMachine = _stateMachine;
-    }
-
-    public State(EnemyRanged _enemyRanged, StateMachine _stateMachine)
-    {
-        enemyRanged = _enemyRanged;
+        enemy = _enemy;
         stateMachine = _stateMachine;
     }
 

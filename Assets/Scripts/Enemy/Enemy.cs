@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class EnemyMelee : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
-    [SerializeField] SpriteRenderer barraVita;
+    [SerializeField] GameObject barraVita;//SpriteRenderer
 
     [Header("Movement System")]
     [SerializeField] float speed;
@@ -12,10 +12,21 @@ public class EnemyMelee : MonoBehaviour
     [SerializeField] Transform endPoint;
 
     [Header("Attack System")]
+    public TipoNemico tipoNemico;
+    public enum TipoNemico { Melee, Ranged }
     [SerializeField] Transform target;
     [SerializeField] int puntiDanno = 2;
-    [SerializeField] float giocatoreRilevatoDist = 5;
-    [SerializeField] float attaccoGiocatoreDist = 1.5f;
+    [SerializeField] Transform firePoint;//ranged
+    [SerializeField] float giocatoreRilevatoDist = 5;//melee
+    [SerializeField] float attaccoGiocatoreDist = 1.5f;//melee
+    [SerializeField] float distPgTroppoVicino = 3f;//ranged
+    [SerializeField] float distPgTroppoLontano = 8f;//ranged
+    [SerializeField] float distAttaccoPg = 5f;//ranged
+
+    [Header("Projectile System")]
+    [SerializeField] GameObject projectilePrefab;//ranged
+    [SerializeField] float destroyTimeProiettile = 2;//ranged
+    [SerializeField] float velocitaProiettile = 1;//ranged
 
     [Header("Stance System")]
     [SerializeField] ParticleSystem particleStance;
@@ -24,14 +35,20 @@ public class EnemyMelee : MonoBehaviour
 
     #region Campi pubblici
     public int StanceMaggioreDanno => stanceMaggioreDanno;
+    public bool FacingRight => facingRight;
     public float Speed => speed;
-    public float AttaccoGiocatoreDist => attaccoGiocatoreDist;
-    public float GiocatoreRilevatoDist => giocatoreRilevatoDist;
+    public float DistAttaccoPg => distAttaccoPg;
+    public float DistPgTroppoVicino => distPgTroppoVicino;
+    public float DistPgTroppoLontano => distPgTroppoLontano;
     public Animator Anim => anim;
     public Transform Target => target;
     public Transform EndPoint => endPoint;
     public Transform StartPoint => startPoint;
-    public bool FacingRight => facingRight;
+
+    public float AttaccoGiocatoreDist => attaccoGiocatoreDist;
+
+    public float GiocatoreRilevatoDist => giocatoreRilevatoDist;
+
     public bool AttackEnded
     {
         get { return attackEnded; }
@@ -48,9 +65,13 @@ public class EnemyMelee : MonoBehaviour
 
     #region FSM
     public StateMachine stateMachine;
-    public Melee_PatrollingState patrollingState;
-    public Melee_FollowingState followingState;
-    public Melee_AttackState attackState;
+
+    public Melee_PatrollingState patrollingStateMelee;
+    public Melee_FollowingState followingStateMelee;
+    public Melee_AttackState attackStateMelee;
+
+    public Ranged_PatrollingState patrollingStateRanged;
+    public Ranged_AttackState attackStateRanged;
     #endregion
 
     private void Awake()
@@ -60,11 +81,17 @@ public class EnemyMelee : MonoBehaviour
         anim = GetComponent<Animator>();
 
         stateMachine = new StateMachine();
-        patrollingState = new Melee_PatrollingState(this, stateMachine);
-        followingState = new Melee_FollowingState(this, stateMachine);
-        attackState = new Melee_AttackState(this, stateMachine);
 
-        stateMachine.Initialize(patrollingState);
+        patrollingStateMelee = new Melee_PatrollingState(this, stateMachine);
+        followingStateMelee = new Melee_FollowingState(this, stateMachine);
+        attackStateMelee = new Melee_AttackState(this, stateMachine);
+
+        patrollingStateRanged = new Ranged_PatrollingState(this, stateMachine);
+        attackStateRanged = new Ranged_AttackState(this, stateMachine);
+
+        if (tipoNemico == TipoNemico.Melee) stateMachine.Initialize(patrollingStateMelee);
+
+        if (tipoNemico == TipoNemico.Ranged) stateMachine.Initialize(patrollingStateRanged);
 
         currentHP = maxHP;
 
@@ -127,12 +154,22 @@ public class EnemyMelee : MonoBehaviour
         barraVita.gameObject.transform.localScale = new Vector3(barValue, 0.2f, 1);
     }
 
+    public void Spara()
+    {
+        GameObject proiettileIstanziato = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+        if (proiettileIstanziato.TryGetComponent(out Projectile projectile))
+        {
+            projectile.VelocitaProiettile = velocitaProiettile;
+            projectile.PuntiDanno = puntiDanno;
+            projectile.DestroyTimeProiettile = destroyTimeProiettile;
+            projectile.Target = target;
+        }
+    }
+
     public void DealDamage()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) < attaccoGiocatoreDist)
-        {
-            if (target.TryGetComponent(out Player player) && !player.IsInvulnerable) player.TakeDamage(puntiDanno);
-        }
+        if ((Vector3.Distance(transform.position, target.transform.position) < attaccoGiocatoreDist) && (target.TryGetComponent(out Player player) && !player.IsInvulnerable)) player.TakeDamage(puntiDanno);
     }
 
     public void OnAttackEnd() => attackEnded = true;

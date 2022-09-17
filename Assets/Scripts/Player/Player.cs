@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
@@ -662,39 +663,28 @@ public class Player : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);//rileva nemici nel raggio dell'attacco
 
         //danneggia i nemici
-        foreach (Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemyCollider in hitEnemies)
         {
             if (randValue < probabilitaCritico)
             {
                 if (stance == TipoStance.Brutale) stackDiSangue++;
-                if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
+                if (enemyCollider.gameObject.TryGetComponent(out Enemy enemy))
                 {
-                    //1: brutale, 0: agile
-                    if (stance == TipoStance.Brutale && melee.StanceMaggioreDanno == 1) melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
-                    else if (stance == TipoStance.Agile && melee.StanceMaggioreDanno == 0) melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
-                    else melee.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
-                }
-                if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged))
-                {
-                    if (stance == TipoStance.Brutale && melee.StanceMaggioreDanno == 1) ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
-                    else if (stance == TipoStance.Agile && melee.StanceMaggioreDanno == 0) ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
-                    else ranged.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
+                    //0: agile, 1: brutale
+                    if (stance == TipoStance.Agile && enemy.StanceMaggioreDanno == 0) enemy.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else if (stance == TipoStance.Brutale && enemy.StanceMaggioreDanno == 1) enemy.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else enemy.TakeDamage(dannoAlNemico + dannoCriticoAggiuntivo);
                 }
             }
             else
             {
                 if (stance == TipoStance.Brutale) stackDiSangue++;
-                if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
+
+                if (enemyCollider.gameObject.TryGetComponent(out Enemy enemy))
                 {
-                    if (stance == TipoStance.Brutale && melee.StanceMaggioreDanno == 1) melee.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
-                    else if (stance == TipoStance.Agile && melee.StanceMaggioreDanno == 0) melee.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
-                    else melee.TakeDamage(dannoAlNemico);
-                }
-                if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged))
-                {
-                    if (stance == TipoStance.Brutale && ranged.StanceMaggioreDanno == 1) ranged.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
-                    else if (stance == TipoStance.Agile && ranged.StanceMaggioreDanno == 0) ranged.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
-                    else ranged.TakeDamage(dannoAlNemico);
+                    if (stance == TipoStance.Agile && enemy.StanceMaggioreDanno == 0) enemy.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else if (stance == TipoStance.Brutale && enemy.StanceMaggioreDanno == 1) enemy.TakeDamage(dannoAlNemico + dannoAlNemicoAggiuntivoPerStanceGiusta);
+                    else enemy.TakeDamage(dannoAlNemico);
                 }
             }
         }
@@ -705,17 +695,13 @@ public class Player : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(verticalAttackPoint.position, verticalAttackRange, enemyLayers);//rileva nemici nel raggio dell'attacco
 
         //danneggia i nemici
-        foreach (Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemyCollider in hitEnemies)
         {
             stackDiSangue++;//non serve il controllo sulla stance perché tanto questo attacco è fattibile solo in una stance
-            if (enemy.gameObject.TryGetComponent(out EnemyMelee melee))
+
+            if (enemyCollider.gameObject.TryGetComponent(out Enemy enemy))
             {
-                melee.TakeDamage(dannoAlNemico);
-                Speed.y = JumpHeight;//serve per il rimbalzo del pg quando colpisce
-            }
-            if (enemy.gameObject.TryGetComponent(out EnemyRanged ranged))
-            {
-                ranged.TakeDamage(dannoAlNemico);
+                enemy.TakeDamage(dannoAlNemico);
                 Speed.y = JumpHeight;//serve per il rimbalzo del pg quando colpisce
             }
         }
@@ -773,52 +759,49 @@ public class Player : MonoBehaviour
     #region Miscellaneous
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (stateMachine.currentState == dashingState)
+        if (stateMachine.currentState == dashingState && other.gameObject.TryGetComponent(out Enemy enemyDS))
         {
-            if (other.gameObject.TryGetComponent(out EnemyMelee melee))
+            Debug.Log("OnCollisionEnter - dashingState");
+            enemyDS.TakeDamage(dannoAlNemico);
+            enemyDS.GetComponent<CapsuleCollider2D>().isTrigger = true;
+        }
+
+
+        if (stateMachine.currentState == standingState && other.gameObject.TryGetComponent(out Enemy enemySS))
+        {
+            tempoInvulnerabilitaDopoCollisioneConNemicoAttuale = tempoInvulnerabilitaDopoCollisioneConNemico;
+
+            Debug.Log("OnCollisionEnter - standingState");
+
+            if (Input.DashDown)
             {
-                melee.TakeDamage(dannoAlNemico);
-                melee.GetComponent<CapsuleCollider2D>().isTrigger = true;
-            }
-            else if (other.gameObject.TryGetComponent(out EnemyRanged ranged))
-            {
-                ranged.TakeDamage(dannoAlNemico);
-                ranged.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                enemySS.TakeDamage(dannoAlNemico);
+                enemySS.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                stateMachine.ChangeState(dashingState);
             }
         }
 
-        if (stateMachine.currentState == airborneState)
+        if (stateMachine.currentState == airborneState && other.gameObject.TryGetComponent(out Enemy enemyAS))
         {
-            if (other.gameObject.TryGetComponent(out EnemyMelee melee))
-            {
-                enemyTouched = true;
-                dashToConsume = false;
-            }
-            else if (other.gameObject.TryGetComponent(out EnemyRanged ranged))
-            {
-                enemyTouched = true;
-                dashToConsume = false;
-            }
+            enemyTouched = true;
+            dashToConsume = false;
         }
 
         if (other.gameObject.CompareTag("Limite")) TakeDamage(MaxHP);
-
-        if (other.gameObject.TryGetComponent(out EnemyMelee meleeP)) tempoInvulnerabilitaDopoCollisioneConNemicoAttuale = tempoInvulnerabilitaDopoCollisioneConNemico;
-        else if (other.gameObject.TryGetComponent(out EnemyRanged rangedP)) tempoInvulnerabilitaDopoCollisioneConNemicoAttuale = tempoInvulnerabilitaDopoCollisioneConNemico;
     }
 
     private void OnCollisionStay2D(Collision2D other)//così trapassa il nemico quando dasha
     {
-        if (stateMachine.currentState == standingState)
+        if (stateMachine.currentState == standingState && other.gameObject.TryGetComponent(out Enemy enemy))//TODO: Fixare che delle volte non passa attraverso il nemico quando dashi, 
         {
-            if (other.gameObject.TryGetComponent(out EnemyMelee melee) && Input.DashDown)
+            enemyTouched = true;
+
+            if (Input.DashDown)
             {
-                melee.GetComponent<CapsuleCollider2D>().isTrigger = true;
-                stateMachine.ChangeState(dashingState);
-            }
-            else if (other.gameObject.TryGetComponent(out EnemyRanged ranged) && Input.DashDown)
-            {
-                ranged.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                Debug.Log("OnCollisionStay - standingState");
+
+                enemy.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                enemy.TakeDamage(dannoAlNemico);
                 stateMachine.ChangeState(dashingState);
             }
         }
@@ -826,22 +809,16 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.TryGetComponent(out EnemyMelee melee))
-        {
-            enemyTouched = false;
-            dashToConsume = false;
-        }
-        else if (other.gameObject.TryGetComponent(out EnemyRanged ranged))
-        {
-            enemyTouched = false;
-            dashToConsume = false;
-        }
+        enemyTouched = false;
+
+        if (other.gameObject.TryGetComponent(out Enemy enemy)) dashToConsume = false;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.TryGetComponent(out EnemyMelee melee)) melee.GetComponent<CapsuleCollider2D>().isTrigger = false;
-        else if (other.gameObject.TryGetComponent(out EnemyRanged ranged)) ranged.GetComponent<CapsuleCollider2D>().isTrigger = false;
+        enemyTouched = false;
+
+        if (other.gameObject.TryGetComponent(out Enemy enemy)) enemy.GetComponent<CapsuleCollider2D>().isTrigger = false;
     }
     #endregion
 }

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Melee_AttackState : State
 {
-    public Melee_AttackState(EnemyMelee _enemy, StateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public Melee_AttackState(Enemy _enemy, StateMachine _stateMachine) : base(_enemy, _stateMachine)
     {
-        enemyMelee = _enemy;
+        enemy = _enemy;
         stateMachine = _stateMachine;
     }
 
@@ -12,14 +12,14 @@ public class Melee_AttackState : State
     {
         base.Enter();
 
-        enemyMelee.Anim.Play("Melee_Attack");
+        enemy.Anim.Play("Melee_Attack");
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        if ((Vector3.Distance(enemyMelee.transform.position, enemyMelee.Target.position) > enemyMelee.AttaccoGiocatoreDist) && enemyMelee.AttackEnded) stateMachine.ChangeState(enemyMelee.followingState);
-        else if ((Vector3.Distance(enemyMelee.transform.position, enemyMelee.Target.position) > enemyMelee.GiocatoreRilevatoDist) && enemyMelee.AttackEnded) stateMachine.ChangeState(enemyMelee.patrollingState);
+        if ((Vector3.Distance(enemy.transform.position, enemy.Target.position) > enemy.AttaccoGiocatoreDist) && enemy.AttackEnded) stateMachine.ChangeState(enemy.followingStateMelee);
+        else if ((Vector3.Distance(enemy.transform.position, enemy.Target.position) > enemy.GiocatoreRilevatoDist) && enemy.AttackEnded) stateMachine.ChangeState(enemy.patrollingStateMelee);
     }
 }

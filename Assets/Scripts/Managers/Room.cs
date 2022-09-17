@@ -18,7 +18,6 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
-        if (GetComponentsInChildren<EnemyMelee>() != null) totalEnemies++;
-        if (GetComponentsInChildren<EnemyRanged>() != null) totalEnemies++;
+        if (GetComponentsInChildren<Enemy>() != null) totalEnemies++;
     }
 }
