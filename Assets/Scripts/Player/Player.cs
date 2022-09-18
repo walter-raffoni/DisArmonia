@@ -732,9 +732,9 @@ public class Player : MonoBehaviour
         {
             Debug.Log("OnCollisionEnter - dashingState");
             enemyDS.TakeDamage(dannoAlNemico);
-            enemyDS.GetComponent<CapsuleCollider2D>().isTrigger = true;
-            colliderAgile.isTrigger = true;
-            colliderBrutale.isTrigger = true;
+            //enemyDS.GetComponent<CapsuleCollider2D>().isTrigger = true;
+            //colliderAgile.isTrigger = true;
+            //colliderBrutale.isTrigger = true;
         }
 
 
@@ -745,9 +745,9 @@ public class Player : MonoBehaviour
             if (Input.DashDown)
             {
                 enemySS.TakeDamage(dannoAlNemico);
-                enemySS.GetComponent<CapsuleCollider2D>().isTrigger = true;
-                colliderAgile.isTrigger = true;
-                colliderBrutale.isTrigger = true;
+                //enemySS.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                //colliderAgile.isTrigger = true;
+                //colliderBrutale.isTrigger = true;
                 stateMachine.ChangeState(dashingState);
             }
         }
@@ -769,13 +769,13 @@ public class Player : MonoBehaviour
 
             if (Input.DashDown)
             {
-                Debug.Log("OnCollisionStay - standingState");
+                //Debug.Log("OnCollisionStay - standingState");
 
-                enemy.GetComponent<CapsuleCollider2D>().isTrigger = true;
-                colliderAgile.isTrigger = true;
-                colliderBrutale.isTrigger = true;
+                //enemy.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                //colliderAgile.isTrigger = true;
+                //colliderBrutale.isTrigger = true;
                 enemy.TakeDamage(dannoAlNemico);
-                stateMachine.ChangeState(dashingState);
+                //stateMachine.ChangeState(dashingState);
             }
         }
     }
@@ -798,9 +798,9 @@ public class Player : MonoBehaviour
 
         if (other.gameObject.TryGetComponent(out Enemy enemy))
         {
-            enemy.GetComponent<CapsuleCollider2D>().isTrigger = false;
-            colliderAgile.isTrigger = false;
-            colliderBrutale.isTrigger = false;
+            //enemy.GetComponent<CapsuleCollider2D>().isTrigger = false;
+            //colliderAgile.isTrigger = false;
+            //colliderBrutale.isTrigger = false;
         }
     }
 
