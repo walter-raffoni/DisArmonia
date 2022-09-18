@@ -22,6 +22,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] float distPgTroppoVicino = 3f;//ranged
     [SerializeField] float distPgTroppoLontano = 8f;//ranged
     [SerializeField] float distAttaccoPg = 5f;//ranged
+    [SerializeField] LayerMask playerMask;
+    [SerializeField] Vector3 offsetRight;
+    [SerializeField] Vector3 offsetLeft;
 
     [Header("Projectile System")]
     [SerializeField] GameObject projectilePrefab;//ranged
@@ -124,17 +127,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        stateMachine.currentState.LogicUpdate();
-
-        if (currentHP <= 0)
-        {
-            Destroy(gameObject);
-            target.GetComponent<Player>().CooldownDashAttuale = 0;
-            target.GetComponent<Player>().JumpToConsume = true;
-        }
-    }
+    private void Update() => stateMachine.currentState.LogicUpdate();
 
     private void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
 
@@ -152,6 +145,13 @@ public class Enemy : MonoBehaviour
 
         float barValue = (float)currentHP / maxHP;
         barraVita.gameObject.transform.localScale = new Vector3(barValue, 0.2f, 1);
+
+        if (currentHP <= 0)
+        {
+            Destroy(gameObject);
+            target.GetComponent<Player>().CooldownDashAttuale = 0;
+            target.GetComponent<Player>().JumpToConsume = true;
+        }
     }
 
     public void Spara()
@@ -169,8 +169,22 @@ public class Enemy : MonoBehaviour
 
     public void DealDamage()
     {
-        if ((Vector3.Distance(transform.position, target.transform.position) < attaccoGiocatoreDist) && (target.TryGetComponent(out Player player) && !player.IsInvulnerable)) player.TakeDamage(puntiDanno);
+        Vector3 offsetTemp = offsetRight;
+        //if ((Vector3.Distance(transform.position, target.transform.position) < attaccoGiocatoreDist) && (target.TryGetComponent(out Player player) && !player.IsInvulnerable)) player.TakeDamage(puntiDanno);
+        if (facingRight) offsetTemp = offsetRight;
+        else offsetTemp = offsetLeft;
+        
+        Collider2D[] playerHit = Physics2D.OverlapCircleAll(transform.position + offsetTemp, .5f, playerMask);
+        foreach (Collider2D player in playerHit) player.transform.parent.GetComponent<Player>().TakeDamage(puntiDanno);
     }
 
-    public void OnAttackEnd() => attackEnded = true;
+    private void OnDrawGizmosSelected()
+    {
+        Vector3 offsetTemp = offsetRight;
+        if (facingRight) offsetTemp = offsetRight;
+        else offsetTemp = offsetLeft;
+        Gizmos.DrawWireSphere(transform.position + offsetTemp, .5f);
+    }
+
+    public void EndAttack() => attackEnded = true;
 }

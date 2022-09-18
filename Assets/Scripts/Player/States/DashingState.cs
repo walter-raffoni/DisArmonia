@@ -12,6 +12,8 @@ public class DashingState : State
     {
         base.Enter();
 
+        player.DashEffect();
+
         player.Anim.Play("Agile_Dash");
 
         player.MinFallSpeed = 80;
@@ -61,7 +63,6 @@ public class DashingState : State
             var vel = new Vector2(player.Input.X, player.IsGrounded && player.Input.Y < 0 ? 0 : player.Input.Y).normalized;
             if (vel == Vector2.zero) { player.DashToConsume = false; return; }
             player.DashVelocity = vel * player.DashPower;
-            player.OnDashingChanged(true);
             player.CanDash = false;
             player.HasStartedDashing = player.FixedFrame;
 
@@ -74,7 +75,6 @@ public class DashingState : State
         //Annulla la corsa quando il tempo è finita o è stata raggiunta la distanza di sicurezza mssima
         if (player.HasStartedDashing + player.DashLength < player.FixedFrame)
         {
-            player.OnDashingChanged(false);
             if (player.Speed.y > 0) player.Speed.y = 0;
             player.Speed.x *= player.HorizontalMultiplierDashEnd;
             if (player.IsGrounded)

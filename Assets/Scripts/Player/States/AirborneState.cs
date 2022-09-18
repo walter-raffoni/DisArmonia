@@ -16,18 +16,10 @@ public class AirborneState : State
         {
             player.Speed.y = player.JumpHeight;
             player.EndedJumpEarly = false;
-            player.CanUseCoyotePriv = false;
             player.JumpToConsume = false;
             player.TimeLeftGrounded = player.FixedFrame;
             player.DidBufferedJump = true;
-            player.OnJumping();
-        }
-
-        if (player.IsGrounded)//Fa riprodurre il particellare solo quando è a terra
-        {
-            player.SetColor(player.JumpParticles);
-            player.SetColor(player.LaunchParticles);
-            player.JumpParticles.Play();
+            if (player.IsGrounded) player.JumpEffect();//Fa riprodurre il particellare solo quando è a terra
         }
 
         player.MinFallSpeed = 80;
@@ -84,7 +76,7 @@ public class AirborneState : State
                 player.CanUseDoubleJump = false;
                 player.EndedJumpEarly = false;
                 player.JumpToConsume = false;
-                player.OnDoubleJumping();
+                player.DoubleJumpEffect();
             }
         }
 

@@ -23,6 +23,8 @@ public class StandingState : State
         player.MaxFallSpeed = 160;
 
         player.ComboAttacco = 0;
+
+        player.GroundedEffect();
     }
 
     public override void HandleInput()
@@ -68,8 +70,8 @@ public class StandingState : State
 
     void CanJump()
     {
-        //Controlla se: Ha premuto il tasto di salto o comunque nella soglia possibile per il salto "coyote" || Se c'è un buffer per il salto sufficiente || È a terra
-        if ((player.JumpToConsume && player.CanUseCoyote) || player.HasBufferedJump || !player.IsGrounded) stateMachine.ChangeState(player.airborneState);
+        //Ha premuto il tasto di salto? || Se c'è un buffer per il salto sufficiente || È a terra
+        if (player.JumpToConsume || player.HasBufferedJump || !player.IsGrounded) stateMachine.ChangeState(player.airborneState);
     }
 
     void CanDash()

@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms;
@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField] float moveClamp = 13;
     [SerializeField] float speedingValue = 120;
     [SerializeField] float forceDecay = 1;//Effectors
+    [SerializeField] float speedAgile = 13f;
+    [SerializeField] float speedBrutal = 5f;
 
     [Header("Gravity System")]
     [SerializeField] float fallClamp = -60;
@@ -26,7 +28,6 @@ public class Player : MonoBehaviour
     [SerializeField] int jumpBuffer = 7;
     [SerializeField] float jumpHeight = 35;
     [SerializeField] float jumpTopLimit = 40;
-    [SerializeField] int coyoteTimeLimit = 7;
     [SerializeField] float gravityModifierJumpEndedEarly = 3;
 
     [Header("Collision System")]
@@ -39,14 +40,15 @@ public class Player : MonoBehaviour
     [SerializeField] float dashPower = 30;
     [SerializeField] float horizontalMultiplierDashEnd = 0.25f;
 
-    [Header("Attack System")]
+    [Header("General Attack System")]
+    [SerializeField] int dannoAlNemico = 2;
+    [SerializeField] LayerMask enemyLayers;
+
+    [Header("Horizontal Attack System")]
     [SerializeField] Transform attackPoint;
     [SerializeField] Transform verticalAttackPoint;
     [SerializeField] float attackRangeAgile = 0.5f;
     [SerializeField] float attackRangeBrutale = 0.42f;
-    [SerializeField] float verticalAttackRange = 0.5f;
-    [SerializeField] LayerMask enemyLayers;
-    [SerializeField] int dannoAlNemico = 2;
     [SerializeField] float tempoAttaccoOrizAgile1 = 0.75f;
     [SerializeField] float tempoAttaccoOrizAgile2 = 0.75f;
     [SerializeField] float tempoAttaccoOrizAgile3 = 0.75f;
@@ -54,12 +56,23 @@ public class Player : MonoBehaviour
     [SerializeField] float tempoAttaccoOrizBrutale2 = 0.75f;
     [SerializeField] float tempoAttaccoOrizBrutale3 = 0.75f;
     [SerializeField] float tempoAttaccoBrutale = 0.75f;
+    [SerializeField] float cooldownAttaccoPotente = 1.5f;
+
+    [Header("Vertical Attack System")]
+    [SerializeField] float verticalAttackRange = 0.5f;
     [SerializeField] float rimbalzoVerticale = 2.5f;
+
+    [Header("Powerful Attack System")]
     [SerializeField] float probabilitaCritico = 25;
     [SerializeField] int dannoCriticoAggiuntivo = 2;
-    [SerializeField] float cooldownAttaccoPotente = 1.5f;
     [SerializeField] int dannoAlNemicoAggiuntivoPerStanceGiusta = 1;
+
+    [Header("Invulnerability System")]
     [SerializeField] float tempoInvulnerabilitaDopoCollisioneConNemico = 1;
+    [SerializeField] float timeBetweenAlphaChange = .4f;
+    [SerializeField] float alphaValue0;
+    [SerializeField] float alphaValue1;
+    [SerializeField] int alphaCycles = 3;
 
     [Header("Stance System")]
     [SerializeField] float cooldownStance = 1;
@@ -74,6 +87,8 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem jumpParticles;
     [SerializeField] ParticleSystem doubleJumpParticles;
     [SerializeField] ParticleSystem landParticles;
+    [SerializeField] ParticleSystem agileIdleParticle;
+    [SerializeField] ParticleSystem brutalIdleParticle;
     [SerializeField] float maxFallSpeedParticles = -40;
     [SerializeField] Transform dashRingTransform;
 
@@ -114,8 +129,7 @@ public class Player : MonoBehaviour
     public bool EnemyTouched => enemyTouched;
     public bool DashAbility => dashAbility;
     public bool DoubleJumpAbility => doubleJumpAbility;
-    public bool CanDoubleJump => canUseDoubleJump && !canUseCoyotePriv;
-    public bool CanUseCoyote => canUseCoyotePriv && !isGrounded && timeLeftGrounded + coyoteTimeLimit > fixedFrame;
+    public bool CanDoubleJump => canUseDoubleJump;
     public bool HasBufferedJump => ((isGrounded && !didBufferedJump) || isStuckInCorner) && lastJumpPressed + jumpBuffer > fixedFrame;
     public bool CanDash
     {
@@ -146,11 +160,6 @@ public class Player : MonoBehaviour
     {
         get { return didBufferedJump; }
         set { didBufferedJump = value; }
-    }
-    public bool CanUseCoyotePriv
-    {
-        get { return canUseCoyotePriv; }
-        set { canUseCoyotePriv = value; }
     }
     public bool CanUseDoubleJump
     {
@@ -222,7 +231,6 @@ public class Player : MonoBehaviour
 
     public TipoStance Stance => stance;
     public enum TipoStance { Agile, Brutale }
-    public enum PlayerForce { Burst, Decay } //Burst: Aggiunta direttamente alla velocità di movimento del pg, da controllare con la decelerazione standard | Decay: Forza additiva gestita dal sistema di decadimento
 
     public ParticleSystem MoveParticles => moveParticles;
     public ParticleSystem DashParticles => dashParticles;
@@ -250,6 +258,8 @@ public class Player : MonoBehaviour
 
     private TipoStance stance;
 
+    private SpriteRenderer sr;
+
     private TrailRenderer trail;
 
     private CapsuleCollider2D coll;
@@ -258,7 +268,7 @@ public class Player : MonoBehaviour
 
     private int currentHP, comboAttacco, stackDiSangue, fixedFrame;
 
-    private bool enemyTouched, doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseCoyotePriv, canUseDoubleJump, canDash, isInvulnerable;
+    private bool enemyTouched, doubleJumpAbility, dashAbility, isGrounded, isStuckInCorner, didBufferedJump, jumpToConsume, dashToConsume, hasHitUp, hasHitRight, hasHitLeft, canUseDoubleJump, canDash, isInvulnerable;
     private bool endedJumpEarly = true;
 
     private RaycastHit2D[] hitsUp = new RaycastHit2D[1];
@@ -266,7 +276,7 @@ public class Player : MonoBehaviour
     private RaycastHit2D[] hitsLeft = new RaycastHit2D[1];
     private RaycastHit2D[] hitsRight = new RaycastHit2D[1];
 
-    private float tempoAttaccoAttuale, cooldownAttaccoPotenteAttuale, tempoInvulnerabilitaDopoCollisioneConNemicoAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale, attackRange, topPoint;//TopPoint diventa 1 in cima al salto
+    private float tempoAttaccoAttuale, cooldownAttaccoPotenteAttuale, cooldownStanceAttuale, timeLeftGrounded, frameClamp, fallSpeed, hasStartedDashing, cooldownDashAttuale, attackRange, topPoint;//TopPoint diventa 1 in cima al salto
     private float lastJumpPressed = float.MinValue;
 
     private ParticleSystem.MinMaxGradient currentGradient;
@@ -302,7 +312,11 @@ public class Player : MonoBehaviour
         stateMachine.Initialize(standingState);
     }
 
-    private void Start() => CambiaStance(TipoStance.Agile);
+    private void Start()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        CambiaStance(TipoStance.Agile);
+    }
 
     private void Update()
     {
@@ -317,18 +331,11 @@ public class Player : MonoBehaviour
         if (stackDiSangue < 0) stackDiSangue = 0;
         else if (stackDiSangue > 3) stackDiSangue = 3;
 
-        if (cooldownStanceAttuale > 0) cooldownStanceAttuale -= Time.deltaTime;
+        if (cooldownStanceAttuale >= 0) cooldownStanceAttuale -= Time.deltaTime;
 
-        if (cooldownDashAttuale > 0) cooldownDashAttuale -= Time.deltaTime;
+        if (cooldownDashAttuale >= 0) cooldownDashAttuale -= Time.deltaTime;
 
-        if (cooldownAttaccoPotenteAttuale > 0) cooldownAttaccoPotenteAttuale -= Time.deltaTime;
-
-        if (tempoInvulnerabilitaDopoCollisioneConNemicoAttuale > 0)
-        {
-            tempoInvulnerabilitaDopoCollisioneConNemicoAttuale -= Time.deltaTime;
-            isInvulnerable = true;
-        }
-        else if (tempoInvulnerabilitaDopoCollisioneConNemicoAttuale <= 0) isInvulnerable = false;
+        if (cooldownAttaccoPotenteAttuale >= 0) cooldownAttaccoPotenteAttuale -= Time.deltaTime;
 
         GameManager.instance.BarraVita.value = currentHP;
         GameManager.instance.BarraStackDiSangue.value = stackDiSangue;
@@ -430,12 +437,14 @@ public class Player : MonoBehaviour
             coll = colliderAgile;
             stance = TipoStance.Agile;
             doubleJumpAbility = true;
-            moveClamp = 13;
+            moveClamp = speedAgile;
             dashAbility = true;
             attackRange = attackRangeAgile;
             dashToConsume = false;//Sennò dasha appena rientri nella stance dall'altra
-            if (stackDiSangue > 0) currentHP += stackDiSangue;//serve per curare il pg
+            if (stackDiSangue > 0) Heal(stackDiSangue);
             stackDiSangue = 0;
+            brutalIdleParticle.Stop();
+            agileIdleParticle.Play();
         }
 
         if (stanceAttivata == TipoStance.Brutale)
@@ -446,17 +455,27 @@ public class Player : MonoBehaviour
             coll = colliderBrutale;
             stance = TipoStance.Brutale;
             doubleJumpAbility = false;
-            moveClamp = 5;
+            moveClamp = speedBrutal;
             dashAbility = false;
             attackRange = attackRangeBrutale;
+            brutalIdleParticle.Play();
+            agileIdleParticle.Stop();
         }
     }
+
+    private void Heal(int healAmount)
+    {
+        if (currentHP == maxHP) return;
+        currentHP += healAmount;
+        if (currentHP > maxHP) currentHP = maxHP;
+    }
+
     #endregion
 
     #region Collisioni
-    public void CollisionsChecks()//I controlli dei raycast vengono usati per le informazioni pre-collisione
+    public void CollisionsChecks()//controlli dei raycast che vengono usati per informazioni pre-collisione
     {
-        var bounds = coll.bounds;//Genera i range dei raggi.
+        var bounds = coll.bounds;//genera range dei raggi.
 
         //Terreno
         var hasHitDown = RunDetection(Vector2.down, out hitsDown);
@@ -464,18 +483,12 @@ public class Player : MonoBehaviour
         hasHitLeft = RunDetection(Vector2.left, out hitsLeft);
         hasHitRight = RunDetection(Vector2.right, out hitsRight);
 
-        if (isGrounded && !hasHitDown)
-        {
-            timeLeftGrounded = fixedFrame;//Si triggera solo quando lascia il terreno la prima volta
-            OnGroundedChanged(false);
-        }
+        if (isGrounded && !hasHitDown) timeLeftGrounded = fixedFrame;//si triggera solo quando lascia il terreno la prima volta
         else if (!isGrounded && hasHitDown)
         {
-            canUseCoyotePriv = true;//Si triggera solo quando tocca il terreno per la prima volta
             didBufferedJump = false;
             canUseDoubleJump = true;
             canDash = true;
-            OnGroundedChanged(true);
             Speed.y = 0;
         }
 
@@ -487,10 +500,7 @@ public class Player : MonoBehaviour
 
             foreach (var hit in hits)
             {
-                if (hit.collider && !hit.collider.isTrigger)
-                {
-                    return true;
-                }
+                if (hit.collider && !hit.collider.isTrigger) return true;
             }
             return false;
         }
@@ -519,25 +529,7 @@ public class Player : MonoBehaviour
     #region Gravità
     public void Gravity()
     {
-        if (isGrounded)
-        {
-            //Pendenze
-            Speed.y = gravityPower;
-            foreach (var hit in hitsDown)
-            {
-                if (hit.collider.isTrigger) continue;
-                var slopePerp = Vector2.Perpendicular(hit.normal).normalized;
-                var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-
-                if (slopeAngle != 0)//Fa sì che venga data priorità a cosa viene colpito davanti per una scivolata dalle pendenze migliore
-                {
-                    Speed.y = Speed.x * -slopePerp.y;
-                    Speed.y += gravityPower;
-                    break;
-                }
-            }
-        }
-        else
+        if (!isGrounded)
         {
             var fallingSpeed = endedJumpEarly && Speed.y > 0 ? fallSpeed * gravityModifierJumpEndedEarly : fallSpeed;//Aggiunge una forza che butta giù il pg mentre sale se il salto viene concluso prima del previsto
 
@@ -584,23 +576,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Forze
-    public void AddForce(Vector2 force, PlayerForce mode = PlayerForce.Burst, bool cancelMovement = true)
-    {
-        if (cancelMovement) Speed = Vector2.zero;
-
-        switch (mode)
-        {
-            case PlayerForce.Burst:
-                Speed += force;
-                break;
-            case PlayerForce.Decay:
-                ForceBuildup += force * Time.fixedDeltaTime;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
-        }
-    }
-
     private Vector2 EvaluateForces()
     {
         //Previene il rimbalzo
@@ -618,8 +593,13 @@ public class Player : MonoBehaviour
     #region Vita
     public void TakeDamage(int damageTaken)
     {
-        if (currentHP <= 0) return;
-        else currentHP -= damageTaken;
+        if (isInvulnerable) return;
+        else
+        {
+            StartCoroutine("Invulnerable");
+            if (currentHP <= 0) return;
+            else currentHP -= damageTaken;
+        }
     }
     #endregion
 
@@ -713,46 +693,35 @@ public class Player : MonoBehaviour
 
     private void OnDisable() => moveParticles.Stop();
 
-    private void OnGroundedChanged(bool grounded)
+    public void GroundedEffect()
     {
-        if (grounded)
-        {
-            audioSource.PlayOneShot(footsteps[Random.Range(0, footsteps.Length)]);
-            moveParticles.Play();
+        audioSource.PlayOneShot(footsteps[Random.Range(0, footsteps.Length)]);
+        moveParticles.Play();
 
-            landParticles.transform.localScale = Vector3.one * Mathf.InverseLerp(0, maxFallSpeedParticles, RawMovement.y);
-            SetColor(landParticles);
-            landParticles.Play();
-        }
-        else moveParticles.Stop();
+        landParticles.transform.localScale = Vector3.one * Mathf.InverseLerp(0, maxFallSpeedParticles, RawMovement.y);
+        SetColor(landParticles);
+        landParticles.Play();
     }
 
-    public void OnJumping()
-    {
-        if (isGrounded)//Fa riprodurre il particellare solo quando è a terra
-        {
-            SetColor(jumpParticles);
-            SetColor(launchParticles);
-            jumpParticles.Play();
-        }
-    }
-
-    public void OnDoubleJumping()
+    public void DoubleJumpEffect()
     {
         audioSource.PlayOneShot(doubleJumpClip);
         doubleJumpParticles.Play();
     }
 
-    public void OnDashingChanged(bool isDashing)
+    public void JumpEffect()
     {
-        if (isDashing)
-        {
-            dashParticles.Play();
-            dashRingTransform.up = new Vector3(Input.X, Input.Y);
-            dashRingParticles.Play();
-            audioSource.PlayOneShot(dashClip);
-        }
-        else dashParticles.Stop();
+        SetColor(jumpParticles);
+        SetColor(launchParticles);
+        jumpParticles.Play();
+    }
+
+    public void DashEffect()
+    {
+        dashParticles.Play();
+        dashRingTransform.up = new Vector3(Input.X, Input.Y);
+        dashRingParticles.Play();
+        audioSource.PlayOneShot(dashClip);
     }
     #endregion
 
@@ -764,19 +733,21 @@ public class Player : MonoBehaviour
             Debug.Log("OnCollisionEnter - dashingState");
             enemyDS.TakeDamage(dannoAlNemico);
             enemyDS.GetComponent<CapsuleCollider2D>().isTrigger = true;
+            colliderAgile.isTrigger = true;
+            colliderBrutale.isTrigger = true;
         }
 
 
         if (stateMachine.currentState == standingState && other.gameObject.TryGetComponent(out Enemy enemySS))
         {
-            tempoInvulnerabilitaDopoCollisioneConNemicoAttuale = tempoInvulnerabilitaDopoCollisioneConNemico;
-
             Debug.Log("OnCollisionEnter - standingState");
 
             if (Input.DashDown)
             {
                 enemySS.TakeDamage(dannoAlNemico);
                 enemySS.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                colliderAgile.isTrigger = true;
+                colliderBrutale.isTrigger = true;
                 stateMachine.ChangeState(dashingState);
             }
         }
@@ -801,6 +772,8 @@ public class Player : MonoBehaviour
                 Debug.Log("OnCollisionStay - standingState");
 
                 enemy.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                colliderAgile.isTrigger = true;
+                colliderBrutale.isTrigger = true;
                 enemy.TakeDamage(dannoAlNemico);
                 stateMachine.ChangeState(dashingState);
             }
@@ -811,14 +784,46 @@ public class Player : MonoBehaviour
     {
         enemyTouched = false;
 
-        if (other.gameObject.TryGetComponent(out Enemy enemy)) dashToConsume = false;
+        if (other.gameObject.TryGetComponent(out Enemy enemy))
+        {
+            dashToConsume = false;
+            //colliderAgile.isTrigger = false;
+            //colliderBrutale.isTrigger = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         enemyTouched = false;
 
-        if (other.gameObject.TryGetComponent(out Enemy enemy)) enemy.GetComponent<CapsuleCollider2D>().isTrigger = false;
+        if (other.gameObject.TryGetComponent(out Enemy enemy))
+        {
+            enemy.GetComponent<CapsuleCollider2D>().isTrigger = false;
+            colliderAgile.isTrigger = false;
+            colliderBrutale.isTrigger = false;
+        }
+    }
+
+    //Timer totale invulnerabilità | timer tra trasparenze | valore trasparenza 0 | valore trasparenza 1
+    IEnumerator Invulnerable()
+    {
+        bool flag = true;
+        Color tempColor = sr.color;
+        isInvulnerable = true;
+        for (int i = 0; i < alphaCycles; i++)
+        {
+            tempColor.a = flag ? alphaValue0 : alphaValue1;
+            sr.color = tempColor;
+            yield return new WaitForSeconds(tempoInvulnerabilitaDopoCollisioneConNemico / alphaCycles / 2);
+            flag = !flag;
+            tempColor.a = flag ? alphaValue0 : alphaValue1;
+            sr.color = tempColor;
+            yield return new WaitForSeconds(tempoInvulnerabilitaDopoCollisioneConNemico / alphaCycles / 2);
+        }
+        tempColor.a = 1;
+        sr.color = tempColor;
+        isInvulnerable = false;
+        yield return null;
     }
     #endregion
 }

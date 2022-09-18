@@ -43,11 +43,11 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponentInParent<Player>() != null && !other.GetComponentInParent<Player>().IsInvulnerable)
+        if (other.CompareTag("Player"))
         {
             other.GetComponentInParent<Player>().TakeDamage(puntiDanno);
             Destroy(gameObject);
         }
-        else Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
