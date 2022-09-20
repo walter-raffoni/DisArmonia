@@ -110,7 +110,6 @@ public class Player : MonoBehaviour
     public int MaxHP => maxHP;
     public int CurrentHP => currentHP;
     public int FixedFrame => fixedFrame;
-    public int DashLength => dashLength;
     public int ComboAttacco
     {
         get { return comboAttacco; }
@@ -124,12 +123,8 @@ public class Player : MonoBehaviour
 
     public Animator Anim => anim;
 
-    public bool HasHitUp => hasHitUp;
     public bool IsGrounded => isGrounded;
     public bool EnemyTouched => enemyTouched;
-    public bool DashAbility => dashAbility;
-    public bool DoubleJumpAbility => doubleJumpAbility;
-    public bool CanDoubleJump => canUseDoubleJump;
     public bool HasBufferedJump => ((isGrounded && !didBufferedJump) || isStuckInCorner) && lastJumpPressed + jumpBuffer > fixedFrame;
     public bool CanDash
     {
@@ -167,7 +162,6 @@ public class Player : MonoBehaviour
         set { canUseDoubleJump = value; }
     }
 
-    public float DashPower => dashPower;
     public float JumpHeight => jumpHeight;
     public float CooldownDash => cooldownDash;
     public float CooldownAttaccoPotente => cooldownAttaccoPotente;
@@ -191,7 +185,6 @@ public class Player : MonoBehaviour
     public float TempoAttaccoOrizBrutale1 => tempoAttaccoOrizBrutale1;
     public float TempoAttaccoOrizBrutale2 => tempoAttaccoOrizBrutale2;
     public float TempoAttaccoOrizBrutale3 => tempoAttaccoOrizBrutale3;
-    public float HorizontalMultiplierDashEnd => horizontalMultiplierDashEnd;
     public float TopPoint
     {
         get { return topPoint; }
@@ -206,11 +199,6 @@ public class Player : MonoBehaviour
     {
         get { return timeLeftGrounded; }
         set { timeLeftGrounded = value; }
-    }
-    public float HasStartedDashing
-    {
-        get { return hasStartedDashing; }
-        set { hasStartedDashing = value; }
     }
 
     public float CooldownDashAttuale
@@ -326,7 +314,7 @@ public class Player : MonoBehaviour
             stateMachine.currentState.LogicUpdate();
         }
 
-        if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);//PER DEBUG MORTE
+        if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);
 
         if (stackDiSangue < 0) stackDiSangue = 0;
         else if (stackDiSangue > 3) stackDiSangue = 3;
@@ -391,17 +379,6 @@ public class Player : MonoBehaviour
 
     void FixedUpdate() => stateMachine.currentState.PhysicsUpdate();
 
-    #region Movimento di base
-    public void BaseMovement()
-    {
-        fixedFrame++;
-        frameClamp = moveClamp;
-
-        Velocity = (rb.position - LastPosition) / Time.fixedDeltaTime;//Calcola la velocità del pg
-        LastPosition = rb.position;
-    }
-    #endregion
-
     #region Gestione degli input
     public void HandleInput()
     {
@@ -424,6 +401,163 @@ public class Player : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Movimento
+    #region Movimento base
+    public void BaseMovement()
+    {
+        fixedFrame++;
+        frameClamp = moveClamp;
+
+        Velocity = (rb.position - LastPosition) / Time.fixedDeltaTime;//Calcola la velocità del pg
+        LastPosition = rb.position;
+    }
+
+    public void HorizontalMovement()
+    {
+        if (Input.X != 0)
+        {
+            //Imposta la velocità di movimento orizzontale
+            Speed.x += Input.X * speedingValue * Time.fixedDeltaTime;
+
+            Speed.x = Mathf.Clamp(Speed.x, -frameClamp, frameClamp);//Fa il clamp con il massimo movimento del frame
+
+            var topBonus = Mathf.Sign(Input.X) * jumpTopBonus * topPoint;//Applica il bonus in cima al salto
+            Speed.x += topBonus * Time.fixedDeltaTime;
+        }
+        else Speed.x = Mathf.MoveTowards(Speed.x, 0, slowingValue * Time.fixedDeltaTime);//Se non ci sono input rallenta il pg
+
+        if (!isGrounded && (Speed.x > 0 && hasHitRight || Speed.x < 0 && hasHitLeft)) Speed.x = 0;//Non aumentare la velocità in verticale, solo in orizzontale, per evitare che si appiccichi ai muri mentre è in aria
+    }
+
+    public void Move()//Viene fatto un cast dei limiti prima di muoversi in modo da evitare collisioni future
+    {
+        RawMovement = Speed;//Per usare la velocità esternamente
+        var move = RawMovement * Time.fixedDeltaTime;
+
+        //Applica gli effector
+        move += EvaluateForces();
+
+        rb.MovePosition(rb.position + move);
+
+        RunCornerPrevention();
+    }
+
+    void RunCornerPrevention()//Fa camminare e saltare anche sul bordo di una piattaforma
+    {
+        //Le linee sotto sono per quando i raggi non rilevano il terreno e il collider non entra nello spazio dell'oggetto in collisione, determina se il pg si muove o no.
+        isStuckInCorner = !isGrounded && LastPos == rb.position && lastJumpPressed + 1 < fixedFrame;
+        Speed.y = isStuckInCorner ? 0 : Speed.y;
+        LastPos = rb.position;
+    }
+
+    private Vector2 EvaluateForces()
+    {
+        //Previene il rimbalzo
+        if (hasHitLeft || hasHitRight) ForceBuildup.x = 0;
+        if (isGrounded || hasHitUp) ForceBuildup.y = 0;
+
+        var force = ForceBuildup;
+
+        ForceBuildup = Vector2.MoveTowards(ForceBuildup, Vector2.zero, forceDecay * Time.fixedDeltaTime);
+
+        return force;
+    }
+    #endregion
+
+    #region Movimento verticale
+    public void Gravity()
+    {
+        if (!isGrounded)
+        {
+            var fallingSpeed = endedJumpEarly && Speed.y > 0 ? fallSpeed * gravityModifierJumpEndedEarly : fallSpeed;//Aggiunge una forza che butta giù il pg mentre sale se il salto viene concluso prima del previsto
+
+            Speed.y -= fallingSpeed * Time.fixedDeltaTime;//Caduta
+
+            if (Speed.y < fallClamp) Speed.y = fallClamp;//Fa il clamp della velocità
+        }
+    }
+
+    public void IsTopPoint()
+    {
+        if (!isGrounded)
+        {
+            topPoint = Mathf.InverseLerp(jumpTopLimit, 0, Mathf.Abs(Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
+            fallSpeed = Mathf.Lerp(minFallSpeed, maxFallSpeed, topPoint);
+        }
+        else
+        {
+            if (stateMachine.currentState == airborneState || stateMachine.currentState == verticalAttackState) stateMachine.ChangeState(standingState);
+            if (stateMachine.currentState == standingState) topPoint = 0;
+        }
+    }
+
+    public void CanJump()
+    {
+        //Ha premuto il tasto di salto? || Se c'è un buffer per il salto sufficiente || È a terra
+        if (jumpToConsume || HasBufferedJump || !isGrounded) stateMachine.ChangeState(airborneState);
+    }
+
+    public void Jump()
+    {
+        if (doubleJumpAbility)
+        {
+            //Controlla se c'è un salto da poter consumare e può effettivamente fare il doppio salto
+            if (jumpToConsume && canUseDoubleJump)
+            {
+                Speed.y = jumpHeight;
+                canUseDoubleJump = false;
+                endedJumpEarly = false;
+                jumpToConsume = false;
+                DoubleJumpEffect();
+            }
+        }
+
+        // Termina il salto se il pulsante viene rilasciato prima
+        if (!isGrounded && !Input.JumpHeld && !endedJumpEarly && Velocity.y > 0) endedJumpEarly = true;
+
+        if (hasHitUp && Speed.y > 0) Speed.y = 0;
+    }
+    #endregion
+
+    #region Movimento orizzontale
+    public void CanDashNow()
+    {
+        if (dashToConsume && canDash && Input.X != 0 && dashAbility && cooldownDashAttuale <= 0) stateMachine.ChangeState(dashingState);
+    }
+
+    public void Dash()
+    {
+        if (dashToConsume && canDash)
+        {
+            var vel = new Vector2(Input.X, isGrounded && Input.Y < 0 ? 0 : Input.Y).normalized;
+            if (vel == Vector2.zero) { dashToConsume = false; return; }
+            DashVelocity = vel * dashPower;
+            canDash = false;
+            hasStartedDashing = fixedFrame;
+
+            ForceBuildup = Vector2.zero;//Toglie ogni forza aggiunta dall'esterno
+        }
+
+        Speed.x = DashVelocity.x;
+        Speed.y = DashVelocity.y;
+
+        //Annulla la corsa quando il tempo è finita o è stata raggiunta la distanza di sicurezza mssima
+        if (hasStartedDashing + dashLength < fixedFrame)
+        {
+            if (Speed.y > 0) Speed.y = 0;
+            Speed.x *= horizontalMultiplierDashEnd;
+            if (isGrounded)
+            {
+                canDash = true;
+                stateMachine.ChangeState(standingState);
+            }
+            else stateMachine.ChangeState(airborneState);//così non passa allo stato di standing per un attimo anche se in aria
+        }
+        dashToConsume = false;
+    }
+    #endregion
     #endregion
 
     #region Stance
@@ -462,14 +596,6 @@ public class Player : MonoBehaviour
             agileIdleParticle.Stop();
         }
     }
-
-    private void Heal(int healAmount)
-    {
-        if (currentHP == maxHP) return;
-        currentHP += healAmount;
-        if (currentHP > maxHP) currentHP = maxHP;
-    }
-
     #endregion
 
     #region Collisioni
@@ -505,92 +631,58 @@ public class Player : MonoBehaviour
             return false;
         }
     }
-    #endregion
 
-    #region Movimento orizzontale
-    public void HorizontalMovement()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (Input.X != 0)
+        if (stateMachine.currentState == airborneState && other.gameObject.TryGetComponent(out Enemy enemy))
         {
-            //Imposta la velocità di movimento orizzontale
-            Speed.x += Input.X * speedingValue * Time.fixedDeltaTime;
-
-            Speed.x = Mathf.Clamp(Speed.x, -frameClamp, frameClamp);//Fa il clamp con il massimo movimento del frame
-
-            var topBonus = Mathf.Sign(Input.X) * jumpTopBonus * topPoint;//Applica il bonus in cima al salto
-            Speed.x += topBonus * Time.fixedDeltaTime;
+            enemyTouched = true;
+            dashToConsume = false;
         }
-        else Speed.x = Mathf.MoveTowards(Speed.x, 0, slowingValue * Time.fixedDeltaTime);//Se non ci sono input rallenta il pg
 
-        if (!isGrounded && (Speed.x > 0 && hasHitRight || Speed.x < 0 && hasHitLeft)) Speed.x = 0;//Non aumentare la velocità in verticale, solo in orizzontale, per evitare che si appiccichi ai muri mentre è in aria
+        if (other.gameObject.CompareTag("Limite")) TakeDamage(MaxHP);
     }
-    #endregion
 
-    #region Gravità
-    public void Gravity()
+    private void OnCollisionStay2D(Collision2D other)
     {
-        if (!isGrounded)
+        if (other.gameObject.TryGetComponent(out Enemy enemy))
         {
-            var fallingSpeed = endedJumpEarly && Speed.y > 0 ? fallSpeed * gravityModifierJumpEndedEarly : fallSpeed;//Aggiunge una forza che butta giù il pg mentre sale se il salto viene concluso prima del previsto
+            enemyTouched = true;
 
-            Speed.y -= fallingSpeed * Time.fixedDeltaTime;//Caduta
-
-            if (Speed.y < fallClamp) Speed.y = fallClamp;//Fa il clamp della velocità
+            if (stateMachine.currentState == dashingState)
+            {
+                enemy.GetComponent<CapsuleCollider2D>().isTrigger = true;//permette di trapassare il nemico quando dasha
+                enemy.TakeDamage(dannoAlNemico);
+            }
         }
     }
 
-    public void IsTopPoint()
+    private void OnCollisionExit2D(Collision2D other)
     {
-        if (!isGrounded)
-        {
-            topPoint = Mathf.InverseLerp(jumpTopLimit, 0, Mathf.Abs(Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
-            fallSpeed = Mathf.Lerp(minFallSpeed, maxFallSpeed, topPoint);
-        }
-        else topPoint = 0;
+        enemyTouched = false;
+
+        if (other.gameObject.TryGetComponent(out Enemy enemy)) dashToConsume = false;
     }
-    #endregion
 
-    #region Movimento avanzato
-    public void Move()//Viene fatto un cast dei limiti prima di muoversi in modo da evitare collisioni future
+    private void OnTriggerExit2D(Collider2D other)
     {
-        RawMovement = Speed;//Per usare la velocità esternamente
-        var move = RawMovement * Time.fixedDeltaTime;
+        enemyTouched = false;
 
-        //Applica gli effector
-        move += EvaluateForces();
-
-        rb.MovePosition(rb.position + move);
-
-        RunCornerPrevention();
-    }
-    #endregion
-
-    #region Prevenzione incastro negli angoli
-    void RunCornerPrevention()//Fa camminare e saltare anche sul bordo di una piattaforma
-    {
-        //Le linee sotto sono per quando i raggi non rilevano il terreno e il collider non entra nello spazio dell'oggetto in collisione, determina se il pg si muove o no.
-        isStuckInCorner = !isGrounded && LastPos == rb.position && lastJumpPressed + 1 < fixedFrame;
-        Speed.y = isStuckInCorner ? 0 : Speed.y;
-        LastPos = rb.position;
-    }
-    #endregion
-
-    #region Forze
-    private Vector2 EvaluateForces()
-    {
-        //Previene il rimbalzo
-        if (hasHitLeft || hasHitRight) ForceBuildup.x = 0;
-        if (isGrounded || hasHitUp) ForceBuildup.y = 0;
-
-        var force = ForceBuildup;
-
-        ForceBuildup = Vector2.MoveTowards(ForceBuildup, Vector2.zero, forceDecay * Time.fixedDeltaTime);
-
-        return force;
+        if (other.gameObject.TryGetComponent(out Enemy enemy)) enemy.GetComponent<CapsuleCollider2D>().isTrigger = false;
     }
     #endregion
 
     #region Vita
+    #region Cura
+    private void Heal(int healAmount)
+    {
+        if (currentHP == maxHP) return;
+        currentHP += healAmount;
+        if (currentHP > maxHP) currentHP = maxHP;
+    }
+    #endregion
+
+    #region Danno
     public void TakeDamage(int damageTaken)
     {
         if (isInvulnerable) return;
@@ -601,39 +693,7 @@ public class Player : MonoBehaviour
             else currentHP -= damageTaken;
         }
     }
-    #endregion
 
-    #region Debug
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null) return;
-
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-        Gizmos.DrawWireSphere(verticalAttackPoint.position, verticalAttackRange);
-    }
-    #endregion
-
-    #region Sistema particellare
-    public void SetColor(ParticleSystem ps)
-    {
-        var main = ps.main;
-        main.startColor = currentGradient;
-    }
-
-    public void DetectGroundColor()
-    {
-        var groundHits = Physics2D.RaycastAll(transform.position, Vector3.down, 2, groundLayer);//Rileva il colore del terreno per il particellare
-        foreach (var hit in groundHits)
-        {
-            if (!hit || hit.collider.isTrigger || !hit.transform.TryGetComponent(out SpriteRenderer r)) continue;
-            currentGradient = new ParticleSystem.MinMaxGradient(r.color * 0.9f, r.color * 1.2f);
-            SetColor(moveParticles);
-            return;
-        }
-    }
-    #endregion
-
-    #region Attacco
     public void DealDamage()
     {
         float randValue = Random.value * 100;
@@ -686,9 +746,50 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    //Timer totale invulnerabilità | timer tra trasparenze | valore trasparenza 0 | valore trasparenza 1
+    IEnumerator Invulnerable()
+    {
+        bool flag = true;
+        Color tempColor = sr.color;
+        isInvulnerable = true;
+        for (int i = 0; i < alphaCycles; i++)
+        {
+            tempColor.a = flag ? alphaValue0 : alphaValue1;
+            sr.color = tempColor;
+            yield return new WaitForSeconds(tempoInvulnerabilitaDopoCollisioneConNemico / alphaCycles / 2);
+            flag = !flag;
+            tempColor.a = flag ? alphaValue0 : alphaValue1;
+            sr.color = tempColor;
+            yield return new WaitForSeconds(tempoInvulnerabilitaDopoCollisioneConNemico / alphaCycles / 2);
+        }
+        tempColor.a = 1;
+        sr.color = tempColor;
+        isInvulnerable = false;
+        yield return null;
+    }
+    #endregion
     #endregion
 
-    #region Animator
+    #region Sistema particellare
+    public void SetColor(ParticleSystem ps)
+    {
+        var main = ps.main;
+        main.startColor = currentGradient;
+    }
+
+    public void DetectGroundColor()
+    {
+        var groundHits = Physics2D.RaycastAll(transform.position, Vector3.down, 2, groundLayer);//Rileva il colore del terreno per il particellare
+        foreach (var hit in groundHits)
+        {
+            if (!hit || hit.collider.isTrigger || !hit.transform.TryGetComponent(out SpriteRenderer r)) continue;
+            currentGradient = new ParticleSystem.MinMaxGradient(r.color * 0.9f, r.color * 1.2f);
+            SetColor(moveParticles);
+            return;
+        }
+    }
+
     private void OnEnable() => moveParticles.Play();
 
     private void OnDisable() => moveParticles.Stop();
@@ -725,105 +826,13 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    #region Miscellaneous
-    private void OnCollisionEnter2D(Collision2D other)
+    #region Debug
+    private void OnDrawGizmosSelected()
     {
-        if (stateMachine.currentState == dashingState && other.gameObject.TryGetComponent(out Enemy enemyDS))
-        {
-            Debug.Log("OnCollisionEnter - dashingState");
-            enemyDS.TakeDamage(dannoAlNemico);
-            //enemyDS.GetComponent<CapsuleCollider2D>().isTrigger = true;
-            //colliderAgile.isTrigger = true;
-            //colliderBrutale.isTrigger = true;
-        }
+        if (attackPoint == null) return;
 
-
-        if (stateMachine.currentState == standingState && other.gameObject.TryGetComponent(out Enemy enemySS))
-        {
-            Debug.Log("OnCollisionEnter - standingState");
-
-            if (Input.DashDown)
-            {
-                enemySS.TakeDamage(dannoAlNemico);
-                //enemySS.GetComponent<CapsuleCollider2D>().isTrigger = true;
-                //colliderAgile.isTrigger = true;
-                //colliderBrutale.isTrigger = true;
-                stateMachine.ChangeState(dashingState);
-            }
-        }
-
-        if (stateMachine.currentState == airborneState && other.gameObject.TryGetComponent(out Enemy enemyAS))
-        {
-            enemyTouched = true;
-            dashToConsume = false;
-        }
-
-        if (other.gameObject.CompareTag("Limite")) TakeDamage(MaxHP);
-    }
-
-    private void OnCollisionStay2D(Collision2D other)//così trapassa il nemico quando dasha
-    {
-        if (stateMachine.currentState == standingState && other.gameObject.TryGetComponent(out Enemy enemy))//TODO: Fixare che delle volte non passa attraverso il nemico quando dashi, 
-        {
-            enemyTouched = true;
-
-            if (Input.DashDown)
-            {
-                //Debug.Log("OnCollisionStay - standingState");
-
-                //enemy.GetComponent<CapsuleCollider2D>().isTrigger = true;
-                //colliderAgile.isTrigger = true;
-                //colliderBrutale.isTrigger = true;
-                enemy.TakeDamage(dannoAlNemico);
-                //stateMachine.ChangeState(dashingState);
-            }
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        enemyTouched = false;
-
-        if (other.gameObject.TryGetComponent(out Enemy enemy))
-        {
-            dashToConsume = false;
-            //colliderAgile.isTrigger = false;
-            //colliderBrutale.isTrigger = false;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        enemyTouched = false;
-
-        if (other.gameObject.TryGetComponent(out Enemy enemy))
-        {
-            //enemy.GetComponent<CapsuleCollider2D>().isTrigger = false;
-            //colliderAgile.isTrigger = false;
-            //colliderBrutale.isTrigger = false;
-        }
-    }
-
-    //Timer totale invulnerabilità | timer tra trasparenze | valore trasparenza 0 | valore trasparenza 1
-    IEnumerator Invulnerable()
-    {
-        bool flag = true;
-        Color tempColor = sr.color;
-        isInvulnerable = true;
-        for (int i = 0; i < alphaCycles; i++)
-        {
-            tempColor.a = flag ? alphaValue0 : alphaValue1;
-            sr.color = tempColor;
-            yield return new WaitForSeconds(tempoInvulnerabilitaDopoCollisioneConNemico / alphaCycles / 2);
-            flag = !flag;
-            tempColor.a = flag ? alphaValue0 : alphaValue1;
-            sr.color = tempColor;
-            yield return new WaitForSeconds(tempoInvulnerabilitaDopoCollisioneConNemico / alphaCycles / 2);
-        }
-        tempColor.a = 1;
-        sr.color = tempColor;
-        isInvulnerable = false;
-        yield return null;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(verticalAttackPoint.position, verticalAttackRange);
     }
     #endregion
 }

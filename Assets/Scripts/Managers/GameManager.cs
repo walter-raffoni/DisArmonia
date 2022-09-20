@@ -38,24 +38,34 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        int cooldownStance = (int)player.CooldownStanceAttuale;
-        int cooldownDash = (int)player.CooldownDashAttuale;
-        int cooldownAttaccoPotente = (int)player.CooldownAttaccoPotenteAttuale;
+        float cooldownStance = player.CooldownStanceAttuale;
+        float cooldownDash = player.CooldownDashAttuale;
+        float cooldownAttaccoPotente = player.CooldownAttaccoPotenteAttuale;
 
-        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldownStance.ToString() + "s";
-        dashCooldownText.text = "Cooldown Dash: " + cooldownDash.ToString() + "s";
-        attaccoPotenteCooldownText.text = "Cooldown Attacco Potente: " + cooldownAttaccoPotente.ToString() + "s";
+        cooldownStance = Mathf.Round(cooldownStance);
+
+        if (cooldownStance < 0) cooldownStance = 0;
+        if (cooldownDash < 0) cooldownDash = 0;
+        if (cooldownAttaccoPotente < 0) cooldownAttaccoPotente = 0;
+
+        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldownStance.ToString("F2") + "s";
+        dashCooldownText.text = "Cooldown Dash: " + cooldownDash.ToString("F2") + "s";
+        attaccoPotenteCooldownText.text = "Cooldown Attacco Potente: " + cooldownAttaccoPotente.ToString("F2") + "s";
     }
 
     private void Update()
     {
-        int cooldownStance = (int)player.CooldownStanceAttuale;
-        int cooldownDash = (int)player.CooldownDashAttuale;
-        int cooldownAttaccoPotente = (int)player.CooldownAttaccoPotenteAttuale;
+        float cooldownStance = player.CooldownStanceAttuale;
+        float cooldownDash = player.CooldownDashAttuale;
+        float cooldownAttaccoPotente = player.CooldownAttaccoPotenteAttuale;
 
-        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldownStance.ToString() + "s";
-        dashCooldownText.text = "Cooldown Dash: " + cooldownDash.ToString() + "s";
-        attaccoPotenteCooldownText.text = "Cooldown Attacco Potente: " + cooldownAttaccoPotente.ToString() + "s";
+        if (cooldownStance < 0) cooldownStance = 0;
+        if (cooldownDash < 0) cooldownDash = 0;
+        if (cooldownAttaccoPotente < 0) cooldownAttaccoPotente = 0;
+
+        stanceChangeCooldownText.text = "Cooldown Stance: " + cooldownStance.ToString("F2") + "s";
+        dashCooldownText.text = "Cooldown Dash: " + cooldownDash.ToString("F2") + "s";
+        attaccoPotenteCooldownText.text = "Cooldown Attacco Potente: " + cooldownAttaccoPotente.ToString("F2") + "s";
 
         if (input.HandleInput().PauseDown) instance.PauseGame();
 

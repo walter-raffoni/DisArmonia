@@ -51,31 +51,10 @@ public class StandingState : State
         player.CollisionsChecks();
 
         player.HorizontalMovement();
-        IsTopPoint();
+        player.IsTopPoint();
         player.Gravity();
-        CanJump();
-        CanDash();
+        player.CanJump();
+        player.CanDashNow();
         player.Move();
-    }
-
-    void IsTopPoint()
-    {
-        if (!player.IsGrounded)
-        {
-            player.TopPoint = Mathf.InverseLerp(player.JumpTopLimit, 0, Mathf.Abs(player.Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
-            player.FallSpeed = Mathf.Lerp(player.MinFallSpeed, player.MaxFallSpeed, player.TopPoint);
-        }
-        else player.TopPoint = 0;
-    }
-
-    void CanJump()
-    {
-        //Ha premuto il tasto di salto? || Se c'è un buffer per il salto sufficiente || È a terra
-        if (player.JumpToConsume || player.HasBufferedJump || !player.IsGrounded) stateMachine.ChangeState(player.airborneState);
-    }
-
-    void CanDash()
-    {
-        if (player.DashToConsume && player.CanDash && player.Input.X != 0 && player.DashAbility && player.CooldownDashAttuale <= 0) stateMachine.ChangeState(player.dashingState);
     }
 }

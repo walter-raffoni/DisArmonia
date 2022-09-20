@@ -170,19 +170,22 @@ public class Enemy : MonoBehaviour
     public void DealDamage()
     {
         Vector3 offsetTemp = offsetRight;
-        //if ((Vector3.Distance(transform.position, target.transform.position) < attaccoGiocatoreDist) && (target.TryGetComponent(out Player player) && !player.IsInvulnerable)) player.TakeDamage(puntiDanno);
+
         if (facingRight) offsetTemp = offsetRight;
         else offsetTemp = offsetLeft;
-        
+
         Collider2D[] playerHit = Physics2D.OverlapCircleAll(transform.position + offsetTemp, .5f, playerMask);
-        foreach (Collider2D player in playerHit) player.transform.parent.GetComponent<Player>().TakeDamage(puntiDanno);
+
+        foreach (Collider2D player in playerHit) player.GetComponentInParent<Player>().TakeDamage(puntiDanno);
     }
 
     private void OnDrawGizmosSelected()
     {
         Vector3 offsetTemp = offsetRight;
+
         if (facingRight) offsetTemp = offsetRight;
         else offsetTemp = offsetLeft;
+
         Gizmos.DrawWireSphere(transform.position + offsetTemp, .5f);
     }
 

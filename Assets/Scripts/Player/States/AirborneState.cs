@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class AirborneState : State
 {
     public AirborneState(Player _player, StateMachine _stateMachine) : base(_player, _stateMachine)
@@ -48,9 +46,9 @@ public class AirborneState : State
         player.CollisionsChecks();
 
         player.HorizontalMovement();
-        IsTopPoint();
+        player.IsTopPoint();
         player.Gravity();
-        Jump();
+        player.Jump();
         player.Move();
 
         if (player.Stance == Player.TipoStance.Brutale && stateMachine.currentState != player.verticalAttackState)
@@ -63,36 +61,5 @@ public class AirborneState : State
             if (player.Velocity.y >= 0) player.Anim.Play("Agile_Jump");
             else if (player.Velocity.y < 0) player.Anim.Play("Agile_AirborneAtterra");
         }
-    }
-
-    void Jump()
-    {
-        if (player.DoubleJumpAbility)
-        {
-            //Controlla se c'è un salto da poter consumare e può effettivamente fare il doppio salto
-            if (player.JumpToConsume && player.CanDoubleJump)
-            {
-                player.Speed.y = player.JumpHeight;
-                player.CanUseDoubleJump = false;
-                player.EndedJumpEarly = false;
-                player.JumpToConsume = false;
-                player.DoubleJumpEffect();
-            }
-        }
-
-        // Termina il salto se il pulsante viene rilasciato prima
-        if (!player.IsGrounded && !player.Input.JumpHeld && !player.EndedJumpEarly && player.Velocity.y > 0) player.EndedJumpEarly = true;
-
-        if (player.HasHitUp && player.Speed.y > 0) player.Speed.y = 0;
-    }
-
-    void IsTopPoint()
-    {
-        if (!player.IsGrounded)
-        {
-            player.TopPoint = Mathf.InverseLerp(player.JumpTopLimit, 0, Mathf.Abs(player.Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
-            player.FallSpeed = Mathf.Lerp(player.MinFallSpeed, player.MaxFallSpeed, player.TopPoint);
-        }
-        else stateMachine.ChangeState(player.standingState);
     }
 }

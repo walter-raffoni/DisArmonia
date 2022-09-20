@@ -1,271 +1,292 @@
 fileFormatVersion: 2
-guid: 953d3cd613e68a84685dfd7d9e16d19b
+guid: 4de43a227ffb1294fbd88b753cc0691d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4626979663298506514
-    second: BrutalStanceAtlas_0
+      213: -6476968283545789666
+    second: Atlas_v1_0
   - first:
-      213: -1450089109705536705
-    second: BrutalStanceAtlas_1
+      213: 1342366229797213494
+    second: Atlas_v1_1
   - first:
-      213: -8655511091084600063
-    second: BrutalStanceAtlas_2
+      213: 5283865808902261899
+    second: Atlas_v1_2
   - first:
-      213: -4573283780869436355
-    second: BrutalStanceAtlas_3
+      213: 6064038105781303208
+    second: Atlas_v1_3
   - first:
-      213: -4341294468057459686
-    second: BrutalStanceAtlas_4
+      213: 2298609276282504380
+    second: Atlas_v1_4
   - first:
-      213: 5618024378453383019
-    second: BrutalStanceAtlas_5
+      213: -4385463200847911308
+    second: Atlas_v1_5
   - first:
-      213: 5722274003558144042
-    second: BrutalStanceAtlas_6
+      213: 5458439740605791141
+    second: Atlas_v1_6
   - first:
-      213: 8795076256887089998
-    second: BrutalStanceAtlas_7
+      213: -2832966035161594489
+    second: Atlas_v1_7
   - first:
-      213: -4597265959027180164
-    second: BrutalStanceAtlas_8
+      213: -2720197504033630829
+    second: Atlas_v1_8
   - first:
-      213: -5602287211053217399
-    second: BrutalStanceAtlas_9
+      213: -7070520337105392489
+    second: Atlas_v1_9
   - first:
-      213: -1897996162160987367
-    second: BrutalStanceAtlas_10
+      213: 7527811675695261216
+    second: Atlas_v1_10
   - first:
-      213: -6506668009052052625
-    second: BrutalStanceAtlas_11
+      213: 3093676725167995859
+    second: Atlas_v1_11
   - first:
-      213: -8713920326385178268
-    second: BrutalStanceAtlas_12
+      213: -8684398747192459460
+    second: Atlas_v1_12
   - first:
-      213: 1349695986023025799
-    second: BrutalStanceAtlas_13
+      213: -5965980045834909008
+    second: Atlas_v1_13
   - first:
-      213: 5240602391261849080
-    second: BrutalStanceAtlas_14
+      213: 8315836671048959754
+    second: Atlas_v1_14
   - first:
-      213: -7497147026048333143
-    second: BrutalStanceAtlas_15
+      213: -8105251913401342940
+    second: Atlas_v1_15
   - first:
-      213: -9120776832379983741
-    second: BrutalStanceAtlas_16
+      213: 4497180192121046648
+    second: Atlas_v1_16
   - first:
-      213: -8121774398119541883
-    second: BrutalStanceAtlas_17
+      213: -2031834597658232593
+    second: Atlas_v1_17
   - first:
-      213: 3721757745727641388
-    second: BrutalStanceAtlas_18
+      213: -1626819265514307404
+    second: Atlas_v1_18
   - first:
-      213: 3498781947199012956
-    second: BrutalStanceAtlas_19
+      213: 1953230015217777066
+    second: Atlas_v1_19
   - first:
-      213: -3320547497864285702
-    second: BrutalStanceAtlas_20
+      213: 5002586463695605904
+    second: Atlas_v1_20
   - first:
-      213: 7317130559616491806
-    second: BrutalStanceAtlas_21
+      213: 672326729956618578
+    second: Atlas_v1_21
   - first:
-      213: 4787854700308395874
-    second: BrutalStanceAtlas_22
+      213: 944644317987436763
+    second: Atlas_v1_22
   - first:
-      213: -9140713434369562717
-    second: BrutalStanceAtlas_23
+      213: 2142995118597606096
+    second: Atlas_v1_23
   - first:
-      213: 4846005615106568183
-    second: BrutalStanceAtlas_24
+      213: -4038583126062602138
+    second: Atlas_v1_24
   - first:
-      213: -3934928015418709043
-    second: BrutalStanceAtlas_25
+      213: 6176557984277586966
+    second: Atlas_v1_25
   - first:
-      213: -8380959090496348570
-    second: BrutalStanceAtlas_26
+      213: 7447380483891169330
+    second: Atlas_v1_26
   - first:
-      213: -3572936638864412942
-    second: BrutalStanceAtlas_27
+      213: -4893652716949190829
+    second: Atlas_v1_27
   - first:
-      213: 4171976227618592589
-    second: BrutalStanceAtlas_28
+      213: 9124197029613716501
+    second: Atlas_v1_28
   - first:
-      213: 1234828480995434382
-    second: BrutalStanceAtlas_29
+      213: -5990302742909688020
+    second: Atlas_v1_29
   - first:
-      213: 2607152243500958904
-    second: BrutalStanceAtlas_30
+      213: -6168443249165421120
+    second: Atlas_v1_30
   - first:
-      213: 2243626416626065344
-    second: BrutalStanceAtlas_31
+      213: 4189691325751075710
+    second: Atlas_v1_31
   - first:
-      213: -931086358129128525
-    second: BrutalStanceAtlas_32
+      213: 7753492864137305534
+    second: Atlas_v1_32
   - first:
-      213: 3110436416493194525
-    second: BrutalStanceAtlas_33
+      213: -7483718517431259945
+    second: Atlas_v1_33
   - first:
-      213: -2230719336580752808
-    second: BrutalStanceAtlas_34
+      213: -4812482810382045754
+    second: Atlas_v1_34
   - first:
-      213: 3809448068444535325
-    second: BrutalStanceAtlas_35
+      213: 3486535820884598124
+    second: Atlas_v1_35
   - first:
-      213: 2559584357576434288
-    second: BrutalStanceAtlas_36
+      213: 6884187145029742561
+    second: Atlas_v1_36
   - first:
-      213: 655104486358663333
-    second: BrutalStanceAtlas_37
+      213: 4859584229510870544
+    second: Atlas_v1_37
   - first:
-      213: 5787948994729052786
-    second: BrutalStanceAtlas_38
+      213: 2142906294730729861
+    second: Atlas_v1_38
   - first:
-      213: -5298436782888808357
-    second: BrutalStanceAtlas_39
+      213: 8617885269009111170
+    second: Atlas_v1_39
   - first:
-      213: -1907565354663037512
-    second: BrutalStanceAtlas_40
+      213: 4917763092252615183
+    second: Atlas_v1_40
   - first:
-      213: 4214083714849710845
-    second: BrutalStanceAtlas_41
+      213: -1974013621817969991
+    second: Atlas_v1_41
   - first:
-      213: -7080239404893769313
-    second: BrutalStanceAtlas_42
+      213: -3435768557266572531
+    second: Atlas_v1_42
   - first:
-      213: -2832971349812524765
-    second: BrutalStanceAtlas_43
+      213: 7784552959305257699
+    second: Atlas_v1_43
   - first:
-      213: -5200991834945587992
-    second: BrutalStanceAtlas_44
+      213: 2840829113609251374
+    second: Atlas_v1_44
   - first:
-      213: -1145915732673089066
-    second: BrutalStanceAtlas_45
+      213: 9080908381903445781
+    second: Atlas_v1_45
   - first:
-      213: -1584534317650927458
-    second: BrutalStanceAtlas_46
+      213: -8003257925366088625
+    second: Atlas_v1_46
   - first:
-      213: 5990057042068624280
-    second: BrutalStanceAtlas_47
+      213: -9212426148169636069
+    second: Atlas_v1_47
   - first:
-      213: -2592826123519193175
-    second: BrutalStanceAtlas_48
+      213: 4952771338087057958
+    second: Atlas_v1_48
   - first:
-      213: 7003486492531906943
-    second: BrutalStanceAtlas_49
+      213: -8756463474247638740
+    second: Atlas_v1_49
   - first:
-      213: 5190389445622432368
-    second: BrutalStanceAtlas_50
+      213: -5510596420874991496
+    second: Atlas_v1_50
   - first:
-      213: 5637700379158498970
-    second: BrutalStanceAtlas_51
+      213: 7919137636289564210
+    second: Atlas_v1_51
   - first:
-      213: -386433352157858173
-    second: BrutalStanceAtlas_52
+      213: -863357230347805672
+    second: Atlas_v1_52
   - first:
-      213: -1326265802904891464
-    second: BrutalStanceAtlas_53
+      213: 2705950265275993922
+    second: Atlas_v1_53
   - first:
-      213: 4138951428419763979
-    second: BrutalStanceAtlas_54
+      213: 679050859240538646
+    second: Atlas_v1_54
   - first:
-      213: -5397522027102223841
-    second: BrutalStanceAtlas_55
+      213: -7677139516232523352
+    second: Atlas_v1_55
   - first:
-      213: -8861308929259229735
-    second: BrutalStanceAtlas_56
+      213: -4823723465536009177
+    second: Atlas_v1_56
   - first:
-      213: 6123050358563776952
-    second: BrutalStanceAtlas_57
+      213: 4744904557944956466
+    second: Atlas_v1_57
   - first:
-      213: 3240164105179558049
-    second: BrutalStanceAtlas_58
+      213: 5022525079765771769
+    second: Atlas_v1_58
   - first:
-      213: -1497436507237928019
-    second: BrutalStanceAtlas_59
+      213: -7647612785435212531
+    second: Atlas_v1_59
   - first:
-      213: -5104060561433007626
-    second: BrutalStanceAtlas_60
+      213: -339776457569594396
+    second: Atlas_v1_60
   - first:
-      213: 6816985644018197437
-    second: BrutalStanceAtlas_61
+      213: 4506097305965143249
+    second: Atlas_v1_61
   - first:
-      213: -4841203128693691905
-    second: BrutalStanceAtlas_62
+      213: -7320026215507949256
+    second: Atlas_v1_62
   - first:
-      213: 849116849664884658
-    second: BrutalStanceAtlas_63
+      213: -7410103097061305940
+    second: Atlas_v1_63
   - first:
-      213: 1890413906784325783
-    second: BrutalStanceAtlas_64
+      213: -7322666883954188577
+    second: Atlas_v1_64
   - first:
-      213: -8609380614185277226
-    second: BrutalStanceAtlas_65
+      213: -2109872250094019675
+    second: Atlas_v1_65
   - first:
-      213: 230959538207355260
-    second: BrutalStanceAtlas_66
+      213: 3658127260141649662
+    second: Atlas_v1_66
   - first:
-      213: 1629604810921727196
-    second: BrutalStanceAtlas_67
+      213: 8554964820501870221
+    second: Atlas_v1_67
   - first:
-      213: -6445437664269441268
-    second: BrutalStanceAtlas_68
+      213: -1291145495538530094
+    second: Atlas_v1_68
   - first:
-      213: 3285355747740426135
-    second: BrutalStanceAtlas_69
+      213: 676013167289422977
+    second: Atlas_v1_69
   - first:
-      213: -7900704232519708885
-    second: BrutalStanceAtlas_70
+      213: -1700868609791563221
+    second: Atlas_v1_70
   - first:
-      213: -3494403031124056008
-    second: BrutalStanceAtlas_71
+      213: -1424264036730966241
+    second: Atlas_v1_71
   - first:
-      213: 1337197219716863763
-    second: BrutalStanceAtlas_72
+      213: 5823166223405908029
+    second: Atlas_v1_72
   - first:
-      213: -7979358157701606572
-    second: BrutalStanceAtlas_73
+      213: 8549847166261077787
+    second: Atlas_v1_73
   - first:
-      213: -527403699191874969
-    second: BrutalStanceAtlas_74
+      213: 7281356827030337239
+    second: Atlas_v1_74
   - first:
-      213: -6169509461531029942
-    second: BrutalStanceAtlas_75
+      213: -8016960206184305675
+    second: Atlas_v1_75
   - first:
-      213: 3084678042915237520
-    second: BrutalStanceAtlas_76
+      213: 4220785604865220344
+    second: Atlas_v1_76
   - first:
-      213: -8573253123938534817
-    second: BrutalStanceAtlas_77
+      213: 752677525650851800
+    second: Atlas_v1_77
   - first:
-      213: 2598615262128125720
-    second: BrutalStanceAtlas_78
+      213: -6397587149752768422
+    second: Atlas_v1_78
   - first:
-      213: 7294240575456453188
-    second: BrutalStanceAtlas_79
+      213: 7198186406833079616
+    second: Atlas_v1_79
   - first:
-      213: 2817864712045387055
-    second: BrutalStanceAtlas_80
+      213: 6678087353686771819
+    second: Atlas_v1_80
   - first:
-      213: -4960037213036759203
-    second: BrutalStanceAtlas_81
+      213: -7331899343507185571
+    second: Atlas_v1_81
   - first:
-      213: -7112997565094935229
-    second: BrutalStanceAtlas_82
+      213: -4384220611541115226
+    second: Atlas_v1_82
   - first:
-      213: 7673401390169464862
-    second: BrutalStanceAtlas_83
+      213: 2376301740748866944
+    second: Atlas_v1_83
   - first:
-      213: 3237735253611656373
-    second: BrutalStanceAtlas_84
+      213: -6409666697368478711
+    second: Atlas_v1_84
   - first:
-      213: -517139023620197578
-    second: BrutalStanceAtlas_85
+      213: 5085466638940200728
+    second: Atlas_v1_85
   - first:
-      213: 3037236165657552268
-    second: BrutalStanceAtlas_86
+      213: -6645173310712100283
+    second: Atlas_v1_86
   - first:
-      213: -4951158357352810246
-    second: BrutalStanceAtlas_87
+      213: -7751936624789247897
+    second: Atlas_v1_87
+  - first:
+      213: 1906526235654973796
+    second: Atlas_v1_88
+  - first:
+      213: -3346090814542095320
+    second: Atlas_v1_89
+  - first:
+      213: -6072175875538365842
+    second: Atlas_v1_90
+  - first:
+      213: -4315980075318472635
+    second: Atlas_v1_91
+  - first:
+      213: 6328270484411396381
+    second: Atlas_v1_92
+  - first:
+      213: 7374990180069413548
+    second: Atlas_v1_93
+  - first:
+      213: -8200137776280396477
+    second: Atlas_v1_94
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -355,301 +376,301 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BrutalStanceAtlas_0
+      name: Atlas_v1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 359
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.74}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21f2ddd2d75563040800000000000000
-      internalID: 4626979663298506514
+      spriteID: e1b18cd99af2d16a0800000000000000
+      internalID: -6476968283545789666
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_1
+      name: Atlas_v1_1
       rect:
         serializedVersion: 2
         x: 48
         y: 359
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.74}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f3bc65b33af30ebe0800000000000000
-      internalID: -1450089109705536705
+      spriteID: 6351b8d49fa01a210800000000000000
+      internalID: 1342366229797213494
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_2
+      name: Atlas_v1_2
       rect:
         serializedVersion: 2
         x: 96
         y: 359
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.74}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10dd272858271e780800000000000000
-      internalID: -8655511091084600063
+      spriteID: b8c837445ff045940800000000000000
+      internalID: 5283865808902261899
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_3
+      name: Atlas_v1_3
       rect:
         serializedVersion: 2
         x: 144
         y: 359
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.74}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3cc830b1ae6880c0800000000000000
-      internalID: -4573283780869436355
+      spriteID: 8a7f68f478ac72450800000000000000
+      internalID: 6064038105781303208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_4
+      name: Atlas_v1_4
       rect:
         serializedVersion: 2
         x: 192
         y: 359
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.74}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a141116beaf90c3c0800000000000000
-      internalID: -4341294468057459686
+      spriteID: cb48c3e45fc46ef10800000000000000
+      internalID: 2298609276282504380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_5
+      name: Atlas_v1_5
       rect:
         serializedVersion: 2
         x: 240
         y: 359
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.74}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b67d239186b37fd40800000000000000
-      internalID: 5618024378453383019
+      spriteID: 476a9e93474b323c0800000000000000
+      internalID: -4385463200847911308
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_6
+      name: Atlas_v1_6
       rect:
         serializedVersion: 2
         x: 288
         y: 359
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.74}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a28198963e9996f40800000000000000
-      internalID: 5722274003558144042
+      spriteID: 5abfea6260640cb40800000000000000
+      internalID: 5458439740605791141
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_7
+      name: Atlas_v1_7
       rect:
         serializedVersion: 2
         x: 0
         y: 320
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4b2a30e1436e0a70800000000000000
-      internalID: 8795076256887089998
+      spriteID: 785427596684fa8d0800000000000000
+      internalID: -2832966035161594489
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_8
+      name: Atlas_v1_8
       rect:
         serializedVersion: 2
         x: 48
         y: 320
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7d7036b7fa3330c0800000000000000
-      internalID: -4597265959027180164
+      spriteID: 395db2548caef3ad0800000000000000
+      internalID: -2720197504033630829
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_9
+      name: Atlas_v1_9
       rect:
         serializedVersion: 2
         x: 96
         y: 320
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9898577b67da042b0800000000000000
-      internalID: -5602287211053217399
+      spriteID: 79c68a1f63770ed90800000000000000
+      internalID: -7070520337105392489
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_10
+      name: Atlas_v1_10
       rect:
         serializedVersion: 2
         x: 144
         y: 320
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 913f659eb86f8a5e0800000000000000
-      internalID: -1897996162160987367
+      spriteID: 026aad1c5d8287860800000000000000
+      internalID: 7527811675695261216
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_11
+      name: Atlas_v1_11
       rect:
         serializedVersion: 2
         x: 192
         y: 320
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f63ed096beba3b5a0800000000000000
-      internalID: -6506668009052052625
+      spriteID: 3db388d2792feea20800000000000000
+      internalID: 3093676725167995859
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_12
+      name: Atlas_v1_12
       rect:
         serializedVersion: 2
         x: 240
         y: 320
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46961c8a1afe11780800000000000000
-      internalID: -8713920326385178268
+      spriteID: c3ffeb1f951da7780800000000000000
+      internalID: -8684398747192459460
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_13
+      name: Atlas_v1_13
       rect:
         serializedVersion: 2
         x: 288
         y: 320
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78c4ca929551bb210800000000000000
-      internalID: 1349695986023025799
+      spriteID: 0ba01f6e1c4943da0800000000000000
+      internalID: -5965980045834909008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_14
+      name: Atlas_v1_14
       rect:
         serializedVersion: 2
         x: 0
@@ -657,20 +678,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f5a934eb1c5ab840800000000000000
-      internalID: 5240602391261849080
+      spriteID: a074a04a469c76370800000000000000
+      internalID: 8315836671048959754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_15
+      name: Atlas_v1_15
       rect:
         serializedVersion: 2
         x: 48
@@ -678,20 +699,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9aa438b5088c4f790800000000000000
-      internalID: -7497147026048333143
+      spriteID: 42468a6045c548f80800000000000000
+      internalID: -8105251913401342940
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_16
+      name: Atlas_v1_16
       rect:
         serializedVersion: 2
         x: 96
@@ -699,20 +720,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 388e06e7bcd7c6180800000000000000
-      internalID: -9120776832379983741
+      spriteID: 8764c42ce81396e30800000000000000
+      internalID: 4497180192121046648
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_17
+      name: Atlas_v1_17
       rect:
         serializedVersion: 2
         x: 144
@@ -720,20 +741,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58309364739a94f80800000000000000
-      internalID: -8121774398119541883
+      spriteID: fe87b34d2397dc3e0800000000000000
+      internalID: -2031834597658232593
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_18
+      name: Atlas_v1_18
       rect:
         serializedVersion: 2
         x: 192
@@ -741,20 +762,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c27972673f656a330800000000000000
-      internalID: 3721757745727641388
+      spriteID: 4b0024d4f706c69e0800000000000000
+      internalID: -1626819265514307404
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_19
+      name: Atlas_v1_19
       rect:
         serializedVersion: 2
         x: 240
@@ -762,20 +783,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c50c855c4ab2e8030800000000000000
-      internalID: 3498781947199012956
+      spriteID: aa9bfa5a9544b1b10800000000000000
+      internalID: 1953230015217777066
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_20
+      name: Atlas_v1_20
       rect:
         serializedVersion: 2
         x: 288
@@ -783,20 +804,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af1bcf9c4ab0be1d0800000000000000
-      internalID: -3320547497864285702
+      spriteID: 09011c642e1cc6540800000000000000
+      internalID: 5002586463695605904
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_21
+      name: Atlas_v1_21
       rect:
         serializedVersion: 2
         x: 336
@@ -804,20 +825,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e11a815e97bab8560800000000000000
-      internalID: 7317130559616491806
+      spriteID: 25170184995945900800000000000000
+      internalID: 672326729956618578
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_22
+      name: Atlas_v1_22
       rect:
         serializedVersion: 2
         x: 384
@@ -825,20 +846,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 267f0189b70e17240800000000000000
-      internalID: 4787854700308395874
+      spriteID: bd87bb4900d0c1d00800000000000000
+      internalID: 944644317987436763
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_23
+      name: Atlas_v1_23
       rect:
         serializedVersion: 2
         x: 432
@@ -846,20 +867,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a7e2ce9f89a52180800000000000000
-      internalID: -9140713434369562717
+      spriteID: 0da086fc4b27dbd10800000000000000
+      internalID: 2142995118597606096
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_24
+      name: Atlas_v1_24
       rect:
         serializedVersion: 2
         x: 0
@@ -867,20 +888,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ffa9f38e68704340800000000000000
-      internalID: 4846005615106568183
+      spriteID: 668e62f4b0214f7c0800000000000000
+      internalID: -4038583126062602138
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_25
+      name: Atlas_v1_25
       rect:
         serializedVersion: 2
         x: 48
@@ -888,20 +909,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dcb2c3071d35469c0800000000000000
-      internalID: -3934928015418709043
+      spriteID: 614e77b03ca87b550800000000000000
+      internalID: 6176557984277586966
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_26
+      name: Atlas_v1_26
       rect:
         serializedVersion: 2
         x: 96
@@ -909,20 +930,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66e52e58c1ad0bb80800000000000000
-      internalID: -8380959090496348570
+      spriteID: 238828997196a5760800000000000000
+      internalID: 7447380483891169330
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_27
+      name: Atlas_v1_27
       rect:
         serializedVersion: 2
         x: 144
@@ -930,20 +951,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2fe2283ae016a6ec0800000000000000
-      internalID: -3572936638864412942
+      spriteID: 3574e1818c0461cb0800000000000000
+      internalID: -4893652716949190829
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_28
+      name: Atlas_v1_28
       rect:
         serializedVersion: 2
         x: 192
@@ -951,20 +972,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4794926646d5e930800000000000000
-      internalID: 4171976227618592589
+      spriteID: 514ccca3bd8af9e70800000000000000
+      internalID: 9124197029613716501
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_29
+      name: Atlas_v1_29
       rect:
         serializedVersion: 2
         x: 240
@@ -972,20 +993,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8f944806fdf22110800000000000000
-      internalID: 1234828480995434382
+      spriteID: c27e1dfa46b2edca0800000000000000
+      internalID: -5990302742909688020
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_30
+      name: Atlas_v1_30
       rect:
         serializedVersion: 2
         x: 288
@@ -993,20 +1014,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b4cc35f6277e2420800000000000000
-      internalID: 2607152243500958904
+      spriteID: 0c5b654fb89456aa0800000000000000
+      internalID: -6168443249165421120
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_31
+      name: Atlas_v1_31
       rect:
         serializedVersion: 2
         x: 336
@@ -1014,20 +1035,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cfdda3b656f22f10800000000000000
-      internalID: 2243626416626065344
+      spriteID: e73ade51016c42a30800000000000000
+      internalID: 4189691325751075710
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_32
+      name: Atlas_v1_32
       rect:
         serializedVersion: 2
         x: 384
@@ -1035,20 +1056,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bb4080f3ed1413f0800000000000000
-      internalID: -931086358129128525
+      spriteID: ebd1e6f1ea0f99b60800000000000000
+      internalID: 7753492864137305534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_33
+      name: Atlas_v1_33
       rect:
         serializedVersion: 2
         x: 432
@@ -1056,20 +1077,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1d0485e07d7a2b20800000000000000
-      internalID: 3110436416493194525
+      spriteID: 7dc2f79a8ad742890800000000000000
+      internalID: -7483718517431259945
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_34
+      name: Atlas_v1_34
       rect:
         serializedVersion: 2
         x: 0
@@ -1077,20 +1098,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85a528d0594ea01e0800000000000000
-      internalID: -2230719336580752808
+      spriteID: 6cd218fa160a63db0800000000000000
+      internalID: -4812482810382045754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_35
+      name: Atlas_v1_35
       rect:
         serializedVersion: 2
         x: 48
@@ -1098,20 +1119,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1a3fedb5d0edd430800000000000000
-      internalID: 3809448068444535325
+      spriteID: c6d508c4bd9a26030800000000000000
+      internalID: 3486535820884598124
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_36
+      name: Atlas_v1_36
       rect:
         serializedVersion: 2
         x: 96
@@ -1119,20 +1140,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0726df57968758320800000000000000
-      internalID: 2559584357576434288
+      spriteID: 1efeec20cbb898f50800000000000000
+      internalID: 6884187145029742561
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_37
+      name: Atlas_v1_37
       rect:
         serializedVersion: 2
         x: 144
@@ -1140,20 +1161,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a04c283f06671900800000000000000
-      internalID: 655104486358663333
+      spriteID: 016f51c0c16b07340800000000000000
+      internalID: 4859584229510870544
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_38
+      name: Atlas_v1_38
       rect:
         serializedVersion: 2
         x: 192
@@ -1161,20 +1182,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27a87e0e1fce25050800000000000000
-      internalID: 5787948994729052786
+      spriteID: 589af54ebe12dbd10800000000000000
+      internalID: 2142906294730729861
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_39
+      name: Atlas_v1_39
       rect:
         serializedVersion: 2
         x: 240
@@ -1182,20 +1203,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b509c0b71db2876b0800000000000000
-      internalID: -5298436782888808357
+      spriteID: 2881c5e1ef0e89770800000000000000
+      internalID: 8617885269009111170
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_40
+      name: Atlas_v1_40
       rect:
         serializedVersion: 2
         x: 288
@@ -1203,20 +1224,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b5b779aa67f685e0800000000000000
-      internalID: -1907565354663037512
+      spriteID: f026e3b1a776f3440800000000000000
+      internalID: 4917763092252615183
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_41
+      name: Atlas_v1_41
       rect:
         serializedVersion: 2
         x: 336
@@ -1224,272 +1245,272 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df2206dbfce6b7a30800000000000000
-      internalID: 4214083714849710845
+      spriteID: 9b2f1c9d115ea94e0800000000000000
+      internalID: -1974013621817969991
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_42
+      name: Atlas_v1_42
       rect:
         serializedVersion: 2
         x: 0
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f91759226cfedbd90800000000000000
-      internalID: -7080239404893769313
+      spriteID: d0b6bad53b2b150d0800000000000000
+      internalID: -3435768557266572531
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_43
+      name: Atlas_v1_43
       rect:
         serializedVersion: 2
         x: 48
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 329c09b21934fa8d0800000000000000
-      internalID: -2832971349812524765
+      spriteID: 3e21b921ca9480c60800000000000000
+      internalID: 7784552959305257699
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_44
+      name: Atlas_v1_44
       rect:
         serializedVersion: 2
         x: 96
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e47c5e6b7d52d7b0800000000000000
-      internalID: -5200991834945587992
+      spriteID: e2a64480707ac6720800000000000000
+      internalID: 2840829113609251374
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_45
+      name: Atlas_v1_45
       rect:
         serializedVersion: 2
         x: 144
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d13d7366b3e810f0800000000000000
-      internalID: -1145915732673089066
+      spriteID: 51fd8358f0ed50e70800000000000000
+      internalID: 9080908381903445781
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_46
+      name: Atlas_v1_46
       rect:
         serializedVersion: 2
         x: 192
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e90200eee6a920ae0800000000000000
-      internalID: -1584534317650927458
+      spriteID: f4c79b8e157bee090800000000000000
+      internalID: -8003257925366088625
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_47
+      name: Atlas_v1_47
       rect:
         serializedVersion: 2
         x: 240
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 893d3d0a425f02350800000000000000
-      internalID: 5990057042068624280
+      spriteID: b1724de4a33e62080800000000000000
+      internalID: -9212426148169636069
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_48
+      name: Atlas_v1_48
       rect:
         serializedVersion: 2
         x: 288
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9af0947c06e640cd0800000000000000
-      internalID: -2592826123519193175
+      spriteID: 62a4a648a47cbb440800000000000000
+      internalID: 4952771338087057958
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_49
+      name: Atlas_v1_49
       rect:
         serializedVersion: 2
         x: 336
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f795c90ebd1613160800000000000000
-      internalID: 7003486492531906943
+      spriteID: c2169c82ddaca7680800000000000000
+      internalID: -8756463474247638740
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_50
+      name: Atlas_v1_50
       rect:
         serializedVersion: 2
         x: 384
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 072034073b7f70840800000000000000
-      internalID: 5190389445622432368
+      spriteID: 878053960cd6683b0800000000000000
+      internalID: -5510596420874991496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_51
+      name: Atlas_v1_51
       rect:
         serializedVersion: 2
         x: 432
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a9ec3d100a22d3e40800000000000000
-      internalID: 5637700379158498970
+      spriteID: 23e477a09bd66ed60800000000000000
+      internalID: 7919137636289564210
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_52
+      name: Atlas_v1_52
       rect:
         serializedVersion: 2
         x: 480
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3867443e9ec13aaf0800000000000000
-      internalID: -386433352157858173
+      spriteID: 81c9ada5c2db404f0800000000000000
+      internalID: -863357230347805672
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_53
+      name: Atlas_v1_53
       rect:
         serializedVersion: 2
         x: 528
         y: 164
         width: 48
         height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8bf0b147748289de0800000000000000
-      internalID: -1326265802904891464
+      spriteID: 24f46a5fd677d8520800000000000000
+      internalID: 2705950265275993922
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_54
+      name: Atlas_v1_54
       rect:
         serializedVersion: 2
         x: 0
@@ -1497,20 +1518,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0f3e812562807930800000000000000
-      internalID: 4138951428419763979
+      spriteID: 612c471a8297c6900800000000000000
+      internalID: 679050859240538646
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_55
+      name: Atlas_v1_55
       rect:
         serializedVersion: 2
         x: 48
@@ -1518,20 +1539,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f12c93b40562815b0800000000000000
-      internalID: -5397522027102223841
+      spriteID: 8a1a8d30942557590800000000000000
+      internalID: -7677139516232523352
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_56
+      name: Atlas_v1_56
       rect:
         serializedVersion: 2
         x: 96
@@ -1539,20 +1560,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9dda1826a7e460580800000000000000
-      internalID: -8861308929259229735
+      spriteID: 72c8206b011be0db0800000000000000
+      internalID: -4823723465536009177
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_57
+      name: Atlas_v1_57
       rect:
         serializedVersion: 2
         x: 144
@@ -1560,20 +1581,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b9a50c1cd179f450800000000000000
-      internalID: 6123050358563776952
+      spriteID: 236e07d4e8949d140800000000000000
+      internalID: 4744904557944956466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_58
+      name: Atlas_v1_58
       rect:
         serializedVersion: 2
         x: 192
@@ -1581,20 +1602,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a0f237261067fc20800000000000000
-      internalID: 3240164105179558049
+      spriteID: 9f5ede613f793b540800000000000000
+      internalID: 5022525079765771769
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_59
+      name: Atlas_v1_59
       rect:
         serializedVersion: 2
         x: 240
@@ -1602,20 +1623,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da3b1603e69083be0800000000000000
-      internalID: -1497436507237928019
+      spriteID: d050660c0b83ed590800000000000000
+      internalID: -7647612785435212531
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_60
+      name: Atlas_v1_60
       rect:
         serializedVersion: 2
         x: 288
@@ -1623,20 +1644,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f964bb36fbba29b0800000000000000
-      internalID: -5104060561433007626
+      spriteID: 4e3168fac1fd84bf0800000000000000
+      internalID: -339776457569594396
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_61
+      name: Atlas_v1_61
       rect:
         serializedVersion: 2
         x: 336
@@ -1644,20 +1665,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db364a6435cca9e50800000000000000
-      internalID: 6816985644018197437
+      spriteID: 1d4a56d10afd88e30800000000000000
+      internalID: 4506097305965143249
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_62
+      name: Atlas_v1_65
       rect:
         serializedVersion: 2
         x: 0
@@ -1665,20 +1686,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff9e3bc776790dcb0800000000000000
-      internalID: -4841203128693691905
+      spriteID: 5ab11bbfd5a38b2e0800000000000000
+      internalID: -2109872250094019675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_63
+      name: Atlas_v1_66
       rect:
         serializedVersion: 2
         x: 48
@@ -1686,20 +1707,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2bff215a64ba8cb00800000000000000
-      internalID: 849116849664884658
+      spriteID: efe7aeb8c5744c230800000000000000
+      internalID: 3658127260141649662
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_64
+      name: Atlas_v1_67
       rect:
         serializedVersion: 2
         x: 96
@@ -1707,20 +1728,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7909650be691c3a10800000000000000
-      internalID: 1890413906784325783
+      spriteID: d863af79d2759b670800000000000000
+      internalID: 8554964820501870221
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_65
+      name: Atlas_v1_68
       rect:
         serializedVersion: 2
         x: 144
@@ -1728,20 +1749,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d82a5322f5558880800000000000000
-      internalID: -8609380614185277226
+      spriteID: 2d88419330ee41ee0800000000000000
+      internalID: -1291145495538530094
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_66
+      name: Atlas_v1_69
       rect:
         serializedVersion: 2
         x: 192
@@ -1749,20 +1770,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c717650f978843300800000000000000
-      internalID: 230959538207355260
+      spriteID: 184d5cbd46ea16900800000000000000
+      internalID: 676013167289422977
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_67
+      name: Atlas_v1_70
       rect:
         serializedVersion: 2
         x: 240
@@ -1770,20 +1791,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd4d14701f48d9610800000000000000
-      internalID: 1629604810921727196
+      spriteID: b2ae2cfc20d4568e0800000000000000
+      internalID: -1700868609791563221
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_68
+      name: Atlas_v1_71
       rect:
         serializedVersion: 2
         x: 288
@@ -1791,20 +1812,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c07eb4ff7943d86a0800000000000000
-      internalID: -6445437664269441268
+      spriteID: f1f6948976ffb3ce0800000000000000
+      internalID: -1424264036730966241
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_69
+      name: Atlas_v1_72
       rect:
         serializedVersion: 2
         x: 336
@@ -1812,20 +1833,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79f1bd065ade79d20800000000000000
-      internalID: 3285355747740426135
+      spriteID: d308926e3da00d050800000000000000
+      internalID: 5823166223405908029
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_70
+      name: Atlas_v1_73
       rect:
         serializedVersion: 2
         x: 384
@@ -1833,20 +1854,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2fcc393c5f0b5290800000000000000
-      internalID: -7900704232519708885
+      spriteID: b172fdcd2b827a670800000000000000
+      internalID: 8549847166261077787
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_71
+      name: Atlas_v1_76
       rect:
         serializedVersion: 2
         x: 0
@@ -1854,20 +1875,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8386dc315f2618fc0800000000000000
-      internalID: -3494403031124056008
+      spriteID: 8fed21b152e339a30800000000000000
+      internalID: 4220785604865220344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_72
+      name: Atlas_v1_77
       rect:
         serializedVersion: 2
         x: 48
@@ -1875,20 +1896,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3171ddb59cdae8210800000000000000
-      internalID: 1337197219716863763
+      spriteID: 8d7c6d2c83c027a00800000000000000
+      internalID: 752677525650851800
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_73
+      name: Atlas_v1_78
       rect:
         serializedVersion: 2
         x: 96
@@ -1896,20 +1917,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 45394923800a34190800000000000000
-      internalID: -7979358157701606572
+      spriteID: a58e16712643737a0800000000000000
+      internalID: -6397587149752768422
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_74
+      name: Atlas_v1_79
       rect:
         serializedVersion: 2
         x: 144
@@ -1917,20 +1938,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76af07041294ea8f0800000000000000
-      internalID: -527403699191874969
+      spriteID: 045c45e366815e360800000000000000
+      internalID: 7198186406833079616
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_75
+      name: Atlas_v1_80
       rect:
         serializedVersion: 2
         x: 192
@@ -1938,20 +1959,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4e080b05df716aa0800000000000000
-      internalID: -6169509461531029942
+      spriteID: b68478fe0155dac50800000000000000
+      internalID: 6678087353686771819
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_76
+      name: Atlas_v1_81
       rect:
         serializedVersion: 2
         x: 240
@@ -1959,20 +1980,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09ee862365afeca20800000000000000
-      internalID: 3084678042915237520
+      spriteID: d50a555a46cdf3a90800000000000000
+      internalID: -7331899343507185571
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_77
+      name: Atlas_v1_82
       rect:
         serializedVersion: 2
         x: 288
@@ -1980,20 +2001,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5ab222f4bfa50980800000000000000
-      internalID: -8573253123938534817
+      spriteID: 6ae5528159e1823c0800000000000000
+      internalID: -4384220611541115226
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_78
+      name: Atlas_v1_83
       rect:
         serializedVersion: 2
         x: 336
@@ -2001,20 +2022,20 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8173e0710d2201420800000000000000
-      internalID: 2598615262128125720
+      spriteID: 0858a70d7d15af020800000000000000
+      internalID: 2376301740748866944
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_79
+      name: Atlas_v1_84
       rect:
         serializedVersion: 2
         x: 384
@@ -2022,182 +2043,182 @@ TextureImporter:
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 442a25628295a3560800000000000000
-      internalID: 7294240575456453188
+      spriteID: 90c53be391a4c07a0800000000000000
+      internalID: -6409666697368478711
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_80
+      name: Atlas_v1_87
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
+        y: 4
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2dd292a6011b1720800000000000000
-      internalID: 2817864712045387055
+      spriteID: 768a81616b69b6490800000000000000
+      internalID: -7751936624789247897
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_81
+      name: Atlas_v1_88
       rect:
         serializedVersion: 2
         x: 48
-        y: 8
+        y: 4
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d57b9342f686a2bb0800000000000000
-      internalID: -4960037213036759203
+      spriteID: 4696d279287557a10800000000000000
+      internalID: 1906526235654973796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_82
+      name: Atlas_v1_89
       rect:
         serializedVersion: 2
         x: 96
-        y: 8
+        y: 4
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3454c4c966e894d90800000000000000
-      internalID: -7112997565094935229
+      spriteID: 82c550de12c4091d0800000000000000
+      internalID: -3346090814542095320
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_83
+      name: Atlas_v1_90
       rect:
         serializedVersion: 2
         x: 144
-        y: 8
+        y: 4
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e102a00b8e56d7a60800000000000000
-      internalID: 7673401390169464862
+      spriteID: e62d6d4863c4bbba0800000000000000
+      internalID: -6072175875538365842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_84
+      name: Atlas_v1_91
       rect:
         serializedVersion: 2
         x: 192
-        y: 8
+        y: 4
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b438441f0fbeec20800000000000000
-      internalID: 3237735253611656373
+      spriteID: 5409af01dfe8a14c0800000000000000
+      internalID: -4315980075318472635
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_85
+      name: Atlas_v1_92
       rect:
         serializedVersion: 2
         x: 240
-        y: 8
+        y: 4
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63330a54cc0c2d8f0800000000000000
-      internalID: -517139023620197578
+      spriteID: d113ee91a7882d750800000000000000
+      internalID: 6328270484411396381
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_86
+      name: Atlas_v1_93
       rect:
         serializedVersion: 2
         x: 288
-        y: 8
+        y: 4
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c85ecf0633e662a20800000000000000
-      internalID: 3037236165657552268
+      spriteID: ca218019e7a395660800000000000000
+      internalID: 7374990180069413548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BrutalStanceAtlas_87
+      name: Atlas_v1_94
       rect:
         serializedVersion: 2
         x: 336
-        y: 8
+        y: 4
         width: 48
         height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af87743d4b3f94bb0800000000000000
-      internalID: -4951158357352810246
+      spriteID: 34d9b8f7322433e80800000000000000
+      internalID: -8200137776280396477
       vertices: []
       indices: 
       edges: []
