@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Player;
 
 public class StandingState : State
 {
@@ -40,6 +41,8 @@ public class StandingState : State
             if (player.StackDiSangue == 0) return;
             else if (player.StackDiSangue >= 1 && player.StackDiSangue <= 3 && player.CooldownAttaccoPotenteAttuale <= 0) stateMachine.ChangeState(player.brutalAttackState);
         }
+
+        if (player.Input.X != 0) player.transform.localScale = new Vector3(player.Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale, è in questo controllo per evitare che si ribalti durante la pausa
     }
 
     public override void PhysicsUpdate()
@@ -56,5 +59,25 @@ public class StandingState : State
         player.CanJump();
         player.CanDashNow();
         player.Move();
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        //Extended animator
+        var inputPoint = Mathf.Abs(player.Input.X);
+
+        if (player.Stance == TipoStance.Agile)
+        {
+            if (inputPoint == 0) player.Anim.Play("Agile_Idle");
+            else if (inputPoint > 0) player.Anim.Play("Agile_Running");
+        }
+        else if (player.Stance == TipoStance.Brutale)
+        {
+            if (inputPoint == 0) player.Anim.Play("Brutale_Idle");
+            else if (inputPoint > 0) player.Anim.Play("Brutale_Running");
+        }
+
     }
 }

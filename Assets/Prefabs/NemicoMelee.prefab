@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8915479273579321969}
-  - component: {fileID: 8915479273579321975}
+  - component: {fileID: 8519113158704622388}
   - component: {fileID: 8915479273579321974}
   - component: {fileID: 8915479273579321968}
   - component: {fileID: 8915479273579321970}
@@ -128,7 +128,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8915479273579321975
+--- !u!114 &8519113158704622388
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8915479273579321868}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f104b8849e337234389b55256ec47be3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a59b8f990d7dc9489a2558e672ffb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
@@ -145,26 +145,18 @@ MonoBehaviour:
   speed: 0.75
   startPoint: {fileID: 0}
   endPoint: {fileID: 0}
-  tipoNemico: 0
   target: {fileID: 0}
   puntiDanno: 2
-  firePoint: {fileID: 0}
-  giocatoreRilevatoDist: 5
-  attaccoGiocatoreDist: 1.5
-  distPgTroppoVicino: 3
-  distPgTroppoLontano: 8
-  distAttaccoPg: 5
   playerMask:
     serializedVersion: 2
     m_Bits: 1024
+  particleStance: {fileID: 8889767062357823678}
+  coloreStanceAgile: {r: 0, g: 0, b: 1, a: 1}
+  coloreStanceBrutale: {r: 1, g: 0, b: 0, a: 1}
+  giocatoreRilevatoDist: 5
+  attaccoGiocatoreDist: 1.5
   offsetRight: {x: 0.65, y: -0.4, z: 0}
   offsetLeft: {x: -0.65, y: -0.4, z: 0}
-  projectilePrefab: {fileID: 0}
-  destroyTimeProiettile: 2
-  velocitaProiettile: 1
-  particleStance: {fileID: 8889767062357823678}
-  coloreStanceAgile: {r: 0, g: 0.23529412, b: 1, a: 1}
-  coloreStanceBrutale: {r: 1, g: 0, b: 0, a: 1}
 --- !u!95 &8915479273579321974
 Animator:
   serializedVersion: 3

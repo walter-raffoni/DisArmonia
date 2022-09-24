@@ -13001,19 +13001,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 263696648}
     m_Modifications:
+    - target: {fileID: -6738449562662419247, guid: 132e10638fdf4fb45a126c6dbcd8272e, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1852010289657773322}
+    - target: {fileID: -6738449562662419247, guid: 132e10638fdf4fb45a126c6dbcd8272e, type: 3}
+      propertyPath: endPoint
+      value: 
+      objectReference: {fileID: 1861954262}
+    - target: {fileID: -6738449562662419247, guid: 132e10638fdf4fb45a126c6dbcd8272e, type: 3}
+      propertyPath: startPoint
+      value: 
+      objectReference: {fileID: 1868635391}
     - target: {fileID: 967931923984636598, guid: 132e10638fdf4fb45a126c6dbcd8272e, type: 3}
       propertyPath: m_Name
       value: NemicoRanged
       objectReference: {fileID: 0}
-    - target: {fileID: 967931923984636601, guid: 132e10638fdf4fb45a126c6dbcd8272e, type: 3}
+    - target: {fileID: 0}
       propertyPath: target
       value: 
       objectReference: {fileID: 1852010289657773322}
-    - target: {fileID: 967931923984636601, guid: 132e10638fdf4fb45a126c6dbcd8272e, type: 3}
+    - target: {fileID: 0}
       propertyPath: endPoint
       value: 
       objectReference: {fileID: 1861954262}
-    - target: {fileID: 967931923984636601, guid: 132e10638fdf4fb45a126c6dbcd8272e, type: 3}
+    - target: {fileID: 0}
       propertyPath: startPoint
       value: 
       objectReference: {fileID: 1868635391}
@@ -13207,6 +13219,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 263696648}
     m_Modifications:
+    - target: {fileID: 8519113158704622388, guid: a559c474dabdabb4888ed2e911077210, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1852010289657773322}
+    - target: {fileID: 8519113158704622388, guid: a559c474dabdabb4888ed2e911077210, type: 3}
+      propertyPath: endPoint
+      value: 
+      objectReference: {fileID: 737392283}
+    - target: {fileID: 8519113158704622388, guid: a559c474dabdabb4888ed2e911077210, type: 3}
+      propertyPath: startPoint
+      value: 
+      objectReference: {fileID: 1583284731}
     - target: {fileID: 8915479273579321868, guid: a559c474dabdabb4888ed2e911077210, type: 3}
       propertyPath: m_Name
       value: NemicoMelee

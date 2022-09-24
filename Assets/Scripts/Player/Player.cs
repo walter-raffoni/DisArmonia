@@ -312,68 +312,17 @@ public class Player : MonoBehaviour
         {
             stateMachine.currentState.HandleInput();
             stateMachine.currentState.LogicUpdate();
-        }
 
-        if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);
+            //Extended animator
+            var inputPoint = Mathf.Abs(Input.X);
 
-        if (stackDiSangue < 0) stackDiSangue = 0;
-        else if (stackDiSangue > 3) stackDiSangue = 3;
+            DetectGroundColor();
 
-        if (cooldownStanceAttuale >= 0) cooldownStanceAttuale -= Time.deltaTime;
+            moveParticles.transform.localScale = Vector3.MoveTowards(moveParticles.transform.localScale, Vector3.one * inputPoint, 2 * Time.deltaTime);
 
-        if (cooldownDashAttuale >= 0) cooldownDashAttuale -= Time.deltaTime;
-
-        if (cooldownAttaccoPotenteAttuale >= 0) cooldownAttaccoPotenteAttuale -= Time.deltaTime;
-
-        GameManager.instance.BarraVita.value = currentHP;
-        GameManager.instance.BarraStackDiSangue.value = stackDiSangue;
-
-        //Extended animator
-        var inputPoint = Mathf.Abs(Input.X);
-
-        if (!GameManager.instance.IsPaused)//Per non fargli ribaltare lo sprite in pausa
-        {
-            if (Input.X != 0 && (stateMachine.currentState == airborneState || stateMachine.currentState == dashingState || stateMachine.currentState == standingState)) transform.localScale = new Vector3(Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale
-        }
-
-        if (stateMachine.currentState == standingState)
-        {
-            if (stance == TipoStance.Agile)
-            {
-                if (inputPoint == 0) anim.Play("Agile_Idle");
-                else if (inputPoint > 0) anim.Play("Agile_Running");
-            }
-            else if (stance == TipoStance.Brutale)
-            {
-                if (inputPoint == 0) anim.Play("Brutale_Idle");
-                else if (inputPoint > 0) anim.Play("Brutale_Running");
-            }
-        }
-
-        DetectGroundColor();
-
-        moveParticles.transform.localScale = Vector3.MoveTowards(moveParticles.transform.localScale, Vector3.one * inputPoint, 2 * Time.deltaTime);
-
-        //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico)
-        if (stackDiSangue == 0)
-        {
-            dannoAlNemico = 2;
-            probabilitaCritico = 0;
-        }
-        else if (stackDiSangue == 1)
-        {
-            dannoAlNemico = 3;
-            probabilitaCritico = 25;
-        }
-        else if (stackDiSangue == 2)
-        {
-            dannoAlNemico = 4;
-            probabilitaCritico = 50;
-        }
-        else if (stackDiSangue == 3)
-        {
-            dannoAlNemico = 5;
-            probabilitaCritico = 75;
+            if (cooldownStanceAttuale >= 0) cooldownStanceAttuale -= Time.deltaTime;
+            if (cooldownDashAttuale >= 0) cooldownDashAttuale -= Time.deltaTime;
+            if (cooldownAttaccoPotenteAttuale >= 0) cooldownAttaccoPotenteAttuale -= Time.deltaTime;
         }
     }
 
@@ -576,7 +525,7 @@ public class Player : MonoBehaviour
             attackRange = attackRangeAgile;
             dashToConsume = false;//Sennò dasha appena rientri nella stance dall'altra
             if (stackDiSangue > 0) Heal(stackDiSangue);
-            stackDiSangue = 0;
+            CambiaStack(0);
             brutalIdleParticle.Stop();
             agileIdleParticle.Play();
         }
@@ -595,6 +544,40 @@ public class Player : MonoBehaviour
             brutalIdleParticle.Play();
             agileIdleParticle.Stop();
         }
+    }
+    #endregion
+
+    #region Stack di sangue
+    public void CambiaStack(int numeroStack)
+    {
+        if (numeroStack == 0) stackDiSangue = numeroStack;
+        else stackDiSangue = stackDiSangue + numeroStack;
+
+        //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico)
+        if (stackDiSangue < 0) stackDiSangue = 0;
+        else if (stackDiSangue == 0)
+        {
+            dannoAlNemico = 2;
+            probabilitaCritico = 0;
+        }
+        else if (stackDiSangue == 1)
+        {
+            dannoAlNemico = 3;
+            probabilitaCritico = 25;
+        }
+        else if (stackDiSangue == 2)
+        {
+            dannoAlNemico = 4;
+            probabilitaCritico = 50;
+        }
+        else if (stackDiSangue == 3)
+        {
+            dannoAlNemico = 5;
+            probabilitaCritico = 75;
+        }
+        else if (stackDiSangue > 3) stackDiSangue = 3;
+
+        GameManager.instance.BarraStackDiSangue.value = stackDiSangue;
     }
     #endregion
 
@@ -640,7 +623,7 @@ public class Player : MonoBehaviour
             dashToConsume = false;
         }
 
-        if (other.gameObject.CompareTag("Limite")) TakeDamage(MaxHP);
+        if (other.gameObject.CompareTag("Limite")) SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     private void OnCollisionStay2D(Collision2D other)
@@ -678,6 +661,9 @@ public class Player : MonoBehaviour
     {
         if (currentHP == maxHP) return;
         currentHP += healAmount;
+
+        GameManager.instance.BarraVita.value = currentHP;
+
         if (currentHP > maxHP) currentHP = maxHP;
     }
     #endregion
@@ -689,8 +675,10 @@ public class Player : MonoBehaviour
         else
         {
             StartCoroutine("Invulnerable");
-            if (currentHP <= 0) return;
+            if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);
             else currentHP -= damageTaken;
+
+            GameManager.instance.BarraVita.value = currentHP;
         }
     }
 
@@ -707,7 +695,8 @@ public class Player : MonoBehaviour
         {
             if (randValue < probabilitaCritico)
             {
-                if (stance == TipoStance.Brutale) stackDiSangue++;
+                if (stance == TipoStance.Brutale) CambiaStack(1);
+
                 if (enemyCollider.gameObject.TryGetComponent(out Enemy enemy))
                 {
                     //0: agile, 1: brutale
@@ -718,7 +707,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (stance == TipoStance.Brutale) stackDiSangue++;
+                if (stance == TipoStance.Brutale) CambiaStack(1);
 
                 if (enemyCollider.gameObject.TryGetComponent(out Enemy enemy))
                 {
@@ -737,7 +726,7 @@ public class Player : MonoBehaviour
         //danneggia i nemici
         foreach (Collider2D enemyCollider in hitEnemies)
         {
-            stackDiSangue++;//non serve il controllo sulla stance perché tanto questo attacco è fattibile solo in una stance
+            CambiaStack(1);//non serve il controllo sulla stance perché tanto questo attacco è fattibile solo in una stance
 
             if (enemyCollider.gameObject.TryGetComponent(out Enemy enemy))
             {

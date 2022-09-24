@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class DashingState : State
 {
     public DashingState(Player _player, StateMachine _stateMachine) : base(_player, _stateMachine)
@@ -27,6 +29,8 @@ public class DashingState : State
         base.HandleInput();
 
         player.HandleInput();
+
+        if (player.Input.X != 0) player.transform.localScale = new Vector3(player.Input.X > 0 ? 1 : -1, 1, 1);//Ribalta lo sprite in orizzontale, è in questo controllo per evitare che si ribalti durante la pausa
     }
 
     public override void PhysicsUpdate()

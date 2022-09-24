@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Melee_FollowingState : State
 {
-    public Melee_FollowingState(Enemy _enemy, StateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public Melee_FollowingState(EnemyMelee _enemyMelee, StateMachine _stateMachine) : base(_enemyMelee, _stateMachine)
     {
-        enemy = _enemy;
+        enemyMelee = _enemyMelee;
         stateMachine = _stateMachine;
     }
 
@@ -12,22 +12,22 @@ public class Melee_FollowingState : State
     {
         base.Enter();
 
-        enemy.Anim.Play("Melee_Idle");
+        enemyMelee.Anim.Play("Melee_Idle");
 
-        enemy.AttackEnded = false;
+        enemyMelee.AttackEnded = false;
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        if (enemy.Target.position.x > enemy.transform.position.x && !enemy.FacingRight) enemy.Flip();
-        if (enemy.Target.position.x < enemy.transform.position.x && enemy.FacingRight) enemy.Flip();
+        if (enemyMelee.Target.position.x > enemyMelee.transform.position.x && !enemyMelee.FacingRight) enemyMelee.Flip();
+        if (enemyMelee.Target.position.x < enemyMelee.transform.position.x && enemyMelee.FacingRight) enemyMelee.Flip();
 
-        enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.Target.position, enemy.Speed * Time.fixedDeltaTime);
+        enemyMelee.transform.position = Vector2.MoveTowards(enemyMelee.transform.position, enemyMelee.Target.position, enemyMelee.Speed * Time.fixedDeltaTime);
 
-        if (Vector3.Distance(enemy.transform.position, enemy.Target.position) <= enemy.AttaccoGiocatoreDist) stateMachine.ChangeState(enemy.attackStateMelee);
+        if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.Target.position) <= enemyMelee.AttaccoGiocatoreDist) stateMachine.ChangeState(enemyMelee.attackState);
 
-        else if (Vector3.Distance(enemy.transform.position, enemy.Target.position) > enemy.GiocatoreRilevatoDist) stateMachine.ChangeState(enemy.patrollingStateMelee);
+        else if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.Target.position) > enemyMelee.GiocatoreRilevatoDist) stateMachine.ChangeState(enemyMelee.patrollingState);
     }
 }

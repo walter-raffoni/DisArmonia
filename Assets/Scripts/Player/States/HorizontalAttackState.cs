@@ -90,4 +90,11 @@ public class HorizontalAttackState : State
             else if (player.Input.JumpDown) player.stateMachine.ChangeState(player.airborneState);
         }
     }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        player.JumpToConsume = false;//impedisce che salti dopo l'attacco
+    }
 }

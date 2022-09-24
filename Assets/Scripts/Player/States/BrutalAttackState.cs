@@ -35,7 +35,7 @@ public class BrutalAttackState : State
     {
         base.Exit();
 
-        player.StackDiSangue = 0;
+        player.CambiaStack(0);
 
         player.CooldownAttaccoPotenteAttuale = player.CooldownAttaccoPotente;
     }

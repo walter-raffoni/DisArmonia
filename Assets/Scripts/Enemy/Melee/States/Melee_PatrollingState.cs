@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Melee_PatrollingState : State
 {
-    public Melee_PatrollingState(Enemy _enemy, StateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public Melee_PatrollingState(EnemyMelee _enemyMelee, StateMachine _stateMachine) : base(_enemyMelee, _stateMachine)
     {
-        enemy = _enemy;
+        enemyMelee = _enemyMelee;
         stateMachine = _stateMachine;
     }
 
@@ -12,27 +12,27 @@ public class Melee_PatrollingState : State
     {
         base.Enter();
 
-        enemy.Anim.Play("Melee_Idle");
+        enemyMelee.Anim.Play("Melee_Idle");
 
-        enemy.AttackEnded = false;
+        enemyMelee.AttackEnded = false;
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        if (enemy.FacingRight)
+        if (enemyMelee.FacingRight)
         {
-            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.EndPoint.position, enemy.Speed * Time.fixedDeltaTime);
-            if (Vector3.Distance(enemy.transform.position, enemy.EndPoint.position) < 0.5f) enemy.Flip();
+            enemyMelee.transform.position = Vector2.MoveTowards(enemyMelee.transform.position, enemyMelee.EndPoint.position, enemyMelee.Speed * Time.fixedDeltaTime);
+            if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.EndPoint.position) < 0.5f) enemyMelee.Flip();
         }
-        else if (!enemy.FacingRight)
+        else if (!enemyMelee.FacingRight)
         {
-            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.StartPoint.position, enemy.Speed * Time.fixedDeltaTime);
-            if (Vector3.Distance(enemy.transform.position, enemy.StartPoint.position) < 0.5f) enemy.Flip();
+            enemyMelee.transform.position = Vector2.MoveTowards(enemyMelee.transform.position, enemyMelee.StartPoint.position, enemyMelee.Speed * Time.fixedDeltaTime);
+            if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.StartPoint.position) < 0.5f) enemyMelee.Flip();
         }
 
-        if (Vector3.Distance(enemy.transform.position, enemy.Target.position) <= enemy.GiocatoreRilevatoDist) stateMachine.ChangeState(enemy.followingStateMelee);
-        else if (Vector3.Distance(enemy.transform.position, enemy.Target.position) <= enemy.AttaccoGiocatoreDist) stateMachine.ChangeState(enemy.attackStateMelee);
+        if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.Target.position) <= enemyMelee.GiocatoreRilevatoDist) stateMachine.ChangeState(enemyMelee.followingState);
+        else if (Vector3.Distance(enemyMelee.transform.position, enemyMelee.Target.position) <= enemyMelee.AttaccoGiocatoreDist) stateMachine.ChangeState(enemyMelee.attackState);
     }
 }

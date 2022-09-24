@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Ranged_AttackState : State
 {
-    public Ranged_AttackState(Enemy _enemy, StateMachine _stateMachine) : base(_enemy, _stateMachine)
+    public Ranged_AttackState(EnemyRanged _enemyRanged, StateMachine _stateMachine) : base(_enemyRanged, _stateMachine)
     {
-        enemy = _enemy;
+        enemyRanged = _enemyRanged;
         stateMachine = _stateMachine;
     }
 
@@ -12,21 +12,21 @@ public class Ranged_AttackState : State
     {
         base.Enter();
 
-        enemy.InvokeRepeating("Spara", 0, 1);
+        enemyRanged.InvokeRepeating("Spara", 0, 1);
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        if (enemy.Target.position.x > enemy.transform.position.x && !enemy.FacingRight) enemy.Flip();
-        if (enemy.Target.position.x < enemy.transform.position.x && enemy.FacingRight) enemy.Flip();
+        if (enemyRanged.Target.position.x > enemyRanged.transform.position.x && !enemyRanged.FacingRight) enemyRanged.Flip();
+        if (enemyRanged.Target.position.x < enemyRanged.transform.position.x && enemyRanged.FacingRight) enemyRanged.Flip();
 
-        if (Vector3.Distance(enemy.transform.position, enemy.Target.position) >= enemy.DistPgTroppoLontano) stateMachine.ChangeState(enemy.patrollingStateRanged);
-        else if (Vector3.Distance(enemy.transform.position, enemy.Target.position) <= enemy.DistPgTroppoVicino)
+        if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.Target.position) >= enemyRanged.DistPgTroppoLontano) stateMachine.ChangeState(enemyRanged.patrollingState);
+        else if (Vector3.Distance(enemyRanged.transform.position, enemyRanged.Target.position) <= enemyRanged.DistPgTroppoVicino)
         {
-            if (enemy.FacingRight) enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.transform.position + Vector3.left, enemy.Speed * Time.fixedDeltaTime);
-            else if (!enemy.FacingRight) enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.transform.position + Vector3.right, enemy.Speed * Time.fixedDeltaTime);
+            if (enemyRanged.FacingRight) enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.transform.position + Vector3.left, enemyRanged.Speed * Time.fixedDeltaTime);
+            else if (!enemyRanged.FacingRight) enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.transform.position + Vector3.right, enemyRanged.Speed * Time.fixedDeltaTime);
         }
     }
 }

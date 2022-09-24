@@ -4914,7 +4914,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 967931923984636603}
-  - component: {fileID: 967931923984636601}
+  - component: {fileID: -6738449562662419247}
   - component: {fileID: 967931923984636597}
   - component: {fileID: 967931923984636600}
   - component: {fileID: 967931923984636596}
@@ -4943,7 +4943,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &967931923984636601
+--- !u!114 &-6738449562662419247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4952,7 +4952,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 967931923984636598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f104b8849e337234389b55256ec47be3, type: 3}
+  m_Script: {fileID: 11500000, guid: d73a713dd78f87c41b09fe81cb2256f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
@@ -4960,26 +4960,21 @@ MonoBehaviour:
   speed: 0.75
   startPoint: {fileID: 0}
   endPoint: {fileID: 0}
-  tipoNemico: 1
   target: {fileID: 0}
-  puntiDanno: 1
-  firePoint: {fileID: 967931924009116081}
-  giocatoreRilevatoDist: 5
-  attaccoGiocatoreDist: 1.5
-  distPgTroppoVicino: 3
-  distPgTroppoLontano: 8
-  distAttaccoPg: 5
+  puntiDanno: 2
   playerMask:
     serializedVersion: 2
-    m_Bits: 0
-  offsetRight: {x: 0, y: 0, z: 0}
-  offsetLeft: {x: 0, y: 0, z: 0}
+    m_Bits: 1024
+  particleStance: {fileID: 1118731264809720021}
+  coloreStanceAgile: {r: 0, g: 0, b: 1, a: 1}
+  coloreStanceBrutale: {r: 1, g: 0, b: 0, a: 1}
   projectilePrefab: {fileID: 1644804148671028251, guid: 34cb517f57de8184fa9e36d1764ce9fe, type: 3}
   destroyTimeProiettile: 0.5
   velocitaProiettile: 15
-  particleStance: {fileID: 1118731264809720021}
-  coloreStanceAgile: {r: 0, g: 0.23456383, b: 1, a: 1}
-  coloreStanceBrutale: {r: 1, g: 0, b: 0, a: 1}
+  firePoint: {fileID: 967931924009116081}
+  distPgTroppoVicino: 3
+  distPgTroppoLontano: 8
+  distAttaccoPg: 5
 --- !u!50 &967931923984636597
 Rigidbody2D:
   serializedVersion: 4
