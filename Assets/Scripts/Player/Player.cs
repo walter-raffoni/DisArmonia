@@ -6,6 +6,10 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
+    public float stunDuration = 1f;
+    public Vector2 stunDirection;
+    public float stunForceMultiplier;
+
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
 
@@ -242,7 +246,7 @@ public class Player : MonoBehaviour
     #region Campi privati
     private Animator anim;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     private TipoStance stance;
 
@@ -278,6 +282,7 @@ public class Player : MonoBehaviour
     public BrutalAttackState brutalAttackState;
     public VerticalAttackState verticalAttackState;
     public HorizontalAttackState horizontalAttackState;
+    public DamagedState damagedState;
     #endregion
 
     void Awake()
@@ -296,6 +301,7 @@ public class Player : MonoBehaviour
         horizontalAttackState = new HorizontalAttackState(this, stateMachine);
         verticalAttackState = new VerticalAttackState(this, stateMachine);
         brutalAttackState = new BrutalAttackState(this, stateMachine);
+        damagedState = new DamagedState(this, stateMachine);
 
         stateMachine.Initialize(standingState);
     }
@@ -359,7 +365,7 @@ public class Player : MonoBehaviour
         fixedFrame++;
         frameClamp = moveClamp;
 
-        Velocity = (rb.position - LastPosition) / Time.fixedDeltaTime;//Calcola la velocità del pg
+        Velocity = (rb.position - LastPosition) / Time.fixedDeltaTime;//Calcola la velocitï¿½ del pg
         LastPosition = rb.position;
     }
 
@@ -367,7 +373,7 @@ public class Player : MonoBehaviour
     {
         if (Input.X != 0)
         {
-            //Imposta la velocità di movimento orizzontale
+            //Imposta la velocitï¿½ di movimento orizzontale
             Speed.x += Input.X * speedingValue * Time.fixedDeltaTime;
 
             Speed.x = Mathf.Clamp(Speed.x, -frameClamp, frameClamp);//Fa il clamp con il massimo movimento del frame
@@ -377,12 +383,12 @@ public class Player : MonoBehaviour
         }
         else Speed.x = Mathf.MoveTowards(Speed.x, 0, slowingValue * Time.fixedDeltaTime);//Se non ci sono input rallenta il pg
 
-        if (!isGrounded && (Speed.x > 0 && hasHitRight || Speed.x < 0 && hasHitLeft)) Speed.x = 0;//Non aumentare la velocità in verticale, solo in orizzontale, per evitare che si appiccichi ai muri mentre è in aria
+        if (!isGrounded && (Speed.x > 0 && hasHitRight || Speed.x < 0 && hasHitLeft)) Speed.x = 0;//Non aumentare la velocitï¿½ in verticale, solo in orizzontale, per evitare che si appiccichi ai muri mentre ï¿½ in aria
     }
 
     public void Move()//Viene fatto un cast dei limiti prima di muoversi in modo da evitare collisioni future
     {
-        RawMovement = Speed;//Per usare la velocità esternamente
+        RawMovement = Speed;//Per usare la velocitï¿½ esternamente
         var move = RawMovement * Time.fixedDeltaTime;
 
         //Applica gli effector
@@ -420,11 +426,11 @@ public class Player : MonoBehaviour
     {
         if (!isGrounded)
         {
-            var fallingSpeed = endedJumpEarly && Speed.y > 0 ? fallSpeed * gravityModifierJumpEndedEarly : fallSpeed;//Aggiunge una forza che butta giù il pg mentre sale se il salto viene concluso prima del previsto
+            var fallingSpeed = endedJumpEarly && Speed.y > 0 ? fallSpeed * gravityModifierJumpEndedEarly : fallSpeed;//Aggiunge una forza che butta giï¿½ il pg mentre sale se il salto viene concluso prima del previsto
 
             Speed.y -= fallingSpeed * Time.fixedDeltaTime;//Caduta
 
-            if (Speed.y < fallClamp) Speed.y = fallClamp;//Fa il clamp della velocità
+            if (Speed.y < fallClamp) Speed.y = fallClamp;//Fa il clamp della velocitï¿½
         }
     }
 
@@ -432,7 +438,7 @@ public class Player : MonoBehaviour
     {
         if (!isGrounded)
         {
-            topPoint = Mathf.InverseLerp(jumpTopLimit, 0, Mathf.Abs(Velocity.y));//Diventa sempre più forte man mano che ci sia avvicina alla cima
+            topPoint = Mathf.InverseLerp(jumpTopLimit, 0, Mathf.Abs(Velocity.y));//Diventa sempre piï¿½ forte man mano che ci sia avvicina alla cima
             fallSpeed = Mathf.Lerp(minFallSpeed, maxFallSpeed, topPoint);
         }
         else
@@ -444,7 +450,7 @@ public class Player : MonoBehaviour
 
     public void CanJump()
     {
-        //Ha premuto il tasto di salto? || Se c'è un buffer per il salto sufficiente || È a terra
+        //Ha premuto il tasto di salto? || Se c'ï¿½ un buffer per il salto sufficiente || ï¿½ a terra
         if (jumpToConsume || HasBufferedJump || !isGrounded) stateMachine.ChangeState(airborneState);
     }
 
@@ -452,7 +458,7 @@ public class Player : MonoBehaviour
     {
         if (doubleJumpAbility)
         {
-            //Controlla se c'è un salto da poter consumare e può effettivamente fare il doppio salto
+            //Controlla se c'ï¿½ un salto da poter consumare e puï¿½ effettivamente fare il doppio salto
             if (jumpToConsume && canUseDoubleJump)
             {
                 Speed.y = jumpHeight;
@@ -492,7 +498,7 @@ public class Player : MonoBehaviour
         Speed.x = DashVelocity.x;
         Speed.y = DashVelocity.y;
 
-        //Annulla la corsa quando il tempo è finita o è stata raggiunta la distanza di sicurezza mssima
+        //Annulla la corsa quando il tempo ï¿½ finita o ï¿½ stata raggiunta la distanza di sicurezza mssima
         if (hasStartedDashing + dashLength < fixedFrame)
         {
             if (Speed.y > 0) Speed.y = 0;
@@ -502,7 +508,7 @@ public class Player : MonoBehaviour
                 canDash = true;
                 stateMachine.ChangeState(standingState);
             }
-            else stateMachine.ChangeState(airborneState);//così non passa allo stato di standing per un attimo anche se in aria
+            else stateMachine.ChangeState(airborneState);//cosï¿½ non passa allo stato di standing per un attimo anche se in aria
         }
         dashToConsume = false;
     }
@@ -523,7 +529,7 @@ public class Player : MonoBehaviour
             moveClamp = speedAgile;
             dashAbility = true;
             attackRange = attackRangeAgile;
-            dashToConsume = false;//Sennò dasha appena rientri nella stance dall'altra
+            dashToConsume = false;//Sennï¿½ dasha appena rientri nella stance dall'altra
             if (stackDiSangue > 0) Heal(stackDiSangue);
             CambiaStack(0);
             brutalIdleParticle.Stop();
@@ -553,7 +559,7 @@ public class Player : MonoBehaviour
         if (numeroStack == 0) stackDiSangue = numeroStack;
         else stackDiSangue = stackDiSangue + numeroStack;
 
-        //Effetti secondari stack sete di sangue (maggiore attacco, probabilità critico)
+        //Effetti secondari stack sete di sangue (maggiore attacco, probabilitï¿½ critico)
         if (stackDiSangue < 0) stackDiSangue = 0;
         else if (stackDiSangue == 0)
         {
@@ -669,7 +675,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Danno
-    public void TakeDamage(int damageTaken)
+    public void TakeDamage(int damageTaken, int direction)
     {
         if (isInvulnerable) return;
         else
@@ -679,6 +685,9 @@ public class Player : MonoBehaviour
             else currentHP -= damageTaken;
 
             GameManager.instance.BarraVita.value = currentHP;
+            stateMachine.ChangeState(damagedState);
+            Stun(direction);
+
         }
     }
 
@@ -726,7 +735,7 @@ public class Player : MonoBehaviour
         //danneggia i nemici
         foreach (Collider2D enemyCollider in hitEnemies)
         {
-            CambiaStack(1);//non serve il controllo sulla stance perché tanto questo attacco è fattibile solo in una stance
+            CambiaStack(1);//non serve il controllo sulla stance perchï¿½ tanto questo attacco ï¿½ fattibile solo in una stance
 
             if (enemyCollider.gameObject.TryGetComponent(out Enemy enemy))
             {
@@ -736,7 +745,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Timer totale invulnerabilità | timer tra trasparenze | valore trasparenza 0 | valore trasparenza 1
+    //Timer totale invulnerabilitï¿½ | timer tra trasparenze | valore trasparenza 0 | valore trasparenza 1
     IEnumerator Invulnerable()
     {
         bool flag = true;
@@ -824,4 +833,21 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(verticalAttackPoint.position, verticalAttackRange);
     }
     #endregion
+
+    public void Stun(int direction)
+    {
+        //Vector2 _stunDirection = direction == -1 ? Vector2.left : Vector2.right;
+        Vector2 _stunDirection = new Vector2(stunDirection.x * direction, stunDirection.y).normalized * stunForceMultiplier;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(_stunDirection, ForceMode2D.Impulse);
+        //Debug.Log(stunDirection.magnitude.ToString());
+        if (stance == TipoStance.Brutale)
+        {
+            anim.Play("Brutale_Damaged");
+        }
+        else
+        {
+            anim.Play("Agile_Damaged");
+        }
+    }
 }

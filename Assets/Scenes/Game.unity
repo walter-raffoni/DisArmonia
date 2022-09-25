@@ -838,7 +838,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: fcdd1b4db0da9b5479e69cd80150364d, type: 3}
-  m_Color: {r: 0.49927646, g: 0.2352941, b: 0.6313726, a: 1}
+  m_Color: {r: 0.9622642, g: 0.58259696, b: 0.30411178, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -951,7 +951,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -6
   m_Sprite: {fileID: 21300000, guid: ff974169e66d3e846bc4197a875997c5, type: 3}
-  m_Color: {r: 0.49927646, g: 0.2352941, b: 0.6313726, a: 1}
+  m_Color: {r: 0.9622642, g: 0.58259696, b: 0.30411178, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -1679,7 +1679,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5602969, g: 0.35506406, b: 0.745283, a: 0}
+  m_BackGroundColor: {r: 0.8679245, g: 0.79899895, b: 0.61000353, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1818,7 +1818,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_Sprite: {fileID: 21300000, guid: ae0aebef034ef67418bb6ec327e21133, type: 3}
-  m_Color: {r: 0.85077745, g: 0.6740388, b: 0.9339623, a: 1}
+  m_Color: {r: 0.9622642, g: 0.58259696, b: 0.30411178, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerView: {fileID: 1852010289007548564}
   parallaxMultiplierX: 0.02
-  parallaxMultiplierY: 0.3
+  parallaxMultiplierY: 0
 --- !u!1 &539600582
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,6 +2077,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8915479273579321969, guid: a559c474dabdabb4888ed2e911077210, type: 3}
   m_PrefabInstance: {fileID: 8915479274237466546}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &702635917 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 4904228191547488627, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+  m_PrefabInstance: {fileID: 6754546245031502309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &737392282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,6 +2245,26 @@ Tilemap:
   m_GameObject: {fileID: 803113553}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: 45, y: -4, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 45, y: -3, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 9, y: -2, z: 0}
     second:
       serializedVersion: 2
@@ -2344,11 +2369,15 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 10
     m_Data: {fileID: 11400000, guid: 577eda4737332e2489d653ec90f55c04, type: 2}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: 2be936cc1acd24ef0b878eb5bbcd8c66, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 10
     m_Data: {fileID: -2601303630227045857, guid: fd51596e4679067439766a7f07ae9f7a, type: 3}
+  - m_RefCount: 2
+    m_Data: {fileID: -8645411520517723921, guid: ca8e577ff8e2a4b26a7ff15f4978d072, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 10
+  - m_RefCount: 12
     m_Data:
       e00: 1
       e01: 0
@@ -2367,11 +2396,11 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 10
+  - m_RefCount: 12
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 0.78684986, g: 0.38470095, b: 0.8962264, a: 1}
+  m_Color: {r: 0.8980392, g: 0.7161354, b: 0.3843137, a: 1}
   m_Origin: {x: -47, y: -13, z: 0}
   m_Size: {x: 184, y: 42, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -2590,7 +2619,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -7
   m_Sprite: {fileID: 21300000, guid: 75739b73aaaa74744b44d31ba092b252, type: 3}
-  m_Color: {r: 0.49927646, g: 0.2352941, b: 0.6313726, a: 1}
+  m_Color: {r: 0.9622642, g: 0.58259696, b: 0.30411178, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -12557,7 +12586,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 0.639431, g: 0, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.59751904, b: 0, a: 1}
   m_Origin: {x: -47, y: -13, z: 0}
   m_Size: {x: 184, y: 13, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -13017,18 +13046,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: NemicoRanged
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1852010289657773322}
-    - target: {fileID: 0}
-      propertyPath: endPoint
-      value: 
-      objectReference: {fileID: 1861954262}
-    - target: {fileID: 0}
-      propertyPath: startPoint
-      value: 
-      objectReference: {fileID: 1868635391}
     - target: {fileID: 967931923984636603, guid: 132e10638fdf4fb45a126c6dbcd8272e, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -13146,6 +13163,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4904228190313848319, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 702635917}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: maxHP
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
       propertyPath: moveClamp
       value: 8
@@ -13167,13 +13196,41 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: cooldownDash
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: stunDuration
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
       propertyPath: dannoAlNemico
-      value: 3
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: cooldownStance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: stunDirection.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: stunDirection.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
       propertyPath: dashRingParticles
       value: 
       objectReference: {fileID: 5709230084281448186, guid: 15bc05689127b984e8ae5ab4b78f7434, type: 3}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: probabilitaCritico
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: stunForceMultiplier
+      value: 0.001
+      objectReference: {fileID: 0}
     - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
       propertyPath: tempoAttaccoOrizAgile1
       value: 0.5
@@ -13199,8 +13256,16 @@ PrefabInstance:
       value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: gravityModifierJumpEndedEarly
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488625, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
       propertyPath: tempoInvulnerabilitaDopoCollisioneConNemico
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904228191547488627, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4904228191547488630, guid: 13ce1babfc2ac2b40b0a1a96e551e3d3, type: 3}
       propertyPath: m_Name

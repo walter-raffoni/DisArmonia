@@ -60,8 +60,8 @@ public class HorizontalAttackState : State
             }
         }
 
-        player.MinFallSpeed = 80;
-        player.MaxFallSpeed = 160;
+        //player.MinFallSpeed = 80;
+        //player.MaxFallSpeed = 160;
     }
 
     public override void HandleInput()

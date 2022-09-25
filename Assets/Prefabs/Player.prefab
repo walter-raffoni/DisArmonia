@@ -34043,6 +34043,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f3bd1c026bad245ad31522a5b940a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stunDuration: 1
+  stunDirection: {x: 1, y: 1}
+  stunForceMultiplier: 5
   maxHP: 10
   slowingValue: 60
   moveClamp: 8
@@ -34741,14 +34744,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42fa4f42e82340d498c9de1049eca8cb, type: 3}
---- !u!198 &2328799787932569843 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7219106014460276255, guid: 42fa4f42e82340d498c9de1049eca8cb, type: 3}
-  m_PrefabInstance: {fileID: 4935634830339849964}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2328799787932569740 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7219106014460276320, guid: 42fa4f42e82340d498c9de1049eca8cb, type: 3}
+  m_PrefabInstance: {fileID: 4935634830339849964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2328799787932569843 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7219106014460276255, guid: 42fa4f42e82340d498c9de1049eca8cb, type: 3}
   m_PrefabInstance: {fileID: 4935634830339849964}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5016880293730453944

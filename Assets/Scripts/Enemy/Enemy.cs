@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
+    public UnityEvent damageEvent;
+
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
     [SerializeField] GameObject barraVita;//SpriteRenderer
@@ -95,5 +98,6 @@ public class Enemy : MonoBehaviour
             target.GetComponent<Player>().CooldownDashAttuale = 0;
             target.GetComponent<Player>().JumpToConsume = true;
         }
+        damageEvent.Invoke();
     }
 }

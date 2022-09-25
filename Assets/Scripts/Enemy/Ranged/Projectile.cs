@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        rb.velocity = (target.position - transform.position).normalized * velocitaProiettile;//Così non segue il giocatore se si muove ma prende solo l'ultima posizione al momento della creazione
+        rb.velocity = (target.position - transform.position).normalized * velocitaProiettile;//Cosï¿½ non segue il giocatore se si muove ma prende solo l'ultima posizione al momento della creazione
     }
 
     void Update() => Destroy(gameObject, destroyTimeProiettile);
@@ -45,7 +45,8 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponentInParent<Player>().TakeDamage(puntiDanno);
+            int direction = transform.position.x > other.transform.position.x ? -1 : 1;
+            other.GetComponentInParent<Player>().TakeDamage(puntiDanno, direction);
             Destroy(gameObject);
         }
         Destroy(gameObject);

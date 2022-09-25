@@ -28,6 +28,8 @@ public class EnemyMelee : Enemy
     public Melee_PatrollingState patrollingState;
     public Melee_FollowingState followingState;
     public Melee_AttackState attackState;
+    public Enemy_DamagedState damagedState;
+
     #endregion
 
     protected override void Awake()
@@ -39,6 +41,7 @@ public class EnemyMelee : Enemy
         patrollingState = new Melee_PatrollingState(this, stateMachine);
         followingState = new Melee_FollowingState(this, stateMachine);
         attackState = new Melee_AttackState(this, stateMachine);
+        damagedState = new Enemy_DamagedState(this, stateMachine);
 
         stateMachine.Initialize(patrollingState);
     }
@@ -56,7 +59,11 @@ public class EnemyMelee : Enemy
 
         Collider2D[] playerHit = Physics2D.OverlapCircleAll(transform.position + offsetTemp, .5f, playerMask);
 
-        foreach (Collider2D player in playerHit) player.GetComponentInParent<Player>().TakeDamage(puntiDanno);
+        foreach (Collider2D player in playerHit)
+        {
+            int direction = transform.position.x > player.transform.position.x ? -1 : 1;
+            player.GetComponentInParent<Player>().TakeDamage(puntiDanno, direction);
+        }
     }
 
     public void EndAttack() => attackEnded = true;
@@ -69,5 +76,18 @@ public class EnemyMelee : Enemy
         else offsetTemp = offsetLeft;
 
         Gizmos.DrawWireSphere(transform.position + offsetTemp, .5f);
+    }
+
+    public void ManageStun()
+    {
+        if (stateMachine.currentState == patrollingState)
+        {
+            stateMachine.ChangeState(damagedState);
+            Anim.Play("Melee_Damaged");
+        }
+        else
+        {
+            return;
+        }
     }
 }

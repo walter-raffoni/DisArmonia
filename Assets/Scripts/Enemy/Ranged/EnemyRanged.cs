@@ -24,6 +24,7 @@ public class EnemyRanged : Enemy
 
     public Ranged_PatrollingState patrollingState;
     public Ranged_AttackState attackState;
+    public Enemy_DamagedState damagedState;
     #endregion
 
     protected override void Awake()
@@ -34,6 +35,7 @@ public class EnemyRanged : Enemy
 
         patrollingState = new Ranged_PatrollingState(this, stateMachine);
         attackState = new Ranged_AttackState(this, stateMachine);
+        damagedState = new Enemy_DamagedState(this, stateMachine);
 
         stateMachine.Initialize(patrollingState);
     }
@@ -52,6 +54,19 @@ public class EnemyRanged : Enemy
             projectile.PuntiDanno = puntiDanno;
             projectile.DestroyTimeProiettile = destroyTimeProiettile;
             projectile.Target = target;
+        }
+    }
+
+    public void ManageStun()
+    {
+        if (stateMachine.currentState == patrollingState)
+        {
+            stateMachine.ChangeState(damagedState);
+            Anim.Play("Melee_Damaged");
+        }
+        else
+        {
+            return;
         }
     }
 }
