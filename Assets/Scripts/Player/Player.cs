@@ -6,10 +6,6 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
-    public float stunDuration = 1f;
-    public Vector2 stunDirection;
-    public float stunForceMultiplier;
-
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
 
@@ -78,6 +74,11 @@ public class Player : MonoBehaviour
     [SerializeField] float alphaValue1;
     [SerializeField] int alphaCycles = 3;
 
+    [Header("Stun System")]
+    [SerializeField] float stunDuration = 1f;
+    [SerializeField] Vector2 stunDirection;
+    [SerializeField] float stunForceMultiplier;
+
     [Header("Stance System")]
     [SerializeField] float cooldownStance = 1;
     [SerializeField] CapsuleCollider2D colliderAgile;
@@ -93,6 +94,12 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem landParticles;
     [SerializeField] ParticleSystem agileIdleParticle;
     [SerializeField] ParticleSystem brutalIdleParticle;
+    [SerializeField] ParticleSystem AgileTransformParticles;
+    [SerializeField] ParticleSystem BrutalTransformParticles;
+    [SerializeField] ParticleSystem HealParticles;
+    [SerializeField] ParticleSystem GroundJump;
+    [SerializeField] ParticleSystem JumpParticleSyst;
+    [SerializeField] ParticleSystem playerHit;
     [SerializeField] float maxFallSpeedParticles = -40;
     [SerializeField] Transform dashRingTransform;
 
@@ -167,6 +174,7 @@ public class Player : MonoBehaviour
     }
 
     public float JumpHeight => jumpHeight;
+    public float StunDuration => stunDuration;
     public float CooldownDash => cooldownDash;
     public float CooldownAttaccoPotente => cooldownAttaccoPotente;
     public float JumpTopLimit => jumpTopLimit;
@@ -450,7 +458,7 @@ public class Player : MonoBehaviour
 
     public void CanJump()
     {
-        //Ha premuto il tasto di salto? || Se c'� un buffer per il salto sufficiente || � a terra
+        //Ha premuto il tasto di salto? || Se c'è un buffer per il salto sufficiente || � a terra
         if (jumpToConsume || HasBufferedJump || !isGrounded) stateMachine.ChangeState(airborneState);
     }
 
@@ -466,9 +474,10 @@ public class Player : MonoBehaviour
                 endedJumpEarly = false;
                 jumpToConsume = false;
                 DoubleJumpEffect();
+                JumpParticleSyst.Play();
             }
         }
-
+        
         // Termina il salto se il pulsante viene rilasciato prima
         if (!isGrounded && !Input.JumpHeld && !endedJumpEarly && Velocity.y > 0) endedJumpEarly = true;
 
@@ -520,6 +529,8 @@ public class Player : MonoBehaviour
     {
         if (stanceAttivata == TipoStance.Agile)
         {
+            AgileTransformParticles.Play();
+            jumpHeight = 27;
             cooldownStanceAttuale = cooldownStance;
             colliderAgile.gameObject.SetActive(true);
             colliderBrutale.gameObject.SetActive(false);
@@ -538,6 +549,8 @@ public class Player : MonoBehaviour
 
         if (stanceAttivata == TipoStance.Brutale)
         {
+            BrutalTransformParticles.Play();
+            jumpHeight = 28;
             cooldownStanceAttuale = cooldownStance;
             colliderAgile.gameObject.SetActive(false);
             colliderBrutale.gameObject.SetActive(true);
@@ -623,17 +636,8 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (stateMachine.currentState == airborneState && other.gameObject.TryGetComponent(out Enemy enemy))
-        {
-            enemyTouched = true;
-            dashToConsume = false;
-        }
-
         if (other.gameObject.CompareTag("Limite")) SceneManager.LoadScene(1, LoadSceneMode.Single);
-    }
 
-    private void OnCollisionStay2D(Collision2D other)
-    {
         if (other.gameObject.TryGetComponent(out Enemy enemy))
         {
             enemyTouched = true;
@@ -642,11 +646,23 @@ public class Player : MonoBehaviour
             {
                 enemy.GetComponent<CapsuleCollider2D>().isTrigger = true;//permette di trapassare il nemico quando dasha
                 enemy.TakeDamage(dannoAlNemico);
+                if (enemy.CurrentHP > 0) StartCoroutine(ResetCollider(enemy));
             }
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    private void OnCollisionStay2D(Collision2D other) { }
+
+    IEnumerator ResetCollider(Enemy other)
+    {
+        if (other != null)
+        {
+            yield return new WaitForSeconds(.1f);
+            other.GetComponent<CapsuleCollider2D>().isTrigger = false;
+        }
+    }
+
+private void OnCollisionExit2D(Collision2D other)
     {
         enemyTouched = false;
 
@@ -665,6 +681,7 @@ public class Player : MonoBehaviour
     #region Cura
     private void Heal(int healAmount)
     {
+        HealParticles.Play();
         if (currentHP == maxHP) return;
         currentHP += healAmount;
 
@@ -680,14 +697,15 @@ public class Player : MonoBehaviour
         if (isInvulnerable) return;
         else
         {
-            StartCoroutine("Invulnerable");
+            currentHP -= damageTaken;
             if (currentHP <= 0) SceneManager.LoadScene(1, LoadSceneMode.Single);
-            else currentHP -= damageTaken;
+            
 
             GameManager.instance.BarraVita.value = currentHP;
             stateMachine.ChangeState(damagedState);
             Stun(direction);
-
+            playerHit.Play();
+            StartCoroutine("Invulnerable");
         }
     }
 
@@ -836,18 +854,11 @@ public class Player : MonoBehaviour
 
     public void Stun(int direction)
     {
-        //Vector2 _stunDirection = direction == -1 ? Vector2.left : Vector2.right;
-        Vector2 _stunDirection = new Vector2(stunDirection.x * direction, stunDirection.y).normalized * stunForceMultiplier;
+        Vector2 _stunDirection = new Vector2(stunDirection.x * direction, stunDirection.y).normalized * stunForceMultiplier;//Vector2 _stunDirection = direction == -1 ? Vector2.left : Vector2.right;
         rb.velocity = Vector2.zero;
         rb.AddForce(_stunDirection, ForceMode2D.Impulse);
-        //Debug.Log(stunDirection.magnitude.ToString());
-        if (stance == TipoStance.Brutale)
-        {
-            anim.Play("Brutale_Damaged");
-        }
-        else
-        {
-            anim.Play("Agile_Damaged");
-        }
+        
+        if (stance == TipoStance.Brutale) anim.Play("Brutale_Damaged");
+        else anim.Play("Agile_Damaged");
     }
 }

@@ -3,8 +3,6 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    public UnityEvent damageEvent;
-
     [Header("Health System")]
     [SerializeField] int maxHP = 10;
     [SerializeField] GameObject barraVita;//SpriteRenderer
@@ -24,7 +22,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] Color coloreStanceAgile = Color.blue;
     [SerializeField] Color coloreStanceBrutale = Color.red;
 
+    [Header("Particle System")]
+    [SerializeField] GameObject explosion;
+    [SerializeField] ParticleSystem enemyHit;
+
     #region Campi pubblici
+    public int CurrentHP => currentHP;
     public int StanceMaggioreDanno => stanceMaggioreDanno;
     public bool FacingRight => facingRight;
     public float Speed => speed;
@@ -38,6 +41,7 @@ public class Enemy : MonoBehaviour
     private Animator anim;
     protected bool facingRight = true;
     private int currentHP, stanceMaggioreDanno;
+    private UnityEvent damageEvent;
     #endregion
 
     protected virtual void Awake()
@@ -94,10 +98,12 @@ public class Enemy : MonoBehaviour
 
         if (currentHP <= 0)
         {
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
             target.GetComponent<Player>().CooldownDashAttuale = 0;
             target.GetComponent<Player>().JumpToConsume = true;
         }
         damageEvent.Invoke();
+        enemyHit.Play();
     }
 }

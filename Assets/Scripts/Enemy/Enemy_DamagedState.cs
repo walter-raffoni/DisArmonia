@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy_DamagedState : State
 {
-    public float stunTimer = .8f;
+    public float stunTimer = 1.1f;
 
     public Enemy_DamagedState(EnemyMelee _enemyMelee, StateMachine _stateMachine) : base(_enemyMelee, _stateMachine)
     {

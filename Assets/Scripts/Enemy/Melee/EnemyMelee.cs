@@ -80,7 +80,7 @@ public class EnemyMelee : Enemy
 
     public void ManageStun()
     {
-        if (stateMachine.currentState == patrollingState)
+        if (attackEnded)
         {
             stateMachine.ChangeState(damagedState);
             Anim.Play("Melee_Damaged");

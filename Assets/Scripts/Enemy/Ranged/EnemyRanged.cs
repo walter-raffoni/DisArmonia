@@ -19,6 +19,10 @@ public class EnemyRanged : Enemy
     public float DistPgTroppoLontano => distPgTroppoLontano;
     #endregion
 
+    #region Campi privati
+    private Rigidbody2D rb;
+    #endregion
+
     #region FSM
     public StateMachine stateMachine;
 
@@ -30,7 +34,7 @@ public class EnemyRanged : Enemy
     protected override void Awake()
     {
         base.Awake();
-
+        rb = GetComponent<Rigidbody2D>();
         stateMachine = new StateMachine();
 
         patrollingState = new Ranged_PatrollingState(this, stateMachine);
@@ -59,14 +63,8 @@ public class EnemyRanged : Enemy
 
     public void ManageStun()
     {
-        if (stateMachine.currentState == patrollingState)
-        {
-            stateMachine.ChangeState(damagedState);
-            Anim.Play("Melee_Damaged");
-        }
-        else
-        {
-            return;
-        }
+        stateMachine.ChangeState(damagedState);
+        Anim.Play("Ranged_Damaged");
+        rb.velocity = Vector2.zero;
     }
 }

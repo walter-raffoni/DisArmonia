@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: GameWorld
+    uniqueID: 3233654109
+    locked: 0
+  - name: Effects
+    uniqueID: 1243134965
+    locked: 0

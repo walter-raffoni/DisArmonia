@@ -12,9 +12,6 @@ public class VerticalAttackState : State
 
         player.Anim.Play("Brutale_AttaccoSalto");
 
-        player.MinFallSpeed = 40;
-        player.MaxFallSpeed = 70;
-
         player.ComboAttacco = 0;
     }
 
@@ -37,5 +34,11 @@ public class VerticalAttackState : State
         player.IsTopPoint();//permette all'animazione di atterraggio di airbornestate di non buggare tutto
         player.Gravity();
         player.Move();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        player.JumpToConsume = false;
     }
 }

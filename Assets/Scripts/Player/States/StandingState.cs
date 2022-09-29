@@ -20,9 +20,6 @@ public class StandingState : State
         if (player.Stance == Player.TipoStance.Agile) player.Anim.Play("Agile_Idle");
         else if (player.Stance == Player.TipoStance.Brutale) player.Anim.Play("Brutale_Idle");
 
-        //player.MinFallSpeed = 80;
-        //player.MaxFallSpeed = 160;
-
         player.ComboAttacco = 0;
 
         player.GroundedEffect();
@@ -65,7 +62,7 @@ public class StandingState : State
     {
         base.LogicUpdate();
 
-        //Extended animator
+        //anim esteso
         var inputPoint = Mathf.Abs(player.Input.X);
 
         if (player.Stance == TipoStance.Agile)

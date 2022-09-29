@@ -12,7 +12,7 @@ public class Ranged_AttackState : State
     {
         base.Enter();
 
-        enemyRanged.InvokeRepeating("Spara", 0, 1);
+        enemyRanged.InvokeRepeating("Spara", 0, 2);
     }
 
     public override void PhysicsUpdate()
@@ -28,5 +28,11 @@ public class Ranged_AttackState : State
             if (enemyRanged.FacingRight) enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.transform.position + Vector3.left, enemyRanged.Speed * Time.fixedDeltaTime);
             else if (!enemyRanged.FacingRight) enemyRanged.transform.position = Vector2.MoveTowards(enemyRanged.transform.position, enemyRanged.transform.position + Vector3.right, enemyRanged.Speed * Time.fixedDeltaTime);
         }
+    }
+
+    public override void Exit()
+    {
+        enemyRanged.CancelInvoke("Spara");
+        base.Exit();
     }
 }

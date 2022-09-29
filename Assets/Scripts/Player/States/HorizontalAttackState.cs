@@ -59,9 +59,6 @@ public class HorizontalAttackState : State
                 player.ComboAttacco = 0;
             }
         }
-
-        //player.MinFallSpeed = 80;
-        //player.MaxFallSpeed = 160;
     }
 
     public override void HandleInput()
@@ -88,6 +85,7 @@ public class HorizontalAttackState : State
             if (player.Input.AttackDown && player.ComboAttacco <= 2) player.stateMachine.ChangeState(player.horizontalAttackState);
             else if (player.Input.X != 0) player.stateMachine.ChangeState(player.standingState);
             else if (player.Input.JumpDown) player.stateMachine.ChangeState(player.airborneState);
+            else if (player.Input.BrutalAttackDown && player.StackDiSangue > 0) player.stateMachine.ChangeState(player.brutalAttackState);
         }
     }
 

@@ -17,9 +17,6 @@ public class BrutalAttackState : State
         else if (player.StackDiSangue == 2) player.Anim.Play("Brutale_MediaCarica");
         else if (player.StackDiSangue == 3) player.Anim.Play("Brutale_PienaCarica");
 
-        //player.MinFallSpeed = 80;
-        //player.MaxFallSpeed = 160;
-
         player.ComboAttacco = 0;
     }
 
@@ -38,5 +35,6 @@ public class BrutalAttackState : State
         player.CambiaStack(0);
 
         player.CooldownAttaccoPotenteAttuale = player.CooldownAttaccoPotente;
+        player.JumpToConsume = false;
     }
 }

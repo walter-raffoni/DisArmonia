@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class DamagedState : State
 {
@@ -17,7 +13,7 @@ public class DamagedState : State
     public override void Enter()
     {
         base.Enter();
-        stunTimer = player.stunDuration;
+        stunTimer = player.StunDuration;
     }
 
     public override void LogicUpdate()

@@ -16,9 +16,6 @@ public class DashingState : State
 
         player.Anim.Play("Agile_Dash");
 
-        player.MinFallSpeed = 80;
-        player.MaxFallSpeed = 160;
-
         player.ComboAttacco = 0;
 
         player.IsInvulnerable = true;

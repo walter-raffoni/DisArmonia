@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Grass_1
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 8614336539394497335, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: 3330055086486280928, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: -7220127149418613618, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: -2373586328001201056, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: 3690261161867036418, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: 5442965279298082243, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: -4969114853332819105, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: -1351643264150391954, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: -2780668430478997784, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  - {fileID: 2449585880910871776, guid: dd0754a738846ec49a264c6807f27390, type: 3}
+  m_MinSpeed: 8
+  m_MaxSpeed: 8
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

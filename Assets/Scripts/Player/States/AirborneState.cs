@@ -66,4 +66,10 @@ public class AirborneState : State
             else if (player.Velocity.y < 0) player.Anim.Play("Agile_AirborneAtterra");
         }
     }
+
+    public override void Exit()
+    {
+        base.Exit();
+        player.JumpToConsume = false;
+    }
 }
